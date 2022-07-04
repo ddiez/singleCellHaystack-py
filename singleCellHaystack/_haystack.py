@@ -35,7 +35,7 @@ from scipy.sparse import isspmatrix
 def haystack(adata, method="highD", basis="pca", dims=None, scale_coords=True, ngrid_points=100,
     pseudo=1e-300, n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
     spline_method="bs", n_randomizations=100, grid_points=None, verbose=True):
-  
+
   if (verbose):
     print("> starting haystack ...")
 
@@ -52,15 +52,16 @@ def haystack(adata, method="highD", basis="pca", dims=None, scale_coords=True, n
   if scale_coords:
     if (verbose):
       print("> scaling coordinates ...")
-    
+
     coord_mean = np.mean(coord, axis=0)
     coord_std = np.std(coord, axis=0)
     coord = (coord - coord_mean) / coord_std
 
   # FIXME: workaround, fix properly.
-  if (verbose):
-    print("> converting to dense array ...")
   if isspmatrix(exprs):
+    if (verbose):
+      print("> converting to dense array ...")
+
     exprs = exprs.toarray()
 
   # Check for negative values.
@@ -120,7 +121,7 @@ def haystack(adata, method="highD", basis="pca", dims=None, scale_coords=True, n
   logpval_adj = logpval + np.log10(logpval.size)
   logpval_adj = np.fmin(1, logpval_adj)
   pval_adj = 10 ** logpval_adj
-  
+
   if (verbose):
     print("> done.")
 
@@ -155,7 +156,7 @@ def haystack(adata, method="highD", basis="pca", dims=None, scale_coords=True, n
 # x is a matrix of PCA or other embeddings coordinates.
 def calculate_grid_points(x, ngrid_points, random_state=None, verbose=False):
   from sklearn.cluster import KMeans
-  
+
   if (verbose):
     print("> calculating grid points ...")
 
@@ -200,9 +201,9 @@ def calculate_P_dist(density, expression, pseudo=1e-300):
   return P
 
 def calculate_KLD(density, expression, Q, pseudo=1e-300, verbose=False):
-  
+
   ngenes = expression.shape[1]
-  
+
   if (verbose):
     print("> calculating KLD for " + str(ngenes) + " genes ...")
     from tqdm import tqdm
@@ -357,7 +358,7 @@ def calculate_Pval(KLD, KLD_rand, cv, cv_rand, method="bs", verbose=False):
   from sklearn.pipeline import Pipeline
   from patsy import cr
   from scipy.stats import norm
-  
+
   if (verbose):
     print("> calculating P values ...")
 
@@ -379,7 +380,7 @@ def calculate_Pval(KLD, KLD_rand, cv, cv_rand, method="bs", verbose=False):
 
   logpval = norm.logpdf(KLD_log, loc=KLD_mean, scale=KLD_sd)/np.log(10)
   pval = np.exp(logpval)
-  
+
   return {
     "pval": pval,
     "logpval": logpval,
