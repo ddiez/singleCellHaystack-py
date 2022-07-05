@@ -1,3 +1,9 @@
+""" singleCellHaystack
+
+This is a python implementation of [singleCellHaystack](https://github.com/alexisvdb/singleCellHaystack).
+
+"""
+
 from anndata import AnnData
 
 from ._haystack import *
