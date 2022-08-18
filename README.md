@@ -3,6 +3,15 @@ singleCellHaystack-py
 
 This repository contains a python implementation of [singleCellHaystack](https://github.com/alexisvdb/singleCellHaystack).
 
+# Installation
+
+For now, clone this repository, then run the following from the repository folder:
+
+```
+pip install .
+```
+
+# Example
 
 ```{python}
 import scanpy as sc
