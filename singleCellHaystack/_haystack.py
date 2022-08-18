@@ -32,7 +32,8 @@ from scipy.sparse import isspmatrix
 #     pseudo=1e-300, n_genes_to_randomize=100, n_randomizations=100, grid_points=None):
 #  print("anndata method")
 #  return(0)
-def haystack(adata, method="highD", basis="pca", dims=None, scale_coords=True, ngrid_points=100,
+
+def haystack(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
     pseudo=1e-300, n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
     spline_method="bs", n_randomizations=100, grid_points=None, verbose=True):
 
