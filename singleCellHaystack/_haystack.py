@@ -1,12 +1,16 @@
 import numpy as np
+from numpy import ndarray
+
 import pandas as pd
 from anndata import AnnData
 
 from scipy.spatial import distance_matrix
 from random import sample
-#import scipy.sparse as sp
+import scipy.sparse as sp
 #from sklearn.preprocessing import StandardScaler
 from scipy.sparse import isspmatrix
+
+from tqdm import tqdm
 
 # def haystack(x, basis="pca", method="highD", dims=None, ngrid_points=100,
 #     pseudo=1e-300, n_genes_to_randomize=100, n_randomizations=100, grid_points=None):
@@ -24,9 +28,112 @@ from scipy.sparse import isspmatrix
 #   print("ndarray method")
 #   return(0)
 #
-# def haystack_sparse(weights: ndarray, coord: ndarray):
-#   print("sparse method")
-#   return(0)
+def haystack_sparse(exprs: ndarray, coord: ndarray, scale_coords=True, ngrid_points=100,
+    n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
+    spline_method="bs", n_randomizations=100, grid_points=None, verbose=True, pseudo=1e-300):
+
+  if (verbose):
+    print("> entering sparse method ...")
+
+  # Scale coords.
+  if scale_coords:
+    if (verbose):
+      print("> scaling coordinates ...")
+
+    coord_mean = np.mean(coord, axis=0)
+    coord_std = np.std(coord, axis=0)
+    coord = (coord - coord_mean) / coord_std
+
+  # Check for negative values.
+  if (np.sum(exprs < 0).astype(bool)):
+    print("_ERROR_ negative values in your data.")
+    return(None)
+
+  # filter genes with zero stdev.
+  if (verbose):
+    print("> calculating feature stds ...")
+  from sklearn.preprocessing import StandardScaler
+  scaler = StandardScaler(with_mean=False)
+  scaler_fit = scaler.fit(exprs)
+  exprs_sd = np.sqrt(scaler_fit.var_)
+  exprs_mean = scaler_fit.mean_
+
+  #exprs_sd = np.std(exprs, axis=0)
+  sel_zero = exprs_sd == 0
+  n_zero = np.sum(sel_zero)
+  if (n_zero > 0):
+    if (verbose):
+      print("> removing", str(n_zero), "genes with zero variance ...")
+    sel_nozero = np.invert(sel_zero)
+  #   genes = genes[sel_nozero]
+    exprs_sd = exprs_sd[sel_nozero] + pseudo
+    exprs_mean = exprs_mean[sel_nozero] + pseudo
+    exprs = exprs[:, sel_nozero]
+
+  ncells = exprs.shape[0]
+  ngenes = exprs.shape[1]
+
+  # Calculate KLD.
+  if grid_points is None:
+    grid_points = calculate_grid_points(coord, ngrid_points, verbose=verbose)
+  grid_dist = calculate_dist_to_cells(coord, grid_points, verbose=verbose)
+  grid_density = calculate_density(grid_dist, verbose=verbose)
+
+  Q = calculate_Q_dist(grid_density, pseudo=pseudo, verbose=verbose)
+
+  KLD = calculate_KLD_sparse(grid_density, exprs, Q, verbose=verbose)
+
+  # Calculate CV
+  if (verbose):
+    print("> calculating feature means ...")
+  #exprs_mean = scaler_fit.mean_[sel_nozero]
+  #exprs_mean = np.mean(exprs, axis=0) + pseudo
+  exprs_cv = exprs_sd / exprs_mean
+
+  genes_to_randomize = select_genes_to_randomize(exprs_cv, n_genes_to_randomize, method=select_genes_randomize_method, verbose=verbose)
+
+  # Randomizations.
+  KLD_rand = randomize_KLD_sparse(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, verbose=verbose)
+
+  # Calculate p.values:
+  pvalData = calculate_Pval(KLD, KLD_rand, exprs_cv, exprs_cv[genes_to_randomize], method=spline_method, verbose=verbose)
+  pval = pvalData["pval"]
+  logpval = pvalData["logpval"]
+  #pval_adj = pval * pval.size # Bonferroni correction
+  logpval_adj = logpval + np.log10(logpval.size)
+  logpval_adj = np.fmin(1, logpval_adj)
+  pval_adj = 10 ** logpval_adj
+
+  if (verbose):
+    print("> done.")
+
+  # Return results.
+  df = pd.DataFrame({
+    #"gene": genes,
+    "KLD": KLD,
+    "pval": pval,
+    "pval_adj": pval_adj,
+    "logpval": logpval,
+    "logpval_adj": logpval_adj
+  })
+
+  df = df.sort_values("logpval_adj")
+
+  info = {
+    "grid_points": grid_points,
+    "grid_dist": grid_dist,
+    "grid_density": grid_density,
+    "Q": Q,
+    "KLD_rand": KLD_rand,
+    "pval_info": pvalData,
+    "genes_to_randomize": genes_to_randomize,
+    "exprs_cv": exprs_cv,
+  }
+
+  return {
+    "results": df,
+    "info": info
+  }
 
 # def haystack_adata(adata, method="highD", basis="pca", dims=None, ngrid_points=100,
 #     pseudo=1e-300, n_genes_to_randomize=100, n_randomizations=100, grid_points=None):
@@ -136,7 +243,7 @@ def haystack(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
     "logpval_adj": logpval_adj
   })
 
-  df = df.sort_values("pval")
+  df = df.sort_values("logpval_adj")
 
   info = {
     "grid_points": grid_points,
@@ -201,13 +308,22 @@ def calculate_P_dist(density, expression, pseudo=1e-300):
   P = P / np.sum(P)
   return P
 
+def calculate_P_dist_sparse(density, expression, pseudo=1e-300):
+
+  index = expression.nonzero()[0]
+  P = density[index, :] * expression.data.reshape(-1,1)
+
+  P = np.sum(P, 0)
+  P = P + pseudo
+  P = P / np.sum(P)
+  return P
+
 def calculate_KLD(density, expression, Q, pseudo=1e-300, verbose=False):
 
   ngenes = expression.shape[1]
 
   if (verbose):
     print("> calculating KLD for " + str(ngenes) + " genes ...")
-    from tqdm import tqdm
     pbar = tqdm(total=ngenes)
 
   # FIXME: vectorize this computation.
@@ -219,6 +335,25 @@ def calculate_KLD(density, expression, Q, pseudo=1e-300, verbose=False):
       pbar.update(n=1)
 
   return res
+
+def calculate_KLD_sparse(density, expression, Q, pseudo=1e-300, verbose=False):
+  expression = expression.tocsc()
+  ngenes = expression.shape[1]
+
+  if (verbose):
+    print("> calculating KLD for " + str(ngenes) + " genes ...")
+    pbar = tqdm(total=ngenes)
+
+  # FIXME: vectorize this computation.
+  res = np.zeros(ngenes)
+  for k in range(ngenes):
+    P = calculate_P_dist_sparse(density, expression[:, [k]])
+    res[k] = np.sum(P * np.log(P / Q))
+    if (verbose):
+      pbar.update(n=1)
+
+  return res
+
 
 def select_genes_to_randomize(x, ngenes=100, method="heavytails", tail=10, verbose=False):
   if (verbose):
@@ -239,9 +374,7 @@ def select_genes_to_randomize(x, ngenes=100, method="heavytails", tail=10, verbo
 def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, verbose=False):
   if (verbose):
     print("> calculating randomized KLD ...")
-    from tqdm import tqdm
     pbar = tqdm(total=n_randomizations)
-    #from tqdm.notebook import trange, tqdm
 
   ncells=expression.shape[0]
   ngenes=expression.shape[1]
@@ -249,9 +382,26 @@ def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, v
   KLD_rand=np.zeros([ngenes, n_randomizations])
 
   for n in range(n_randomizations):
-  #for n in trange(n_randomizations):
     shuffled_cells = sample(range(ncells), ncells)
     KLD_rand[:, n] = calculate_KLD(density, expression[shuffled_cells, :], Q)
+    if (verbose):
+      pbar.update(n=1)
+
+  return KLD_rand
+
+def randomize_KLD_sparse(density, expression, Q, n_randomizations=100, pseudo=1e-300, verbose=False):
+  if (verbose):
+    print("> calculating randomized KLD ...")
+    pbar = tqdm(total=n_randomizations)
+
+  ncells=expression.shape[0]
+  ngenes=expression.shape[1]
+
+  KLD_rand=np.zeros([ngenes, n_randomizations])
+
+  for n in range(n_randomizations):
+    shuffled_cells = sample(range(ncells), ncells)
+    KLD_rand[:, n] = calculate_KLD_sparse(density, expression[shuffled_cells, :], Q)
     if (verbose):
       pbar.update(n=1)
 
