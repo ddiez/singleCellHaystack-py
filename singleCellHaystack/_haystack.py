@@ -117,7 +117,7 @@ def haystack_sparse(exprs: ndarray, coord: ndarray, scale_coords=True, ngrid_poi
     "logpval_adj": logpval_adj
   })
 
-  df = df.sort_values("logpval_adj")
+  df = df.sort_values("logpval")
 
   info = {
     "grid_points": grid_points,
@@ -243,7 +243,7 @@ def haystack(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
     "logpval_adj": logpval_adj
   })
 
-  df = df.sort_values("logpval_adj")
+  df = df.sort_values("logpval")
 
   info = {
     "grid_points": grid_points,
