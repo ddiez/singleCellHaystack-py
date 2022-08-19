@@ -85,9 +85,7 @@ def haystack_sparse(exprs: ndarray, coord: ndarray, scale_coords=True, ngrid_poi
 
   # Calculate CV
   if (verbose):
-    print("> calculating feature means ...")
-  #exprs_mean = scaler_fit.mean_[sel_nozero]
-  #exprs_mean = np.mean(exprs, axis=0) + pseudo
+    print("> calculating feature's CV ...")
   exprs_cv = exprs_sd / exprs_mean
 
   genes_to_randomize = select_genes_to_randomize(exprs_cv, n_genes_to_randomize, method=select_genes_randomize_method, verbose=verbose)
@@ -185,7 +183,7 @@ def haystack(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
 
   # filter genes with zero stdev.
   if (verbose):
-    print("> calculating feature stds ...")
+    print("> calculating feature's stds ...")
   exprs_sd = np.std(exprs, axis=0)
   sel_zero = exprs_sd == 0
   n_zero = np.sum(sel_zero)
@@ -212,7 +210,7 @@ def haystack(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
 
   # Calculate CV
   if (verbose):
-    print("> calculating feature means ...")
+    print("> calculating feature's CV ...")
   exprs_mean = np.mean(exprs, axis=0) + pseudo
   exprs_cv = exprs_sd / exprs_mean
 
