@@ -50,3 +50,31 @@ def plot_pval_hist(x):
   h = plt.hist(x, color="black", bins=30)
   plt.xlim([0, 1])
   plt.show()
+
+def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None):
+  import pandas as pd
+
+  sum1 = res1["results"].sort_values(sort_by)
+  sum2 = res2["results"].sort_values(sort_by)
+
+  r1 = pd.DataFrame({
+    "gene1": sum1.index,
+    "rank1": list(range(sum1.index.shape[0])),
+  })
+
+  r2 = pd.DataFrame({
+    "gene2": sum2.index,
+    "rank2": list(range(sum2.index.shape[0])),
+  })
+
+  r1 = r1.sort_values("gene1")
+  r1 = r1.reset_index(drop=True)
+
+  r2 = r2.sort_values("gene2")
+  r2 = r2.reset_index(drop=True)
+
+  d = r1.join(r2)
+
+  plt.plot(d.rank1, d.rank2, "bo", markersize=1)
+  plt.xlabel(xlabel)
+  plt.ylabel(ylabel)
