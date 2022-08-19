@@ -1,1 +1,1 @@
-include singleCellHaystack/data/*
+include datasets/*
