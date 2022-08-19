@@ -101,7 +101,7 @@ def haystack_sparse(exprs: ndarray, coord: ndarray, scale_coords=True, ngrid_poi
   logpval = pvalData["logpval"]
   #pval_adj = pval * pval.size # Bonferroni correction
   logpval_adj = logpval + np.log10(logpval.size)
-  logpval_adj = np.fmin(1, logpval_adj)
+  logpval_adj = np.fmin(0, logpval_adj)
   pval_adj = 10 ** logpval_adj
 
   if (verbose):
@@ -227,7 +227,7 @@ def haystack(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
   logpval = pvalData["logpval"]
   #pval_adj = pval * pval.size # Bonferroni correction
   logpval_adj = logpval + np.log10(logpval.size)
-  logpval_adj = np.fmin(1, logpval_adj)
+  logpval_adj = np.fmin(0, logpval_adj)
   pval_adj = 10 ** logpval_adj
 
   if (verbose):
