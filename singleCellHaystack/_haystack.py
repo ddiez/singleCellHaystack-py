@@ -529,8 +529,8 @@ def calculate_Pval(KLD, KLD_rand, cv, cv_rand, method="bs", verbose=False):
   KLD_mean = KLD_rand_mean_model.predict(cv_log)
   KLD_sd = KLD_rand_sd_model.predict(cv_log)
 
-  logpval = norm.logpdf(KLD_log, loc=KLD_mean, scale=KLD_sd)/np.log(10)
-  pval = np.exp(logpval)
+  logpval = norm.logsf(KLD_log, loc=KLD_mean, scale=KLD_sd)/np.log(10)
+  pval = 10 ** logpval
 
   return {
     "pval": pval,
