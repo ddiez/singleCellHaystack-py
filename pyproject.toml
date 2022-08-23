@@ -25,9 +25,7 @@ dependencies = [
   "anndata",
   "scanpy",
   "pandas",
-  "random",
   "tqdm",
-  "pkg_resources"
 ]
 
 [project.urls]
