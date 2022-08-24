@@ -40,6 +40,8 @@ def plot_pval_rank(x):
   x = np.sort(data["logpval"])
 
   plt.plot(x, color="black")
+  plt.xlabel("Rank")
+  plt.ylabel("logpval")
   plt.show()
 
 def plot_pval_hist(x):
