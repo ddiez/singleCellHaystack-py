@@ -12,6 +12,8 @@ from scipy.sparse import isspmatrix
 
 from tqdm import tqdm
 
+# haystack
+# Main function. Can accept AnnData, numpy array and scipy sparse matrices.
 def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True):
@@ -22,14 +24,16 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
         select_genes_randomize_method=select_genes_randomize_method, spline_method=spline_method,
         n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, verbose=verbose)
 
-  if isinstance(x, ndarray) and isinstance(coord, ndarray):
-    res = haystack_array(exprs=x, coord=coord, features=features, scale_coords=scale_coords,
+  if (isinstance(x, ndarray) or isspmatrix(x)) and isinstance(coord, ndarray):
+    res = haystack_array(weights=x, coord=coord, features=features, scale_coords=scale_coords,
         ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
         select_genes_randomize_method=select_genes_randomize_method, spline_method=spline_method,
         n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, verbose=verbose)
 
   return(res)
 
+# haystack_array
+# Method for numpy array and scipy sparse matrix objects.
 def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True):
