@@ -81,7 +81,7 @@ def haystack_sparse(exprs: ndarray, coord: ndarray, scale_coords=True, ngrid_poi
 
   Q = calculate_Q_dist(grid_density, pseudo=pseudo, verbose=verbose)
 
-  KLD = calculate_KLD_sparse(grid_density, exprs, Q, verbose=verbose)
+  KLD = calculate_KLD(grid_density, exprs, Q, verbose=verbose)
 
   # Calculate CV
   if (verbose):
@@ -91,7 +91,7 @@ def haystack_sparse(exprs: ndarray, coord: ndarray, scale_coords=True, ngrid_poi
   genes_to_randomize = select_genes_to_randomize(exprs_cv, n_genes_to_randomize, method=select_genes_randomize_method, verbose=verbose)
 
   # Randomizations.
-  KLD_rand = randomize_KLD_sparse(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, verbose=verbose)
+  KLD_rand = randomize_KLD(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, verbose=verbose)
 
   # Calculate p.values:
   pvalData = calculate_Pval(KLD, KLD_rand, exprs_cv, exprs_cv[genes_to_randomize], method=spline_method, verbose=verbose)
@@ -300,25 +300,11 @@ def calculate_Q_dist(density, pseudo=1e-300, verbose=False):
 # P (vector): ngrid_points.
 def calculate_P_dist(density, weights, pseudo=1e-300):
   if (isspmatrix(weights)):
-    P = calculate_P_dist_sparse(density=density, weights=weights)
+    index = weights.nonzero()[0]
+    P = density[index, :] * weights.data.reshape(-1,1)
 
   if (isinstance(weights, ndarray)):
-    P = calculate_P_dist_dense(density=density, weights=weights)
-
-  return P
-
-def calculate_P_dist_dense(density, weights, pseudo=1e-300):
-  P = density * weights.reshape(-1,1)
-
-  P = np.sum(P, 0)
-  P = P + pseudo
-  P = P / np.sum(P)
-  return P
-
-def calculate_P_dist_sparse(density, weights, pseudo=1e-300):
-
-  index = weights.nonzero()[0]
-  P = density[index, :] * weights.data.reshape(-1,1)
+    P = density * weights.reshape(-1,1)
 
   P = np.sum(P, 0)
   P = P + pseudo
@@ -326,6 +312,9 @@ def calculate_P_dist_sparse(density, weights, pseudo=1e-300):
   return P
 
 def calculate_KLD(density, expression, Q, pseudo=1e-300, verbose=False):
+
+  if (isspmatrix(expression)):
+    expression = expression.tocsc()
 
   ngenes = expression.shape[1]
 
@@ -343,23 +332,23 @@ def calculate_KLD(density, expression, Q, pseudo=1e-300, verbose=False):
 
   return res
 
-def calculate_KLD_sparse(density, expression, Q, pseudo=1e-300, verbose=False):
-  expression = expression.tocsc()
-  ngenes = expression.shape[1]
-
-  if (verbose):
-    print("> calculating KLD for " + str(ngenes) + " genes ...")
-    pbar = tqdm(total=ngenes)
-
-  # FIXME: vectorize this computation.
-  res = np.zeros(ngenes)
-  for k in range(ngenes):
-    P = calculate_P_dist_sparse(density, expression[:, [k]])
-    res[k] = np.sum(P * np.log(P / Q))
-    if (verbose):
-      pbar.update(n=1)
-
-  return res
+# def calculate_KLD_sparse(density, expression, Q, pseudo=1e-300, verbose=False):
+#   expression = expression.tocsc()
+#   ngenes = expression.shape[1]
+#
+#   if (verbose):
+#     print("> calculating KLD for " + str(ngenes) + " genes ...")
+#     pbar = tqdm(total=ngenes)
+#
+#   # FIXME: vectorize this computation.
+#   res = np.zeros(ngenes)
+#   for k in range(ngenes):
+#     P = calculate_P_dist_sparse(density, expression[:, [k]])
+#     res[k] = np.sum(P * np.log(P / Q))
+#     if (verbose):
+#       pbar.update(n=1)
+#
+#   return res
 
 
 def select_genes_to_randomize(x, ngenes=100, method="heavytails", tail=10, verbose=False):
@@ -383,6 +372,9 @@ def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, v
     print("> calculating randomized KLD ...")
     pbar = tqdm(total=n_randomizations)
 
+  if (isspmatrix(expression)):
+    expression = expression.tocsc()
+
   ncells=expression.shape[0]
   ngenes=expression.shape[1]
 
@@ -396,23 +388,23 @@ def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, v
 
   return KLD_rand
 
-def randomize_KLD_sparse(density, expression, Q, n_randomizations=100, pseudo=1e-300, verbose=False):
-  if (verbose):
-    print("> calculating randomized KLD ...")
-    pbar = tqdm(total=n_randomizations)
-
-  ncells=expression.shape[0]
-  ngenes=expression.shape[1]
-
-  KLD_rand=np.zeros([ngenes, n_randomizations])
-
-  for n in range(n_randomizations):
-    shuffled_cells = sample(range(ncells), ncells)
-    KLD_rand[:, n] = calculate_KLD_sparse(density, expression[shuffled_cells, :], Q)
-    if (verbose):
-      pbar.update(n=1)
-
-  return KLD_rand
+# def randomize_KLD_sparse(density, expression, Q, n_randomizations=100, pseudo=1e-300, verbose=False):
+#   if (verbose):
+#     print("> calculating randomized KLD ...")
+#     pbar = tqdm(total=n_randomizations)
+#
+#   ncells=expression.shape[0]
+#   ngenes=expression.shape[1]
+#
+#   KLD_rand=np.zeros([ngenes, n_randomizations])
+#
+#   for n in range(n_randomizations):
+#     shuffled_cells = sample(range(ncells), ncells)
+#     KLD_rand[:, n] = calculate_KLD_sparse(density, expression[shuffled_cells, :], Q)
+#     if (verbose):
+#       pbar.update(n=1)
+#
+#   return KLD_rand
 
 def estimate_spline_param(x, y, method="bs"):
   from sklearn.preprocessing import SplineTransformer
