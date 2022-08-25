@@ -311,21 +311,21 @@ def calculate_P_dist(density, weights, pseudo=1e-300):
   P = P / np.sum(P)
   return P
 
-def calculate_KLD(density, expression, Q, pseudo=1e-300, verbose=False):
+def calculate_KLD(density, weights, Q, pseudo=1e-300, verbose=False):
 
-  if (isspmatrix(expression)):
-    expression = expression.tocsc()
+  if (isspmatrix(weights)):
+    weights = weights.tocsc()
 
-  ngenes = expression.shape[1]
+  ngenes = weights.shape[1]
 
   if (verbose):
-    print("> calculating KLD for " + str(ngenes) + " genes ...")
+    print("> calculating KLD for " + str(ngenes) + " features ...")
     pbar = tqdm(total=ngenes)
 
   # FIXME: vectorize this computation.
   res = np.zeros(ngenes)
   for k in range(ngenes):
-    P = calculate_P_dist(density, expression[:, k])
+    P = calculate_P_dist(density, weights[:, k])
     res[k] = np.sum(P * np.log(P / Q))
     if (verbose):
       pbar.update(n=1)
