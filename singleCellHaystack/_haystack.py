@@ -30,7 +30,7 @@ from tqdm import tqdm
 #
 def haystack_array(exprs: ndarray, coord: ndarray, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
-    spline_method="bs", n_randomizations=100, grid_points=None, verbose=True, pseudo=1e-300):
+    spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True, ):
 
   if (verbose):
     print("> entering array method ...")
@@ -144,8 +144,8 @@ def haystack_array(exprs: ndarray, coord: ndarray, features=None, scale_coords=T
 #  return(0)
 
 def haystack(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
-    pseudo=1e-300, n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
-    spline_method="bs", n_randomizations=100, grid_points=None, verbose=True):
+    n_genes_to_randomize=100, select_genes_randomize_method="heavytails", spline_method="bs",
+    n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True):
 
   if (verbose):
     print("> starting haystack ...")
