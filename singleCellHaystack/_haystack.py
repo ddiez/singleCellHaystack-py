@@ -169,12 +169,12 @@ def haystack_adata(adata, basis="pca", dims=None, scale_coords=True, ngrid_point
   #   coord_std = np.std(coord, axis=0)
   #   coord = (coord - coord_mean) / coord_std
 
-  # FIXME: workaround, fix properly.
-  if isspmatrix(exprs):
-    if (verbose):
-      print("> converting to dense array ...")
-
-    exprs = exprs.toarray()
+  # # FIXME: workaround, fix properly.
+  # if isspmatrix(exprs):
+  #   if (verbose):
+  #     print("> converting to dense array ...")
+  #
+  #   exprs = exprs.toarray()
 
   # Check for negative values.
   if (np.sum(exprs < 0).astype(bool)):
