@@ -33,7 +33,11 @@ def haystack_array(exprs: ndarray, coord: ndarray, features=None, scale_coords=T
     spline_method="bs", n_randomizations=100, grid_points=None, verbose=True, pseudo=1e-300):
 
   if (verbose):
-    print("> entering sparse method ...")
+    print("> entering array method ...")
+
+  # Features included?
+  if features is None:
+    features = np.array(range(exprs.shape[1]))
 
   # Scale coords.
   if scale_coords:
@@ -69,6 +73,7 @@ def haystack_array(exprs: ndarray, coord: ndarray, features=None, scale_coords=T
     exprs_sd = exprs_sd[sel_nozero] + pseudo
     exprs_mean = exprs_mean[sel_nozero] + pseudo
     exprs = exprs[:, sel_nozero]
+    features = features[sel_nozero]
 
   ncells = exprs.shape[0]
   ngenes = exprs.shape[1]
@@ -107,7 +112,7 @@ def haystack_array(exprs: ndarray, coord: ndarray, features=None, scale_coords=T
 
   # Return results.
   df = pd.DataFrame({
-    #"gene": genes,
+    "gene": features,
     "KLD": KLD,
     "pval": pval,
     "pval_adj": pval_adj,
