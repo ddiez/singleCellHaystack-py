@@ -251,25 +251,6 @@ def calculate_KLD(density, weights, Q, pseudo=1e-300, verbose=False):
 
   return res
 
-# def calculate_KLD_sparse(density, expression, Q, pseudo=1e-300, verbose=False):
-#   expression = expression.tocsc()
-#   ngenes = expression.shape[1]
-#
-#   if (verbose):
-#     print("> calculating KLD for " + str(ngenes) + " genes ...")
-#     pbar = tqdm(total=ngenes)
-#
-#   # FIXME: vectorize this computation.
-#   res = np.zeros(ngenes)
-#   for k in range(ngenes):
-#     P = calculate_P_dist_sparse(density, expression[:, [k]])
-#     res[k] = np.sum(P * np.log(P / Q))
-#     if (verbose):
-#       pbar.update(n=1)
-#
-#   return res
-
-
 def select_genes_to_randomize(x, ngenes=100, method="heavytails", tail=10, verbose=False):
   if (verbose):
     print("> selecting genes to randomize ...")
@@ -306,24 +287,6 @@ def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, v
       pbar.update(n=1)
 
   return KLD_rand
-
-# def randomize_KLD_sparse(density, expression, Q, n_randomizations=100, pseudo=1e-300, verbose=False):
-#   if (verbose):
-#     print("> calculating randomized KLD ...")
-#     pbar = tqdm(total=n_randomizations)
-#
-#   ncells=expression.shape[0]
-#   ngenes=expression.shape[1]
-#
-#   KLD_rand=np.zeros([ngenes, n_randomizations])
-#
-#   for n in range(n_randomizations):
-#     shuffled_cells = sample(range(ncells), ncells)
-#     KLD_rand[:, n] = calculate_KLD_sparse(density, expression[shuffled_cells, :], Q)
-#     if (verbose):
-#       pbar.update(n=1)
-#
-#   return KLD_rand
 
 def estimate_spline_param(x, y, method="bs"):
   from sklearn.preprocessing import SplineTransformer
