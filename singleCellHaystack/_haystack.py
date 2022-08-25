@@ -298,18 +298,27 @@ def calculate_Q_dist(density, pseudo=1e-300, verbose=False):
 # density (array): ncells x ngrid_points.
 # expression (vector): ncells.
 # P (vector): ngrid_points.
-def calculate_P_dist(density, expression, pseudo=1e-300):
-  P = density * expression.reshape(-1,1)
+def calculate_P_dist(density, weights, pseudo=1e-300):
+  if (isspmatrix(weights)):
+    P = calculate_P_dist_sparse(density=density, weights=weights)
+
+  if (isinstance(weights, ndarray)):
+    P = calculate_P_dist_dense(density=density, weights=weights)
+
+  return P
+
+def calculate_P_dist_dense(density, weights, pseudo=1e-300):
+  P = density * weights.reshape(-1,1)
 
   P = np.sum(P, 0)
   P = P + pseudo
   P = P / np.sum(P)
   return P
 
-def calculate_P_dist_sparse(density, expression, pseudo=1e-300):
+def calculate_P_dist_sparse(density, weights, pseudo=1e-300):
 
-  index = expression.nonzero()[0]
-  P = density[index, :] * expression.data.reshape(-1,1)
+  index = weights.nonzero()[0]
+  P = density[index, :] * weights.data.reshape(-1,1)
 
   P = np.sum(P, 0)
   P = P + pseudo
