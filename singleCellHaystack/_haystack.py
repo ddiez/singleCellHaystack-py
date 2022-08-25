@@ -14,6 +14,7 @@ from tqdm import tqdm
 
 # haystack
 # Main function. Can accept AnnData, numpy array and scipy sparse matrices.
+# Does not accept numpay matrix objects.
 def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True):
