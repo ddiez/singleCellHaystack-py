@@ -12,28 +12,32 @@ from scipy.sparse import isspmatrix
 
 from tqdm import tqdm
 
-# def haystack(x, basis="pca", method="highD", dims=None, ngrid_points=100,
-#     pseudo=1e-300, n_genes_to_randomize=100, n_randomizations=100, grid_points=None):
-#
-#  from numpy import ndarray
-#
-#
-#   if isinstance(x, AnnData) and isinstance(basis, str):
-#     haystack_adata(x, method=method, basis=basis, dims=None, ngrid_points=100,
-#         pseudo=1e-300, n_genes_to_randomize=100, n_randomizations=100, grid_points=None)
-#   if isinstance(x, ndarray) and isinstance(basis, ndarray):
-#     haystack_ndarray(weights=x, coord=basis)
-#
-# def haystack_ndarray(weights: ndarray, coord: ndarray):
-#   print("ndarray method")
-#   return(0)
-#
-def haystack_array(exprs: ndarray, coord: ndarray, features=None, scale_coords=True, ngrid_points=100,
+def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
-    spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True, ):
+    spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True):
+
+  if isinstance(x, AnnData) and isinstance(coord, str):
+    res = haystack_adata(adata=x, basis=coord, dims=None, scale_coords=scale_coords,
+        ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
+        select_genes_randomize_method=select_genes_randomize_method, spline_method=spline_method,
+        n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, verbose=verbose)
+
+  if isinstance(x, ndarray) and isinstance(coord, ndarray):
+    res = haystack_array(exprs=x, coord=coord, features=features, scale_coords=scale_coords,
+        ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
+        select_genes_randomize_method=select_genes_randomize_method, spline_method=spline_method,
+        n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, verbose=verbose)
+
+  return(res)
+
+def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_points=100,
+    n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
+    spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True):
 
   if (verbose):
     print("> entering array method ...")
+
+  exprs = weights
 
   # Features included?
   if features is None:
@@ -138,12 +142,9 @@ def haystack_array(exprs: ndarray, coord: ndarray, features=None, scale_coords=T
     "info": info
   }
 
-# def haystack_adata(adata, method="highD", basis="pca", dims=None, ngrid_points=100,
-#     pseudo=1e-300, n_genes_to_randomize=100, n_randomizations=100, grid_points=None):
-#  print("anndata method")
-#  return(0)
-
-def haystack(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
+# haystack_adata
+# method for AnnData objects.
+def haystack_adata(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails", spline_method="bs",
     n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True):
 
