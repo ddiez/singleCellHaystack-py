@@ -160,13 +160,13 @@ def haystack(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
   genes = adata.var_names
 
   # Scale coords.
-  if scale_coords:
-    if (verbose):
-      print("> scaling coordinates ...")
-
-    coord_mean = np.mean(coord, axis=0)
-    coord_std = np.std(coord, axis=0)
-    coord = (coord - coord_mean) / coord_std
+  # if scale_coords:
+  #   if (verbose):
+  #     print("> scaling coordinates ...")
+  #
+  #   coord_mean = np.mean(coord, axis=0)
+  #   coord_std = np.std(coord, axis=0)
+  #   coord = (coord - coord_mean) / coord_std
 
   # FIXME: workaround, fix properly.
   if isspmatrix(exprs):
@@ -183,86 +183,91 @@ def haystack(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
   if dims is not None:
     coord = coord[:, dims]
 
+  res = haystack_array(exprs, coord, features=genes, scale_coords=scale_coords, ngrid_points=ngrid_points,
+      n_genes_to_randomize=n_genes_to_randomize, select_genes_randomize_method=select_genes_randomize_method,
+      spline_method=spline_method, n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, verbose=verbose)
+  return(res)
+
   # We could call a haystack matrix based function here.
   # haystack_array(coord, exprs, genes, ...)
 
   # filter genes with zero stdev.
-  if (verbose):
-    print("> calculating feature's stds ...")
-  exprs_sd = np.std(exprs, axis=0)
-  sel_zero = exprs_sd == 0
-  n_zero = np.sum(sel_zero)
-  if (n_zero > 0):
-    if (verbose):
-      print("> removing", str(n_zero), "genes with zero variance ...")
-    sel_nozero = np.invert(sel_zero)
-    genes = genes[sel_nozero]
-    exprs_sd = exprs_sd[sel_nozero]
-    exprs = exprs[:, sel_nozero]
-
-  ncells = exprs.shape[0]
-  ngenes = exprs.shape[1]
-
-  # Calculate KLD.
-  if grid_points is None:
-    grid_points = calculate_grid_points(coord, ngrid_points, verbose=verbose)
-  grid_dist = calculate_dist_to_cells(coord, grid_points, verbose=verbose)
-  grid_density = calculate_density(grid_dist, verbose=verbose)
-
-  Q = calculate_Q_dist(grid_density, pseudo=pseudo, verbose=verbose)
-
-  KLD = calculate_KLD(grid_density, exprs, Q, verbose=verbose)
-
-  # Calculate CV
-  if (verbose):
-    print("> calculating feature's CV ...")
-  exprs_mean = np.mean(exprs, axis=0) + pseudo
-  exprs_cv = exprs_sd / exprs_mean
-
-  genes_to_randomize = select_genes_to_randomize(exprs_cv, n_genes_to_randomize, method=select_genes_randomize_method, verbose=verbose)
-
-  # Randomizations.
-  KLD_rand = randomize_KLD(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, verbose=verbose)
-
-  # Calculate p.values:
-  pvalData = calculate_Pval(KLD, KLD_rand, exprs_cv, exprs_cv[genes_to_randomize], method=spline_method, verbose=verbose)
-  pval = pvalData["pval"]
-  logpval = pvalData["logpval"]
-  #pval_adj = pval * pval.size # Bonferroni correction
-  logpval_adj = logpval + np.log10(logpval.size)
-  logpval_adj = np.fmin(0, logpval_adj)
-  pval_adj = 10 ** logpval_adj
-
-  if (verbose):
-    print("> done.")
-
-  # Return results.
-  df = pd.DataFrame({
-    "gene": genes,
-    "KLD": KLD,
-    "pval": pval,
-    "pval_adj": pval_adj,
-    "logpval": logpval,
-    "logpval_adj": logpval_adj
-  })
-
-  df = df.sort_values("logpval")
-
-  info = {
-    "grid_points": grid_points,
-    "grid_dist": grid_dist,
-    "grid_density": grid_density,
-    "Q": Q,
-    "KLD_rand": KLD_rand,
-    "pval_info": pvalData,
-    "genes_to_randomize": genes_to_randomize,
-    "exprs_cv": exprs_cv,
-  }
-
-  return {
-    "results": df,
-    "info": info
-  }
+  # if (verbose):
+  #   print("> calculating feature's stds ...")
+  # exprs_sd = np.std(exprs, axis=0)
+  # sel_zero = exprs_sd == 0
+  # n_zero = np.sum(sel_zero)
+  # if (n_zero > 0):
+  #   if (verbose):
+  #     print("> removing", str(n_zero), "genes with zero variance ...")
+  #   sel_nozero = np.invert(sel_zero)
+  #   genes = genes[sel_nozero]
+  #   exprs_sd = exprs_sd[sel_nozero]
+  #   exprs = exprs[:, sel_nozero]
+  #
+  # ncells = exprs.shape[0]
+  # ngenes = exprs.shape[1]
+  #
+  # # Calculate KLD.
+  # if grid_points is None:
+  #   grid_points = calculate_grid_points(coord, ngrid_points, verbose=verbose)
+  # grid_dist = calculate_dist_to_cells(coord, grid_points, verbose=verbose)
+  # grid_density = calculate_density(grid_dist, verbose=verbose)
+  #
+  # Q = calculate_Q_dist(grid_density, pseudo=pseudo, verbose=verbose)
+  #
+  # KLD = calculate_KLD(grid_density, exprs, Q, verbose=verbose)
+  #
+  # # Calculate CV
+  # if (verbose):
+  #   print("> calculating feature's CV ...")
+  # exprs_mean = np.mean(exprs, axis=0) + pseudo
+  # exprs_cv = exprs_sd / exprs_mean
+  #
+  # genes_to_randomize = select_genes_to_randomize(exprs_cv, n_genes_to_randomize, method=select_genes_randomize_method, verbose=verbose)
+  #
+  # # Randomizations.
+  # KLD_rand = randomize_KLD(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, verbose=verbose)
+  #
+  # # Calculate p.values:
+  # pvalData = calculate_Pval(KLD, KLD_rand, exprs_cv, exprs_cv[genes_to_randomize], method=spline_method, verbose=verbose)
+  # pval = pvalData["pval"]
+  # logpval = pvalData["logpval"]
+  # #pval_adj = pval * pval.size # Bonferroni correction
+  # logpval_adj = logpval + np.log10(logpval.size)
+  # logpval_adj = np.fmin(0, logpval_adj)
+  # pval_adj = 10 ** logpval_adj
+  #
+  # if (verbose):
+  #   print("> done.")
+  #
+  # # Return results.
+  # df = pd.DataFrame({
+  #   "gene": genes,
+  #   "KLD": KLD,
+  #   "pval": pval,
+  #   "pval_adj": pval_adj,
+  #   "logpval": logpval,
+  #   "logpval_adj": logpval_adj
+  # })
+  #
+  # df = df.sort_values("logpval")
+  #
+  # info = {
+  #   "grid_points": grid_points,
+  #   "grid_dist": grid_dist,
+  #   "grid_density": grid_density,
+  #   "Q": Q,
+  #   "KLD_rand": KLD_rand,
+  #   "pval_info": pvalData,
+  #   "genes_to_randomize": genes_to_randomize,
+  #   "exprs_cv": exprs_cv,
+  # }
+  #
+  # return {
+  #   "results": df,
+  #   "info": info
+  # }
 
 # x is a matrix of PCA or other embeddings coordinates.
 def calculate_grid_points(x, ngrid_points, random_state=None, verbose=False):
