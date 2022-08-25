@@ -11,7 +11,7 @@ def cluster_genes(adata, haystack_result, method="kmeans", n_clusters=None, rand
   density = haystack_result["info"]["grid_density"]
   ngrid_points = density.shape[1]
 
-  expression = adata.X.toarray()
+  #expression = adata.X.toarray()
   ngenes = expression.shape[1]
 
   # FIXME: vectorize this computation.
