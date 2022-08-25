@@ -28,7 +28,7 @@ from tqdm import tqdm
 #   print("ndarray method")
 #   return(0)
 #
-def haystack_sparse(exprs: ndarray, coord: ndarray, scale_coords=True, ngrid_points=100,
+def haystack_array(exprs: ndarray, coord: ndarray, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
     spline_method="bs", n_randomizations=100, grid_points=None, verbose=True, pseudo=1e-300):
 
