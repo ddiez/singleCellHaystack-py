@@ -1,16 +1,9 @@
-import numpy as np
-from numpy import ndarray
+from ._randomization import *
+from ._pvalue import *
+from ._grid import *
+from ._kld import *
 
-import pandas as pd
-from anndata import AnnData
-
-from scipy.spatial import distance_matrix
-from random import sample
-import scipy.sparse as sp
-#from sklearn.preprocessing import StandardScaler
 from scipy.sparse import isspmatrix
-
-from tqdm import tqdm
 
 # haystack
 # Main function. Can accept AnnData, numpy array and scipy sparse matrices.
@@ -18,6 +11,9 @@ from tqdm import tqdm
 def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True):
+
+  from anndata import AnnData
+  from numpy import ndarray
 
   if isinstance(x, AnnData) and isinstance(coord, str):
     res = haystack_adata(adata=x, basis=coord, dims=None, scale_coords=scale_coords,
@@ -38,6 +34,9 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
 def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True):
+
+  from pandas import DataFrame
+  from sklearn.preprocessing import StandardScaler
 
   if (verbose):
     print("> entering array method ...")
@@ -65,7 +64,6 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
   # filter genes with zero stdev.
   if (verbose):
     print("> calculating feature stds ...")
-  from sklearn.preprocessing import StandardScaler
   scaler = StandardScaler(with_mean=False)
   scaler_fit = scaler.fit(exprs)
   exprs_sd = np.sqrt(scaler_fit.var_)
@@ -120,7 +118,7 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
     print("> done.")
 
   # Return results.
-  df = pd.DataFrame({
+  df = DataFrame({
     "gene": features,
     "KLD": KLD,
     "pval": pval,
@@ -177,253 +175,3 @@ def haystack_adata(adata, basis="pca", dims=None, scale_coords=True, ngrid_point
       n_genes_to_randomize=n_genes_to_randomize, select_genes_randomize_method=select_genes_randomize_method,
       spline_method=spline_method, n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, verbose=verbose)
   return(res)
-
-# x is a matrix of PCA or other embeddings coordinates.
-def calculate_grid_points(x, ngrid_points, random_state=None, verbose=False):
-  from sklearn.cluster import KMeans
-
-  if (verbose):
-    print("> calculating grid points ...")
-
-  res = KMeans(n_clusters=ngrid_points, random_state=random_state).fit(x)
-  return res.cluster_centers_
-
-def calculate_dist_to_cells(coord, grid_points, verbose=False):
-  if (verbose):
-    print("> calculating distance to cells ...")
-
-  return distance_matrix(coord, grid_points)
-
-# dist is a distance matrix, calculated form grid points and embedding
-# coordinates.
-def calculate_density(dist, verbose=False):
-  if (verbose):
-    print("> calculating densities ...")
-
-  bandwidth = np.median(np.min(dist, 1))
-  dist_norm = dist / bandwidth
-  return np.exp(-dist_norm * dist_norm / 2)
-
-# density is density as calculated by calculate_density.
-def calculate_Q_dist(density, pseudo=1e-300, verbose=False):
-  if (verbose):
-    print("> calculating Q dist ...")
-
-  Q = np.sum(density, axis=0)
-  Q = Q + pseudo
-  Q = Q / np.sum(Q)
-  return Q
-
-# density (array): ncells x ngrid_points.
-# expression (vector): ncells.
-# P (vector): ngrid_points.
-def calculate_P_dist(density, weights, pseudo=1e-300):
-  if (isspmatrix(weights)):
-    index = weights.nonzero()[0]
-    P = density[index, :] * weights.data.reshape(-1,1)
-
-  if (isinstance(weights, ndarray)):
-    P = density * weights.reshape(-1,1)
-
-  P = np.sum(P, 0)
-  P = P + pseudo
-  P = P / np.sum(P)
-  return P
-
-def calculate_KLD(density, weights, Q, pseudo=1e-300, verbose=False):
-
-  if (isspmatrix(weights)):
-    weights = weights.tocsc()
-
-  ngenes = weights.shape[1]
-
-  if (verbose):
-    print("> calculating KLD for " + str(ngenes) + " features ...")
-    pbar = tqdm(total=ngenes)
-
-  # FIXME: vectorize this computation.
-  res = np.zeros(ngenes)
-  for k in range(ngenes):
-    P = calculate_P_dist(density, weights[:, k])
-    res[k] = np.sum(P * np.log(P / Q))
-    if (verbose):
-      pbar.update(n=1)
-
-  return res
-
-def select_genes_to_randomize(x, ngenes=100, method="heavytails", tail=10, verbose=False):
-  if (verbose):
-    print("> selecting genes to randomize ...")
-
-  index = np.argsort(x)
-
-  if (method == "uniform"):
-    return index[np.linspace(0, index.shape[0]-1, ngenes, dtype="int")]
-
-  if (method == "heavytails"):
-    ls = index[:tail]
-    rs = index[-tail:]
-    ngenes = ngenes - tail * 2
-    ms = index[np.linspace(tail, index.shape[0]-tail-1, ngenes, dtype="int")]
-    return np.concatenate([ls, ms, rs])
-
-def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, verbose=False):
-  if (verbose):
-    print("> calculating randomized KLD ...")
-    pbar = tqdm(total=n_randomizations)
-
-  if (isspmatrix(expression)):
-    expression = expression.tocsc()
-
-  ncells=expression.shape[0]
-  ngenes=expression.shape[1]
-
-  KLD_rand=np.zeros([ngenes, n_randomizations])
-
-  for n in range(n_randomizations):
-    shuffled_cells = sample(range(ncells), ncells)
-    KLD_rand[:, n] = calculate_KLD(density, expression[shuffled_cells, :], Q)
-    if (verbose):
-      pbar.update(n=1)
-
-  return KLD_rand
-
-def estimate_spline_param(x, y, method="bs"):
-  from sklearn.preprocessing import SplineTransformer
-  from sklearn.preprocessing import FunctionTransformer
-  from sklearn.linear_model import LinearRegression
-  from sklearn.pipeline import Pipeline
-  from sklearn.model_selection import GridSearchCV
-  from patsy import cr
-
-  if method == "bs":
-    pip = Pipeline([
-      ["transformer", SplineTransformer()],
-      ["estimator", LinearRegression()]
-    ])
-
-    min_knots = 2
-    max_knots = 10
-    min_degree = 1
-    max_degree = 5
-    param = {
-      "transformer__n_knots": list(range(min_knots, max_knots)),
-      "transformer__degree": list(range(min_degree, max_degree))
-    }
-
-    cv = GridSearchCV(pip, param, cv=10)
-    cv_res = cv.fit(x, y)
-
-    info = {
-      "method": "bs",
-      "n_knots": cv_res.best_params_["transformer__n_knots"],
-      "degree": cv_res.best_params_["transformer__degree"]
-    }
-
-  if method == "ns":
-    NaturalSplineTransformer = FunctionTransformer(cr)
-    pip = Pipeline([
-      ["transformer", NaturalSplineTransformer],
-      ["estimator", LinearRegression()]
-    ])
-
-    # Set dict of degrees of freedom for CV.
-    min_df = 3
-    max_df = 10
-    df = []
-    for k in range(min_df, max_df):
-      df.append({"df": k})
-
-    param = {
-      "transformer__kw_args": df
-    }
-
-    cv = GridSearchCV(pip, param, cv=10)
-    cv_res = cv.fit(x, y)
-
-    info = {
-      "method": "ns",
-      "df": cv_res.best_params_["transformer__kw_args"]["df"]
-    }
-
-  return info
-
-def calculate_KLD_fit(x, y, method="bs"):
-  from sklearn.preprocessing import SplineTransformer
-  from sklearn.preprocessing import FunctionTransformer
-  from sklearn.linear_model import LinearRegression
-  from sklearn.pipeline import Pipeline
-  from patsy import cr
-
-  info = estimate_spline_param(x, y, method=method)
-  if method == "bs":
-    n_knots = info["n_knots"]
-    degree = info["degree"]
-
-    pip = Pipeline([
-      ["transformer", SplineTransformer(n_knots=n_knots, degree=degree)],
-      ["estimator", LinearRegression()]
-    ])
-    model = pip.fit(x, y)
-    y_hat = model.predict(x)
-
-  if method == "ns":
-    df = info["df"]
-
-    NaturalSplineTransformer = FunctionTransformer(cr, kw_args={"df": df})
-    pip = Pipeline([
-      ["transformer", NaturalSplineTransformer],
-      ["estimator", LinearRegression()]
-    ])
-    model = pip.fit(x, y)
-    y_hat = model.predict(x)
-
-  return {
-    "model": model,
-    "spline": info,
-    "y_hat": y_hat
-  }
-
-def calculate_Pval(KLD, KLD_rand, cv, cv_rand, method="bs", verbose=False):
-  from sklearn.preprocessing import SplineTransformer
-  from sklearn.linear_model import LinearRegression
-  from sklearn.pipeline import Pipeline
-  from patsy import cr
-  from scipy.stats import norm
-
-  if (verbose):
-    print("> calculating P values ...")
-
-  KLD_log = np.log(KLD)
-  KLD_rand_log = np.log(KLD_rand)
-  KLD_rand_mean = np.mean(KLD_rand_log, axis=1)
-  KLD_rand_sd = np.std(KLD_rand_log, axis=1)
-  cv_log = np.log(cv).reshape(-1, 1)
-  cv_rand_log = np.log(cv_rand).reshape(-1, 1)
-
-  KLD_rand_mean_fit = calculate_KLD_fit(cv_rand_log, KLD_rand_mean, method=method)
-  KLD_rand_sd_fit = calculate_KLD_fit(cv_rand_log, KLD_rand_sd, method=method)
-
-  KLD_rand_mean_model = KLD_rand_mean_fit["model"]
-  KLD_rand_sd_model = KLD_rand_sd_fit["model"]
-
-  KLD_mean = KLD_rand_mean_model.predict(cv_log)
-  KLD_sd = KLD_rand_sd_model.predict(cv_log)
-
-  logpval = norm.logsf(KLD_log, loc=KLD_mean, scale=KLD_sd)/np.log(10)
-  pval = 10 ** logpval
-
-  return {
-    "pval": pval,
-    "logpval": logpval,
-    "method": method,
-    "CV": cv_rand_log,
-    "rand_mean": KLD_rand_mean,
-    "rand_sd": KLD_rand_sd,
-    "rand_mean_model": KLD_rand_mean_model,
-    "rand_sd_model": KLD_rand_sd_model,
-    "rand_mean_spline": KLD_rand_mean_fit["spline"],
-    "rand_sd_spline": KLD_rand_sd_fit["spline"],
-    "rand_mean_hat": KLD_rand_mean_fit["y_hat"],
-    "rand_sd_hat": KLD_rand_sd_fit["y_hat"]
-  }
