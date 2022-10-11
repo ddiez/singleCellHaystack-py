@@ -27,9 +27,13 @@ def cluster_genes(adata, haystack_result, method="kmeans", n_clusters=None, n_ge
     res = KMeans(n_clusters=n_clusters, random_state=random_state).fit(scores)
     clusters = res.labels_
 
+  if method == "hclust":
+    cluters = None
+
   res = DataFrame({
     "gene": adata.var_names,
-    "cluster": clusters
+    "cluster": clusters,
+    "P": scores
   })
 
   return res
