@@ -24,7 +24,7 @@ def cluster_genes(adata, haystack_result, method="kmeans", n_clusters=None, n_ge
     scores[k, :] = calculate_P_dist(density, expression[:, k])
 
   if method == "kmeans":
-    res = KMeans(n_clusters=n_clusters, random_state=random_state).fit(scores)
+    res = KMeans(n_clusters=n_clusters, random_state=random_state, n_init=10).fit(scores)
     clusters = res.labels_
 
   if method == "hclust":

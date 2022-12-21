@@ -7,7 +7,7 @@ def calculate_grid_points(x, ngrid_points, random_state=None, verbose=False):
   if (verbose):
     print("> calculating grid points ...")
 
-  res = KMeans(n_clusters=ngrid_points, random_state=random_state).fit(x)
+  res = KMeans(n_clusters=ngrid_points, random_state=random_state, n_init=10).fit(x)
   return res.cluster_centers_
 
 def calculate_dist_to_cells(coord, grid_points, verbose=False):
