@@ -2,6 +2,8 @@ singleCellHaystack-py
 =====================
 
 [![Lifecycle:beta](https://img.shields.io/badge/lifecycle-beta-orange.svg)]()
+[![PyPI](https://img.shields.io/pypi/v/singleCellHaystack?logo=PyPI)](https://pypi.org/project/singleCellHaystack)
+[![PyPIDownloads](https://pepy.tech/badge/singleCellHaystack)](https://pepy.tech/project/singleCellHaystack)
 
 This repository contains a python implementation of [singleCellHaystack](https://github.com/alexisvdb/singleCellHaystack).
 
@@ -10,7 +12,7 @@ This repository contains a python implementation of [singleCellHaystack](https:/
 For now, clone this repository, then run the following from the repository folder:
 
 ```
-pip install .
+pip install singleCellHaystack
 ```
 
 # Example
