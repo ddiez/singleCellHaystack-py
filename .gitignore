@@ -131,3 +131,6 @@ dmypy.json
 # OS
 .DS_Store
 tests/data/pbmc3k_processed.h5ad
+
+# Other
+tests
