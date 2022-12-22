@@ -16,6 +16,9 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Intended Audience :: Science/Research",
+    "Development Status :: 4 - Beta"
 ]
 
 dependencies = [
