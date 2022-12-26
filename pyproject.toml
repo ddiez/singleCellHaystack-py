@@ -21,16 +21,6 @@ classifiers = [
     "Development Status :: 4 - Beta"
 ]
 
-dependencies = [
-  "numpy",
-  "scipy",
-  "sklearn",
-  "anndata",
-  "scanpy",
-  "pandas",
-  "tqdm",
-]
-
 [project.urls]
 "Homepage" = "https://github.com/ddiez/singleCellHaystack-py"
 "Bug Tracker" = "https://github.com/ddiez/singleCellHaystack-py/issues"

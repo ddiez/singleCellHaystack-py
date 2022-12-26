@@ -1,7 +1,0 @@
-numpy
-scipy
-sklearn
-anndata
-scanpy
-pandas
-tqdm
