@@ -133,4 +133,4 @@ dmypy.json
 tests/data/pbmc3k_processed.h5ad
 
 # Other
-tests
+local_tests
