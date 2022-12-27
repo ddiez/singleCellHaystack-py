@@ -9,7 +9,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Contents &mdash; singleCellHaystack  documentation</title>
+  <title>singleCellHaystack: finding neddles (genes) in haystacks (single cell genomics data) &mdash; singleCellHaystack  documentation</title>
   
 
   
@@ -134,14 +134,14 @@
     
       <li><a href="#">Docs</a> &raquo;</li>
         
-      <li>Contents</li>
+      <li>singleCellHaystack: finding neddles (genes) in haystacks (single cell genomics data)</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/ddiez/singleCellHaystack-py/blob/main/index.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/ddiez/singleCellHaystack-py/blob/main/index.md" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -179,50 +179,32 @@
     text-align: unset;
 }
 </style>
-<section id="contents">
-<h1>Contents<a class="headerlink" href="#contents" title="Permalink to this heading">¶</a></h1>
+<section id="singlecellhaystack-finding-neddles-genes-in-haystacks-single-cell-genomics-data">
+<h1>singleCellHaystack: finding neddles (genes) in haystacks (single cell genomics data)<a class="headerlink" href="#singlecellhaystack-finding-neddles-genes-in-haystacks-single-cell-genomics-data" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://github.com/ddiez/singleCellHaystack-py"><img alt="Lifecycle:beta" src="https://img.shields.io/badge/lifecycle-beta-orange.svg" /></a>
+<a class="reference external" href="https://github.com/ddiez/singleCellHaystack-py/actions/workflows/python-package.yml"><img alt="" src="https://github.com/ddiez/singleCellHaystack-py/actions/workflows/python-package.yml/badge.svg" /></a>
+<a class="reference external" href="https://pypi.org/project/singleCellHaystack"><img alt="PyPI" src="https://img.shields.io/pypi/v/singleCellHaystack?logo=PyPI" /></a>
+<a class="reference external" href="https://pepy.tech/project/singleCellHaystack"><img alt="PyPIDownloads" src="https://pepy.tech/badge/singleCellHaystack" /></a></p>
+<p>This repository contains a python implementation of <a class="reference external" href="https://github.com/alexisvdb/singleCellHaystack">singleCellHaystack</a>.</p>
+</section>
+<section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">¶</a></h1>
+<p>You can install singleCellHaystack from <a class="reference external" href="https://pypi.org">pypi</a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">singleCellHaystack</span>
+</pre></div>
+</div>
+</section>
+<section id="example">
+<h1>Example<a class="headerlink" href="#example" title="Permalink to this heading">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scanpy</span> <span class="k">as</span> <span class="nn">sc</span>
+<span class="kn">import</span> <span class="nn">singleCellHaystack</span> <span class="k">as</span> <span class="nn">hs</span>
+
+<span class="n">adata</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">read_h5ad</span><span class="p">(</span><span class="s2">&quot;data.h5ad&quot;</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">haystack</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="toy.html">Toy example</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="test_toy.html">Load toy data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_toy.html#Run-haystack">Run haystack</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_toy.html#QC">QC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_toy.html#Results">Results</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_toy.html#Export-results">Export results</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="pbmc3k.html">PBMC3k</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="test_pbmc3k.html">Load data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_pbmc3k.html#Run-haystack">Run haystack</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_pbmc3k.html#QC">QC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_pbmc3k.html#Results">Results</a></li>
-<li class="toctree-l3"><a class="reference internal" href="test_pbmc3k.html#Export-results">Export results</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="generated/singleCellHaystack.haystack.html">singleCellHaystack.haystack</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/singleCellHaystack.haystack.html#singleCellHaystack.haystack"><code class="docutils literal notranslate"><span class="pre">haystack()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="generated/singleCellHaystack.plot_rand_fit.html">singleCellHaystack.plot_rand_fit</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/singleCellHaystack.plot_rand_fit.html#singleCellHaystack.plot_rand_fit"><code class="docutils literal notranslate"><span class="pre">plot_rand_fit()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="generated/singleCellHaystack.plot_pval_rank.html">singleCellHaystack.plot_pval_rank</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/singleCellHaystack.plot_pval_rank.html#singleCellHaystack.plot_pval_rank"><code class="docutils literal notranslate"><span class="pre">plot_pval_rank()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="generated/singleCellHaystack.plot_compare_ranks.html">singleCellHaystack.plot_compare_ranks</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="generated/singleCellHaystack.plot_compare_ranks.html#singleCellHaystack.plot_compare_ranks"><code class="docutils literal notranslate"><span class="pre">plot_compare_ranks()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
 </div>
 </section>
 
