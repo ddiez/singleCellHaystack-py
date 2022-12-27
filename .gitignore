@@ -134,4 +134,3 @@ tests/data/pbmc3k_processed.h5ad
 
 # Other
 local_tests
-_build
