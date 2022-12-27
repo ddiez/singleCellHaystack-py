@@ -1,6 +1,9 @@
 Usage
 =====
 
-you can use the ``singleCellHaystack.haystack()`` function:
+To use singleCellHaystack you need to do::
 
-.. autofunction:: singleCellHaystack.haystack
+  import singleCellHaystack as hs
+  
+  adata = hs.load_toy()
+  hs.haystack(adata, "tsne")

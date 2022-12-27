@@ -1,9 +1,6 @@
 API
 ===
 
-.. automodule:: singleCellHaystack
-
-.. module:: singleCellHaystack
 .. currentmodule:: singleCellHaystack
 
 .. autosummary::
