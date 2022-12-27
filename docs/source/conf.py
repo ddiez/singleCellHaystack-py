@@ -2,7 +2,8 @@ extensions = [
   "sphinx_rtd_theme",
   "sphinx.ext.autodoc",
   "sphinx.ext.autosummary",
-  "nbsphinx"
+  "nbsphinx",
+  "myst_parser"
 ]
 
 #import sphinx_rtd_theme
