@@ -27,6 +27,16 @@ adata = sc.read_h5ad("data.h5ad")
 res = hs.haystack(adata)
 ```
 
+# References
+
+- Our manuscript describing the updated, more generally applicable version of `singleCellHaystack` inclusing this python implementation is available on [bioRxiv](https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1).
+
+- Our manuscript describing the original implementation of `singleCellHaystack` for R ([version 0.3.4](https://github.com/alexisvdb/singleCellHaystack/tree/binary)) was published in [Nature Communications](https://doi.org/10.1038/s41467-020-17900-3).
+
+If you use `singleCellHaystack` in your research please cite our work using:
+
+Vandenbon A, Diez D (2020). “A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.” *Nature Communications*, *11*(1), 4318. [doi:10.1038/s41467-020-17900-3](https://doi.org/10.1038/s41467-020-17900-3).
+
 ```{toctree}
 :hidden: true
 
