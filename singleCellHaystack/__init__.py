@@ -1,6 +1,6 @@
-""" singleCellHaystack
+""" 
 
-This is a python implementation of [singleCellHaystack](https://github.com/alexisvdb/singleCellHaystack).
+This is a python implementation of `singleCellHaystack <https://github.com/alexisvdb/singleCellHaystack>`_.
 
 """
 

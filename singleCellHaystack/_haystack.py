@@ -12,6 +12,15 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, verbose=True):
 
+  """
+  Runs singleCellHaystack.
+
+  :param x: AnnData, numpy array or scipy sparse matrix.
+  :param coord: a numpy array with 1D pseudotime, 2D or 3D spatial coordinates or an embedding with any number of dimansions.
+  :return: A list with singleCellHaystack results.
+  :rtype: list
+
+  """
   from anndata import AnnData
   from numpy import ndarray
 

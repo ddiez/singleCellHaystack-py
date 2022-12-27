@@ -2,6 +2,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def plot_rand_fit(x, type="mean"):
+  """
+  Plot singleCellHaystack randomization information.
+
+  :param x: singleCellHaystack result.
+  :param type: one of "mean" or "sd".
+
+  """
+
   data = x["info"]["pval_info"]
 
   x = data["CV"]
@@ -35,6 +43,13 @@ def plot_rand_fit(x, type="mean"):
   plt.show()
 
 def plot_pval_rank(x):
+  """
+  Plot singleCellHaystack p.value rank.
+
+  :param x: singleCellHaystack result.
+
+  """
+
   data = x["info"]["pval_info"]
 
   x = np.sort(data["logpval"])
@@ -54,6 +69,19 @@ def plot_pval_hist(x):
   plt.show()
 
 def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None):
+  """
+  Plot the rank of two singleCellHaystack results.
+
+  This plot facilitates comparing two singleCellHaystack results.
+
+  :param res1: singleCellHaystack result.
+  :param res2: singleCellHaystack resuot.
+  :param sort_by: what column to use for sorting (rank).
+  :param xlabel: label for x-axis (res1).
+  :param ylabel: label for y-axis (res2).
+
+  """
+
   import pandas as pd
 
   sum1 = res1["results"].sort_values(sort_by)
