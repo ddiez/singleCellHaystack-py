@@ -1,5 +1,5 @@
-singleCellHaystack: finding neddles (genes) in haystacks (single cell genomics data)
-====================================================================================
+singleCellHaystack
+==================
 
 [![Lifecycle:beta](https://img.shields.io/badge/lifecycle-beta-orange.svg)](https://github.com/ddiez/singleCellHaystack-py)
 [![](https://github.com/ddiez/singleCellHaystack-py/actions/workflows/python-package.yml/badge.svg)](https://github.com/ddiez/singleCellHaystack-py/actions/workflows/python-package.yml)
