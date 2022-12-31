@@ -3,6 +3,7 @@ def cluster_genes(adata, haystack_result, method="kmeans", n_clusters=None, n_ge
   from ._haystack import calculate_P_dist
   from sklearn.cluster import KMeans
   from pandas import DataFrame
+  from scipy.sparse import isspmatrix
   #import scipy.stats as ss
 
   #grid_points = r["info"]["grid.points"]
@@ -17,6 +18,9 @@ def cluster_genes(adata, haystack_result, method="kmeans", n_clusters=None, n_ge
   adata = adata[:, genes]
   expression = adata.X
   ngenes = expression.shape[1]
+
+  if (isspmatrix(expression)):
+    expression = expression.tocsc()
 
   # FIXME: vectorize this computation.
   scores = np.zeros([ngenes, ngrid_points])
