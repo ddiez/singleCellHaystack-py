@@ -36,10 +36,9 @@ def cluster_genes(adata, haystack_result, method="kmeans", n_clusters=None, n_ge
 
   res = DataFrame({
     "gene": adata.var_names,
-    "cluster": clusters,
-    "P": scores
+    "cluster": clusters
   })
-
+  
   return res
 
 def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, color_map="coolwarm"):
@@ -64,7 +63,7 @@ def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, 
   for k in range(len(clusters)):
     genes = gene_clusters[gene_clusters.cluster == clusters[k]].gene.tolist()
     m = adata[:, genes].X
-    scores[:,k] = np.squeeze(np.sum(m, axis=1))
+    scores[:,k] = np.squeeze(np.mean(m, axis=1))
 
   import matplotlib.pyplot as plt
   nclusters = scores.shape[1]
