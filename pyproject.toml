@@ -24,7 +24,7 @@ classifiers = [
 dependencies = [
   "numpy",
   "scipy",
-  "sklearn",
+  "scikit-learn",
   "anndata",
   "scanpy",
   "pandas",
