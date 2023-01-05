@@ -24,7 +24,10 @@ import singleCellHaystack as hs
 
 adata = sc.read_h5ad("data.h5ad")
 
-res = hs.haystack(adata)
+[... processing of adata object ...]
+
+res = hs.haystack(adata, coord="pca")
+res["results"]
 ```
 
 # References
