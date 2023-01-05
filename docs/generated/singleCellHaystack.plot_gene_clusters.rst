@@ -1,6 +1,6 @@
-﻿singleCellHaystack.plot\_compare\_ranks
+﻿singleCellHaystack.plot\_gene\_clusters
 =======================================
 
 .. currentmodule:: singleCellHaystack
 
-.. autofunction:: plot_compare_ranks
+.. autofunction:: plot_gene_clusters

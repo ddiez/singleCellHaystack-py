@@ -1,6 +1,6 @@
-﻿singleCellHaystack.plot\_pval\_rank
+﻿singleCellHaystack.plot\_pval\_hist
 ===================================
 
 .. currentmodule:: singleCellHaystack
 
-.. autofunction:: plot_pval_rank
+.. autofunction:: plot_pval_hist
