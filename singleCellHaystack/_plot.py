@@ -60,6 +60,13 @@ def plot_pval_rank(x):
   plt.show()
 
 def plot_pval_hist(x):
+  """
+  Plot singleCellHaystack p.value histogram.
+
+  :param x: singleCellHaystack result.
+
+  """
+
   data = x["info"]["pval_info"]
 
   x = data["pval"]

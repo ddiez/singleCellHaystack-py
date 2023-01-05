@@ -1,4 +1,16 @@
 def cluster_genes(adata, haystack_result, method="kmeans", n_clusters=None, n_genes=100, random_state=None):
+  """
+  Cluster singleCellHaystack results into gene modules.
+
+  :param adata: AnnData object.
+  :param haystack_result: singleCellHaystack result.
+  :param method: clustering method. Currently only sklearn.cluster.KMeans implemented.
+  :param n_clusters: number of clusters for KMeans.
+  :param n_genes: number of top genes to cluster.
+  :param random_state: number to set random_state in clustering method.
+
+  """
+
   import numpy as np
   from ._haystack import calculate_P_dist
   from sklearn.cluster import KMeans
