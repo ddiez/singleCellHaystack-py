@@ -2,7 +2,7 @@ Articles
 ========
 
 .. toctree::
-  :maxdepth: 0
+  :maxdepth: 1
 
   toy
   pbmc3k

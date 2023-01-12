@@ -1,7 +1,7 @@
-PBMC3k
-======
+Application to human PBMC
+=========================
 
 .. toctree::
   :maxdepth: 1
 
-  test_pbmc3k
+  articles/pbmc3k
