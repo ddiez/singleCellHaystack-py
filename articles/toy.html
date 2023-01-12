@@ -8,14 +8,14 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Load data &mdash; singleCellHaystack  documentation</title>
+  <title>Load toy data &mdash; singleCellHaystack  documentation</title>
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
 
   
   
@@ -27,28 +27,28 @@
 
   
   <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
+    <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
     
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
-    <script type="text/javascript" src="_static/js/theme.js"></script>
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="API" href="api.html" />
-    <link rel="prev" title="PBMC3k" href="pbmc3k.html" /> 
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Application to human PBMC" href="../pbmc3k.html" />
+    <link rel="prev" title="Toy example" href="../toy.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -62,7 +62,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> singleCellHaystack
+            <a href="../index.html" class="icon icon-home"> singleCellHaystack
           
 
           
@@ -75,7 +75,7 @@
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -94,19 +94,19 @@
             
             
               <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="articles.html">Articles</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="toy.html">Toy example</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="pbmc3k.html">PBMC3k</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Load data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../articles.html">Articles</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../toy.html">Toy example</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Load toy data</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Run-haystack">Run haystack</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#QC">QC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Results">Results</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Export-results">Export results</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../pbmc3k.html">Application to human PBMC</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
 </ul>
 
             
@@ -122,7 +122,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">singleCellHaystack</a>
+          <a href="../index.html">singleCellHaystack</a>
         
       </nav>
 
@@ -153,20 +153,20 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-          <li><a href="articles.html">Articles</a> &raquo;</li>
+          <li><a href="../articles.html">Articles</a> &raquo;</li>
         
-          <li><a href="pbmc3k.html">PBMC3k</a> &raquo;</li>
+          <li><a href="../toy.html">Toy example</a> &raquo;</li>
         
-      <li>Load data</li>
+      <li>Load toy data</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
             
-              <a href="https://github.com/ddiez/singleCellHaystack-py/blob/main/test_pbmc3k.ipynb" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/ddiez/singleCellHaystack-py/blob/main/articles/toy.ipynb" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -464,22 +464,19 @@ div.rendered_html tbody tr:hover {
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import scanpy as sc
-import numpy as np
-#import matplotlib.pyplot as plt
 import singleCellHaystack as hs
-import timeit
 
 sc.set_figure_params(facecolor=&quot;white&quot;, dpi=90)
 </pre></div>
 </div>
 </div>
-<section id="Load-data">
-<h1>Load data<a class="headerlink" href="#Load-data" title="Permalink to this heading">¶</a></h1>
+<section id="Load-toy-data">
+<h1>Load toy data<a class="headerlink" href="#Load-toy-data" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata = sc.datasets.pbmc3k_processed()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata = hs.load_toy()
 adata
 </pre></div>
 </div>
@@ -490,37 +487,23 @@ adata
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-AnnData object with n_obs × n_vars = 2638 × 1838
-    obs: &#39;n_genes&#39;, &#39;percent_mito&#39;, &#39;n_counts&#39;, &#39;louvain&#39;
-    var: &#39;n_cells&#39;
-    uns: &#39;draw_graph&#39;, &#39;louvain&#39;, &#39;louvain_colors&#39;, &#39;neighbors&#39;, &#39;pca&#39;, &#39;rank_genes_groups&#39;
-    obsm: &#39;X_pca&#39;, &#39;X_tsne&#39;, &#39;X_umap&#39;, &#39;X_draw_graph_fr&#39;
-    varm: &#39;PCs&#39;
-    obsp: &#39;distances&#39;, &#39;connectivities&#39;
+AnnData object with n_obs × n_vars = 601 × 500
+    obsm: &#39;X_tsne&#39;
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=&quot;louvain&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.scatter(adata, basis=&quot;tsne&quot;)
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/Users/diez/miniconda3/envs/singleCellHaystack/lib/python3.10/site-packages/scanpy/plotting/_tools/scatterplots.py:392: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39; will be ignored
-  cax = scatter(
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/test_pbmc3k_3_1.png" class="no-scaled-link" src="_images/test_pbmc3k_3_1.png" style="width: 517px; height: 337px;" />
+<img alt="../_images/articles_toy_3_0.png" class="no-scaled-link" src="../_images/articles_toy_3_0.png" style="width: 323px; height: 342px;" />
 </div>
 </div>
 </section>
@@ -530,9 +513,7 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#%%timeit -n 1 -r 1
-np.random.seed(1)
-res = hs.haystack(adata.raw.to_adata(), coord=&quot;umap&quot;, n_randomizations=100, n_genes_to_randomize=100, spline_method=&quot;ns&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata, coord=&quot;tsne&quot;, n_randomizations=100, n_genes_to_randomize=100, spline_method=&quot;ns&quot;)
 </pre></div>
 </div>
 </div>
@@ -545,12 +526,11 @@ res = hs.haystack(adata.raw.to_adata(), coord=&quot;umap&quot;, n_randomizations
 &gt; entering array method ...
 &gt; scaling coordinates ...
 &gt; calculating feature stds ...
-&gt; removing 1 genes with zero variance ...
 &gt; calculating grid points ...
 &gt; calculating distance to cells ...
 &gt; calculating densities ...
 &gt; calculating Q dist ...
-&gt; calculating KLD for 13713 features ...
+&gt; calculating KLD for 500 features ...
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -558,7 +538,7 @@ res = hs.haystack(adata.raw.to_adata(), coord=&quot;umap&quot;, n_randomizations
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 13713/13713 [00:02&lt;00:00, 4713.95it/s]
+100%|██████████| 500/500 [00:00&lt;00:00, 5689.77it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -576,7 +556,7 @@ res = hs.haystack(adata.raw.to_adata(), coord=&quot;umap&quot;, n_randomizations
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [00:04&lt;00:00, 22.92it/s]
+100%|██████████| 100/100 [00:01&lt;00:00, 69.84it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -605,14 +585,14 @@ hs.plot_rand_fit(res, &quot;sd&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/test_pbmc3k_7_0.png" class="no-scaled-link" src="_images/test_pbmc3k_7_0.png" style="width: 349px; height: 358px;" />
+<img alt="../_images/articles_toy_7_0.png" class="no-scaled-link" src="../_images/articles_toy_7_0.png" style="width: 363px; height: 358px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/test_pbmc3k_7_1.png" class="no-scaled-link" src="_images/test_pbmc3k_7_1.png" style="width: 353px; height: 358px;" />
+<img alt="../_images/articles_toy_7_1.png" class="no-scaled-link" src="../_images/articles_toy_7_1.png" style="width: 372px; height: 358px;" />
 </div>
 </div>
 <p>The ranking of logpval and distribution of pval gives us some idea of how many significant genes we can detect.</p>
@@ -629,14 +609,14 @@ hs.plot_pval_hist(res)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/test_pbmc3k_9_0.png" class="no-scaled-link" src="_images/test_pbmc3k_9_0.png" style="width: 368px; height: 338px;" />
+<img alt="../_images/articles_toy_9_0.png" class="no-scaled-link" src="../_images/articles_toy_9_0.png" style="width: 358px; height: 338px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/test_pbmc3k_9_1.png" class="no-scaled-link" src="_images/test_pbmc3k_9_1.png" style="width: 368px; height: 316px;" />
+<img alt="../_images/articles_toy_9_1.png" class="no-scaled-link" src="../_images/articles_toy_9_1.png" style="width: 339px; height: 316px;" />
 </div>
 </div>
 </section>
@@ -685,49 +665,49 @@ sum
   </thead>
   <tbody>
     <tr>
-      <th>12672</th>
-      <td>TYROBP</td>
-      <td>0.858267</td>
-      <td>2.049251e-174</td>
-      <td>2.810138e-170</td>
-      <td>-1.736884e+02</td>
-      <td>-169.551272</td>
+      <th>241</th>
+      <td>gene_242</td>
+      <td>1.801961</td>
+      <td>1.748949e-38</td>
+      <td>8.744746e-36</td>
+      <td>-3.775722e+01</td>
+      <td>-35.058253</td>
     </tr>
     <tr>
-      <th>11877</th>
-      <td>CST3</td>
-      <td>0.842005</td>
-      <td>1.100722e-167</td>
-      <td>1.509420e-163</td>
-      <td>-1.669583e+02</td>
-      <td>-162.821190</td>
+      <th>274</th>
+      <td>gene_275</td>
+      <td>1.738050</td>
+      <td>5.804561e-34</td>
+      <td>2.902281e-31</td>
+      <td>-3.323623e+01</td>
+      <td>-30.537261</td>
     </tr>
     <tr>
-      <th>1049</th>
-      <td>FCER1G</td>
-      <td>0.880699</td>
-      <td>1.012191e-166</td>
-      <td>1.388017e-162</td>
-      <td>-1.659947e+02</td>
-      <td>-161.857605</td>
+      <th>496</th>
+      <td>gene_497</td>
+      <td>1.945970</td>
+      <td>6.162514e-34</td>
+      <td>3.081257e-31</td>
+      <td>-3.321024e+01</td>
+      <td>-30.511272</td>
     </tr>
     <tr>
-      <th>907</th>
-      <td>S100A9</td>
-      <td>0.996357</td>
-      <td>3.949874e-163</td>
-      <td>5.416462e-159</td>
-      <td>-1.624034e+02</td>
-      <td>-158.266284</td>
+      <th>350</th>
+      <td>gene_351</td>
+      <td>1.817486</td>
+      <td>3.136079e-33</td>
+      <td>1.568039e-30</td>
+      <td>-3.250361e+01</td>
+      <td>-29.804643</td>
     </tr>
     <tr>
-      <th>4370</th>
-      <td>AIF1</td>
-      <td>0.792199</td>
-      <td>2.235849e-160</td>
-      <td>3.066020e-156</td>
-      <td>-1.596506e+02</td>
-      <td>-155.513425</td>
+      <th>338</th>
+      <td>gene_339</td>
+      <td>1.730166</td>
+      <td>6.431448e-33</td>
+      <td>3.215724e-30</td>
+      <td>-3.219169e+01</td>
+      <td>-29.492721</td>
     </tr>
     <tr>
       <th>...</th>
@@ -739,53 +719,53 @@ sum
       <td>...</td>
     </tr>
     <tr>
-      <th>1398</th>
-      <td>MTR</td>
-      <td>0.497307</td>
+      <th>187</th>
+      <td>gene_188</td>
+      <td>0.469387</td>
+      <td>9.999956e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-3.574777e-51</td>
+      <td>-1.904205e-06</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>10918</th>
-      <td>TRIM16</td>
-      <td>0.544917</td>
+      <th>362</th>
+      <td>gene_363</td>
+      <td>0.685665</td>
+      <td>9.999987e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-2.788618e-52</td>
+      <td>-5.429706e-07</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>1611</th>
-      <td>THUMPD2</td>
-      <td>0.591565</td>
+      <th>447</th>
+      <td>gene_448</td>
+      <td>0.526370</td>
+      <td>9.999993e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-2.492840e-53</td>
+      <td>-2.903058e-07</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>11911</th>
-      <td>PXMP4</td>
-      <td>0.619327</td>
+      <th>374</th>
+      <td>gene_375</td>
+      <td>0.471640</td>
+      <td>9.999999e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-2.084382e-54</td>
+      <td>-3.192371e-08</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>12907</th>
-      <td>DHX34</td>
-      <td>0.660873</td>
+      <th>379</th>
+      <td>gene_380</td>
+      <td>0.565381</td>
       <td>1.000000e+00</td>
       <td>1.000000e+00</td>
-      <td>-4.370214e-63</td>
+      <td>-1.109075e-13</td>
       <td>0.000000</td>
     </tr>
   </tbody>
 </table>
-<p>13713 rows × 6 columns</p>
+<p>500 rows × 6 columns</p>
 </div></div>
 </div>
 <p>Plot top 4 genes.</p>
@@ -801,7 +781,7 @@ sum
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/test_pbmc3k_14_0.png" class="no-scaled-link" src="_images/test_pbmc3k_14_0.png" style="width: 737px; height: 654px;" />
+<img alt="../_images/articles_toy_14_0.png" class="no-scaled-link" src="../_images/articles_toy_14_0.png" style="width: 746px; height: 654px;" />
 </div>
 </div>
 </section>
@@ -811,7 +791,7 @@ sum
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;pbmc3k-results.tsv&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;toy-results.tsv&quot;)
 </pre></div>
 </div>
 </div>
@@ -823,8 +803,8 @@ sum
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="pbmc3k.html" class="btn btn-neutral float-left" title="PBMC3k" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../pbmc3k.html" class="btn btn-neutral float-right" title="Application to human PBMC" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../toy.html" class="btn btn-neutral float-left" title="Toy example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
