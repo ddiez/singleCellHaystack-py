@@ -460,7 +460,7 @@ div.rendered_html tbody tr:hover {
 }
 </style>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import scanpy as sc
@@ -473,7 +473,7 @@ sc.set_figure_params(facecolor=&quot;white&quot;, dpi=90)
 <section id="Load-data">
 <h1>Load data<a class="headerlink" href="#Load-data" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata = sc.datasets.pbmc3k_processed()
@@ -481,8 +481,16 @@ adata
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|██████████| 23.5M/23.5M [00:00&lt;00:00, 83.4MB/s]
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
@@ -497,7 +505,7 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=&quot;louvain&quot;)
@@ -524,7 +532,7 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 <section id="Run-haystack">
 <h1>Run haystack<a class="headerlink" href="#Run-haystack" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata.raw.to_adata(), coord=&quot;umap&quot;, n_randomizations=100, n_genes_to_randomize=100, spline_method=&quot;ns&quot;)
@@ -553,7 +561,7 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 13713/13713 [00:03&lt;00:00, 4066.89it/s]
+100%|██████████| 13713/13713 [00:02&lt;00:00, 5448.06it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -571,7 +579,7 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [00:03&lt;00:00, 27.34it/s]
+100%|██████████| 100/100 [00:02&lt;00:00, 35.19it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -588,7 +596,7 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 <h1>QC<a class="headerlink" href="#QC" title="Permalink to this heading">¶</a></h1>
 <p>We can examine some of the QC plots. First the randomization fits. These are used to calculate KLD from randomized expression levels for a subset of genes, in order to estimate the values to the entire gene set.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_rand_fit(res, &quot;mean&quot;)
@@ -612,7 +620,7 @@ hs.plot_rand_fit(res, &quot;sd&quot;)
 </div>
 <p>The ranking of logpval and distribution of pval gives us some idea of how many significant genes we can detect.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_pval_rank(res)
@@ -639,7 +647,7 @@ hs.plot_pval_hist(res)
 <h1>Results<a class="headerlink" href="#Results" title="Permalink to this heading">¶</a></h1>
 <p>A pandas DataFrame with the results can be obtained. By default the results are sorted by logpval_adj.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sum = res[&quot;results&quot;]
@@ -648,7 +656,7 @@ sum
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -682,47 +690,47 @@ sum
     <tr>
       <th>12672</th>
       <td>TYROBP</td>
-      <td>0.857776</td>
-      <td>4.160819e-173</td>
-      <td>5.705732e-169</td>
-      <td>-1.723808e+02</td>
-      <td>-168.243689</td>
+      <td>0.824173</td>
+      <td>1.599725e-213</td>
+      <td>2.193703e-209</td>
+      <td>-2.127960e+02</td>
+      <td>-208.658822</td>
     </tr>
     <tr>
       <th>11877</th>
       <td>CST3</td>
-      <td>0.841235</td>
-      <td>9.799262e-166</td>
-      <td>1.343773e-161</td>
-      <td>-1.650088e+02</td>
-      <td>-160.871674</td>
+      <td>0.815731</td>
+      <td>3.897961e-204</td>
+      <td>5.345273e-200</td>
+      <td>-2.034092e+02</td>
+      <td>-199.272030</td>
     </tr>
     <tr>
       <th>1049</th>
       <td>FCER1G</td>
-      <td>0.881896</td>
-      <td>1.636547e-164</td>
-      <td>2.244197e-160</td>
-      <td>-1.637861e+02</td>
-      <td>-159.648939</td>
-    </tr>
-    <tr>
-      <th>907</th>
-      <td>S100A9</td>
-      <td>0.976648</td>
-      <td>3.123385e-158</td>
-      <td>4.283098e-154</td>
-      <td>-1.575054e+02</td>
-      <td>-153.368242</td>
+      <td>0.846571</td>
+      <td>1.201772e-200</td>
+      <td>1.647989e-196</td>
+      <td>-1.999202e+02</td>
+      <td>-195.783046</td>
     </tr>
     <tr>
       <th>4370</th>
       <td>AIF1</td>
-      <td>0.790817</td>
-      <td>3.802102e-158</td>
-      <td>5.213823e-154</td>
-      <td>-1.574200e+02</td>
-      <td>-153.282844</td>
+      <td>0.760218</td>
+      <td>2.209666e-193</td>
+      <td>3.030115e-189</td>
+      <td>-1.926557e+02</td>
+      <td>-188.518541</td>
+    </tr>
+    <tr>
+      <th>4411</th>
+      <td>HLA-DRB1</td>
+      <td>0.586864</td>
+      <td>3.156285e-193</td>
+      <td>4.328214e-189</td>
+      <td>-1.925008e+02</td>
+      <td>-188.363691</td>
     </tr>
     <tr>
       <th>...</th>
@@ -734,48 +742,48 @@ sum
       <td>...</td>
     </tr>
     <tr>
-      <th>6223</th>
-      <td>KIAA1429</td>
-      <td>0.455362</td>
+      <th>12907</th>
+      <td>DHX34</td>
+      <td>0.739196</td>
       <td>1.000000e+00</td>
       <td>1.000000e+00</td>
-      <td>-1.431461e-44</td>
+      <td>-3.953615e-50</td>
       <td>0.000000</td>
     </tr>
     <tr>
       <th>9270</th>
       <td>RP11-468E2.4</td>
-      <td>0.455503</td>
+      <td>0.422861</td>
       <td>1.000000e+00</td>
       <td>1.000000e+00</td>
-      <td>-3.473537e-45</td>
+      <td>-4.794212e-52</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>8410</th>
-      <td>MED21</td>
-      <td>0.528302</td>
+      <th>10260</th>
+      <td>ABCC1</td>
+      <td>0.422078</td>
       <td>1.000000e+00</td>
       <td>1.000000e+00</td>
-      <td>-1.712413e-45</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>3044</th>
-      <td>TBCCD1</td>
-      <td>0.395643</td>
-      <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-1.595332e-47</td>
+      <td>-2.038303e-52</td>
       <td>0.000000</td>
     </tr>
     <tr>
       <th>11911</th>
       <td>PXMP4</td>
-      <td>0.549734</td>
+      <td>0.590625</td>
       <td>1.000000e+00</td>
       <td>1.000000e+00</td>
-      <td>-5.130723e-53</td>
+      <td>-1.197850e-52</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>3044</th>
+      <td>TBCCD1</td>
+      <td>0.366168</td>
+      <td>1.000000e+00</td>
+      <td>1.000000e+00</td>
+      <td>-2.431788e-54</td>
       <td>0.000000</td>
     </tr>
   </tbody>
@@ -785,10 +793,10 @@ sum
 </div>
 <p>Plot top 4 genes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.tsne(adata, color=sum.gene.iloc[:4], ncols=2, cmap=&quot;Spectral_r&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=sum.gene.iloc[:4], ncols=2, cmap=&quot;Spectral_r&quot;)
 </pre></div>
 </div>
 </div>
@@ -803,7 +811,7 @@ sum
 <section id="Export-results">
 <h1>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;pbmc3k-results.tsv&quot;)
