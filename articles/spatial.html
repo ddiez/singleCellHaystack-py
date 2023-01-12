@@ -47,8 +47,8 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Application to spatial transcriptomics" href="../spatial.html" />
-    <link rel="prev" title="Application to scRNA-seq" href="../pbmc3k.html" /> 
+    <link rel="next" title="API" href="../api.html" />
+    <link rel="prev" title="Application to spatial transcriptomics" href="../spatial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -96,15 +96,14 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="../articles.html">Articles</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../toy.html">Toy example</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="../pbmc3k.html">Application to scRNA-seq</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../pbmc3k.html">Application to scRNA-seq</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="../spatial.html">Application to spatial transcriptomics</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Load data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Run-haystack">Run haystack</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#QC">QC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Results">Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Process">Process</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Haystack">Haystack</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Export-results">Export results</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="../spatial.html">Application to spatial transcriptomics</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API</a></li>
@@ -158,7 +157,7 @@
         
           <li><a href="../articles.html">Articles</a> &raquo;</li>
         
-          <li><a href="../pbmc3k.html">Application to scRNA-seq</a> &raquo;</li>
+          <li><a href="../spatial.html">Application to spatial transcriptomics</a> &raquo;</li>
         
       <li>Load data</li>
     
@@ -167,7 +166,7 @@
         
           
             
-              <a href="https://github.com/ddiez/singleCellHaystack-py/blob/maindocs/articles/pbmc3k.ipynb" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/ddiez/singleCellHaystack-py/blob/maindocs/articles/spatial.ipynb" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -466,8 +465,6 @@ div.rendered_html tbody tr:hover {
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import scanpy as sc
 import singleCellHaystack as hs
-
-sc.set_figure_params(facecolor=&quot;white&quot;, dpi=90)
 </pre></div>
 </div>
 </div>
@@ -477,7 +474,7 @@ sc.set_figure_params(facecolor=&quot;white&quot;, dpi=90)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata = sc.datasets.pbmc3k_processed()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata = sc.datasets.visium_sge()
 adata
 </pre></div>
 </div>
@@ -487,7 +484,10 @@ adata
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 23.5M/23.5M [00:00&lt;00:00, 83.4MB/s]
+100%|██████████| 9.50M/9.50M [00:00&lt;00:00, 28.1MB/s]
+100%|██████████| 26.9M/26.9M [00:00&lt;00:00, 29.6MB/s]
+/Users/diez/miniconda3/envs/singleCellHaystack/lib/python3.10/site-packages/anndata/_core/anndata.py:1830: UserWarning: Variable names are not unique. To make them unique, call `.var_names_make_unique`.
+  utils.warn_names_duplicates(&#34;var&#34;)
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -496,47 +496,56 @@ adata
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-AnnData object with n_obs × n_vars = 2638 × 1838
-    obs: &#39;n_genes&#39;, &#39;percent_mito&#39;, &#39;n_counts&#39;, &#39;louvain&#39;
-    var: &#39;n_cells&#39;
-    uns: &#39;draw_graph&#39;, &#39;louvain&#39;, &#39;louvain_colors&#39;, &#39;neighbors&#39;, &#39;pca&#39;, &#39;rank_genes_groups&#39;
-    obsm: &#39;X_pca&#39;, &#39;X_tsne&#39;, &#39;X_umap&#39;, &#39;X_draw_graph_fr&#39;
-    varm: &#39;PCs&#39;
-    obsp: &#39;distances&#39;, &#39;connectivities&#39;
+AnnData object with n_obs × n_vars = 3798 × 36601
+    obs: &#39;in_tissue&#39;, &#39;array_row&#39;, &#39;array_col&#39;
+    var: &#39;gene_ids&#39;, &#39;feature_types&#39;, &#39;genome&#39;
+    uns: &#39;spatial&#39;
+    obsm: &#39;spatial&#39;
 </pre></div></div>
 </div>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=&quot;louvain&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata.var_names_make_unique()
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/Users/diez/miniconda3/envs/singleCellHaystack/lib/python3.10/site-packages/scanpy/plotting/_tools/scatterplots.py:392: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39; will be ignored
-  cax = scatter(
-</pre></div></div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.spatial(adata)
+</pre></div>
+</div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_3_1.png" class="no-scaled-link" src="../_images/articles_pbmc3k_3_1.png" style="width: 517px; height: 337px;" />
+<img alt="../_images/articles_spatial_4_0.png" src="../_images/articles_spatial_4_0.png" />
 </div>
 </div>
 </section>
-<section id="Run-haystack">
-<h1>Run haystack<a class="headerlink" href="#Run-haystack" title="Permalink to this heading">¶</a></h1>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<section id="Process">
+<h1>Process<a class="headerlink" href="#Process" title="Permalink to this heading">¶</a></h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata.raw.to_adata(), coord=&quot;umap&quot;, n_randomizations=100, n_genes_to_randomize=100, spline_method=&quot;ns&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pp.normalize_total(adata)
+sc.pp.log1p(adata)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Haystack">
+<h1>Haystack<a class="headerlink" href="#Haystack" title="Permalink to this heading">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata, coord=&quot;spatial&quot;)
 </pre></div>
 </div>
 </div>
@@ -549,12 +558,12 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 &gt; entering array method ...
 &gt; scaling coordinates ...
 &gt; calculating feature stds ...
-&gt; removing 1 genes with zero variance ...
+&gt; removing 11678 genes with zero variance ...
 &gt; calculating grid points ...
 &gt; calculating distance to cells ...
 &gt; calculating densities ...
 &gt; calculating Q dist ...
-&gt; calculating KLD for 13713 features ...
+&gt; calculating KLD for 24923 features ...
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -562,7 +571,7 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 13713/13713 [00:02&lt;00:00, 5448.06it/s]
+100%|██████████| 24923/24923 [00:11&lt;00:00, 2235.51it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -580,7 +589,7 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [00:02&lt;00:00, 35.19it/s]
+100%|██████████| 100/100 [00:05&lt;00:00, 18.89it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -592,12 +601,8 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 &gt; done.
 </pre></div></div>
 </div>
-</section>
-<section id="QC">
-<h1>QC<a class="headerlink" href="#QC" title="Permalink to this heading">¶</a></h1>
-<p>We can examine some of the QC plots. First the randomization fits. These are used to calculate KLD from randomized expression levels for a subset of genes, in order to estimate the values to the entire gene set.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_rand_fit(res, &quot;mean&quot;)
@@ -609,19 +614,18 @@ hs.plot_rand_fit(res, &quot;sd&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_7_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_7_0.png" style="width: 349px; height: 358px;" />
+<img alt="../_images/articles_spatial_9_0.png" src="../_images/articles_spatial_9_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_7_1.png" class="no-scaled-link" src="../_images/articles_pbmc3k_7_1.png" style="width: 353px; height: 358px;" />
+<img alt="../_images/articles_spatial_9_1.png" src="../_images/articles_spatial_9_1.png" />
 </div>
 </div>
-<p>The ranking of logpval and distribution of pval gives us some idea of how many significant genes we can detect.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_pval_rank(res)
@@ -633,22 +637,18 @@ hs.plot_pval_hist(res)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_9_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_9_0.png" style="width: 368px; height: 338px;" />
+<img alt="../_images/articles_spatial_10_0.png" src="../_images/articles_spatial_10_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_9_1.png" class="no-scaled-link" src="../_images/articles_pbmc3k_9_1.png" style="width: 368px; height: 316px;" />
+<img alt="../_images/articles_spatial_10_1.png" src="../_images/articles_spatial_10_1.png" />
 </div>
 </div>
-</section>
-<section id="Results">
-<h1>Results<a class="headerlink" href="#Results" title="Permalink to this heading">¶</a></h1>
-<p>A pandas DataFrame with the results can be obtained. By default the results are sorted by logpval_adj.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sum = res[&quot;results&quot;]
@@ -657,7 +657,7 @@ sum
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -689,49 +689,49 @@ sum
   </thead>
   <tbody>
     <tr>
-      <th>12672</th>
-      <td>TYROBP</td>
-      <td>0.824173</td>
-      <td>1.599725e-213</td>
-      <td>2.193703e-209</td>
-      <td>-2.127960e+02</td>
-      <td>-208.658822</td>
+      <th>8277</th>
+      <td>CRISP3</td>
+      <td>0.131658</td>
+      <td>1.002692e-112</td>
+      <td>2.499010e-108</td>
+      <td>-111.998832</td>
+      <td>-107.602232</td>
     </tr>
     <tr>
-      <th>11877</th>
-      <td>CST3</td>
-      <td>0.815731</td>
-      <td>3.897961e-204</td>
-      <td>5.345273e-200</td>
-      <td>-2.034092e+02</td>
-      <td>-199.272030</td>
+      <th>5157</th>
+      <td>CPB1</td>
+      <td>0.052947</td>
+      <td>8.150681e-112</td>
+      <td>2.031394e-107</td>
+      <td>-111.088806</td>
+      <td>-106.692206</td>
     </tr>
     <tr>
-      <th>1049</th>
-      <td>FCER1G</td>
-      <td>0.846571</td>
-      <td>1.201772e-200</td>
-      <td>1.647989e-196</td>
-      <td>-1.999202e+02</td>
-      <td>-195.783046</td>
+      <th>24196</th>
+      <td>S100G</td>
+      <td>0.071816</td>
+      <td>6.617157e-103</td>
+      <td>1.649194e-98</td>
+      <td>-102.179329</td>
+      <td>-97.782728</td>
     </tr>
     <tr>
-      <th>4370</th>
-      <td>AIF1</td>
-      <td>0.760218</td>
-      <td>2.209666e-193</td>
-      <td>3.030115e-189</td>
-      <td>-1.926557e+02</td>
-      <td>-188.518541</td>
+      <th>7116</th>
+      <td>CXCL14</td>
+      <td>0.044309</td>
+      <td>8.811847e-103</td>
+      <td>2.196177e-98</td>
+      <td>-102.054933</td>
+      <td>-97.658333</td>
     </tr>
     <tr>
-      <th>4411</th>
-      <td>HLA-DRB1</td>
-      <td>0.586864</td>
-      <td>3.156285e-193</td>
-      <td>4.328214e-189</td>
-      <td>-1.925008e+02</td>
-      <td>-188.363691</td>
+      <th>15913</th>
+      <td>SLITRK6</td>
+      <td>0.340828</td>
+      <td>2.602061e-102</td>
+      <td>6.485117e-98</td>
+      <td>-101.584682</td>
+      <td>-97.188082</td>
     </tr>
     <tr>
       <th>...</th>
@@ -743,61 +743,60 @@ sum
       <td>...</td>
     </tr>
     <tr>
-      <th>12907</th>
-      <td>DHX34</td>
-      <td>0.739196</td>
+      <th>1851</th>
+      <td>AL021026.1</td>
+      <td>1.433165</td>
+      <td>9.995057e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-3.953615e-50</td>
+      <td>-0.000215</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>9270</th>
-      <td>RP11-468E2.4</td>
-      <td>0.422861</td>
+      <th>825</th>
+      <td>AC104170.1</td>
+      <td>1.796741</td>
+      <td>9.996506e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-4.794212e-52</td>
+      <td>-0.000152</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>10260</th>
-      <td>ABCC1</td>
-      <td>0.422078</td>
+      <th>6164</th>
+      <td>AC093591.2</td>
+      <td>2.445691</td>
+      <td>9.997189e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-2.038303e-52</td>
+      <td>-0.000122</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>11911</th>
-      <td>PXMP4</td>
-      <td>0.590625</td>
+      <th>10991</th>
+      <td>RFX3-AS1</td>
+      <td>1.757526</td>
+      <td>9.997641e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-1.197850e-52</td>
+      <td>-0.000102</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>3044</th>
-      <td>TBCCD1</td>
-      <td>0.366168</td>
+      <th>14911</th>
+      <td>RPL41</td>
+      <td>0.000380</td>
+      <td>NaN</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-2.431788e-54</td>
+      <td>NaN</td>
       <td>0.000000</td>
     </tr>
   </tbody>
 </table>
-<p>13713 rows × 6 columns</p>
+<p>24923 rows × 6 columns</p>
 </div></div>
 </div>
-<p>Plot top 4 genes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=sum.gene.iloc[:4], ncols=2, cmap=&quot;Spectral_r&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.spatial(adata, color=sum.gene.iloc[:8], ncols=2, cmap=&quot;Spectral_r&quot;)
 </pre></div>
 </div>
 </div>
@@ -805,17 +804,17 @@ sum
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_14_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_14_0.png" style="width: 737px; height: 654px;" />
+<img alt="../_images/articles_spatial_12_0.png" src="../_images/articles_spatial_12_0.png" />
 </div>
 </div>
 </section>
 <section id="Export-results">
 <h1>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;pbmc3k-results.tsv&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;results-spatial.csv&quot;)
 </pre></div>
 </div>
 </div>
@@ -827,8 +826,8 @@ sum
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="../spatial.html" class="btn btn-neutral float-right" title="Application to spatial transcriptomics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="../pbmc3k.html" class="btn btn-neutral float-left" title="Application to scRNA-seq" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../spatial.html" class="btn btn-neutral float-left" title="Application to spatial transcriptomics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

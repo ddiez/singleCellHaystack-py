@@ -6,3 +6,4 @@ Articles
 
   toy
   pbmc3k
+  spatial

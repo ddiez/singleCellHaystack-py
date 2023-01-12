@@ -1,5 +1,5 @@
-Application to human PBMC
-=========================
+Application to scRNA-seq
+========================
 
 .. toctree::
   :maxdepth: 1
