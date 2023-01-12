@@ -7,3 +7,4 @@ Articles
   toy
   pbmc3k
   spatial
+  trajectory
