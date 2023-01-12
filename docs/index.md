@@ -6,7 +6,13 @@ singleCellHaystack
 [![PyPI](https://img.shields.io/pypi/v/singleCellHaystack?logo=PyPI)](https://pypi.org/project/singleCellHaystack)
 [![PyPIDownloads](https://pepy.tech/badge/singleCellHaystack)](https://pepy.tech/project/singleCellHaystack)
 
-This repository contains a python implementation of [singleCellHaystack](https://github.com/alexisvdb/singleCellHaystack).
+This repository contains a python implementation of [singleCellHaystack](https://github.com/alexisvdb/singleCellHaystack) (version >= 1.0.0).
+
+This package is currently in beta. The most important functionality in the R package works, but some features are not yet available. Here is a (probably imcomplete) list of missing features. Some will be added in the future.
+
+* `weights.advanced.Q` (formerly known as `use.advanced.sampling`).
+
+* `seeding` method for calculating grid points.
 
 # Installation
 
@@ -16,6 +22,8 @@ You can install singleCellHaystack from [pypi](https://pypi.org):
 pip install singleCellHaystack
 ```
 
+>Support for conda installation will be added in the future.
+
 # Example
 
 ```
@@ -23,6 +31,8 @@ import scanpy as sc
 import singleCellHaystack as hs
 
 adata = sc.read_h5ad("data.h5ad")
+
+[... process adata object ...]
 
 res = hs.haystack(adata)
 ```
