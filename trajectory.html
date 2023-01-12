@@ -8,7 +8,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Application to scRNA-seq &mdash; singleCellHaystack  documentation</title>
+  <title>Application to trajectory analysis &mdash; singleCellHaystack  documentation</title>
   
 
   
@@ -45,8 +45,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Load data" href="articles/pbmc3k.html" />
-    <link rel="prev" title="Load toy data" href="articles/toy.html" /> 
+    <link rel="next" title="Load data" href="articles/trajectory.html" />
+    <link rel="prev" title="Load data" href="articles/spatial.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,16 +94,16 @@
               <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="articles.html">Articles</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="toy.html">Toy example</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Application to scRNA-seq</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="articles/pbmc3k.html">Load data</a></li>
-<li class="toctree-l3"><a class="reference internal" href="articles/pbmc3k.html#Run-haystack">Run haystack</a></li>
-<li class="toctree-l3"><a class="reference internal" href="articles/pbmc3k.html#QC">QC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="articles/pbmc3k.html#Results">Results</a></li>
-<li class="toctree-l3"><a class="reference internal" href="articles/pbmc3k.html#Export-results">Export results</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbmc3k.html">Application to scRNA-seq</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spatial.html">Application to spatial transcriptomics</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Application to trajectory analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="articles/trajectory.html">Load data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/trajectory.html#Preprocess">Preprocess</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/trajectory.html#Calculate-DPT-trajectories">Calculate DPT trajectories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/trajectory.html#Run-singleCellHaystack">Run singleCellHaystack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="articles/trajectory.html#Export-results">Export results</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="spatial.html">Application to spatial transcriptomics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="trajectory.html">Application to trajectory analysis</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
@@ -157,14 +157,14 @@
         
           <li><a href="articles.html">Articles</a> &raquo;</li>
         
-      <li>Application to scRNA-seq</li>
+      <li>Application to trajectory analysis</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
           
             
-              <a href="https://github.com/ddiez/singleCellHaystack-py/blob/maindocs/pbmc3k.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/ddiez/singleCellHaystack-py/blob/maindocs/trajectory.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -202,15 +202,15 @@
     text-align: unset;
 }
 </style>
-<section id="application-to-scrna-seq">
-<h1>Application to scRNA-seq<a class="headerlink" href="#application-to-scrna-seq" title="Permalink to this heading">¶</a></h1>
+<section id="application-to-trajectory-analysis">
+<h1>Application to trajectory analysis<a class="headerlink" href="#application-to-trajectory-analysis" title="Permalink to this heading">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="articles/pbmc3k.html">Load data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="articles/pbmc3k.html#Run-haystack">Run haystack</a></li>
-<li class="toctree-l1"><a class="reference internal" href="articles/pbmc3k.html#QC">QC</a></li>
-<li class="toctree-l1"><a class="reference internal" href="articles/pbmc3k.html#Results">Results</a></li>
-<li class="toctree-l1"><a class="reference internal" href="articles/pbmc3k.html#Export-results">Export results</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/trajectory.html">Load data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/trajectory.html#Preprocess">Preprocess</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/trajectory.html#Calculate-DPT-trajectories">Calculate DPT trajectories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/trajectory.html#Run-singleCellHaystack">Run singleCellHaystack</a></li>
+<li class="toctree-l1"><a class="reference internal" href="articles/trajectory.html#Export-results">Export results</a></li>
 </ul>
 </div>
 </section>
@@ -221,8 +221,8 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="articles/pbmc3k.html" class="btn btn-neutral float-right" title="Load data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-        <a href="articles/toy.html" class="btn btn-neutral float-left" title="Load toy data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="articles/trajectory.html" class="btn btn-neutral float-right" title="Load data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="articles/spatial.html" class="btn btn-neutral float-left" title="Load data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
