@@ -16,5 +16,5 @@ html_context = dict(
     github_user='ddiez',   # Username
     github_repo='singleCellHaystack-py',     # Repo name
     github_version='main',  # Version
-    conf_py_path='/',    # Path in the checkout to the docs root
+    conf_py_path='docs/',    # Path in the checkout to the docs root
 )
