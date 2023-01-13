@@ -54,6 +54,18 @@ def cluster_genes(adata, haystack_result, method="kmeans", n_clusters=None, n_ge
   return res
 
 def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, color_map="coolwarm", return_scores=False):
+  """
+  Plot gene clusters returned by cluster_genes.
+
+  :param adata: AnnData object.
+  :param gene_clusters: pandas DataFrame output by cluster_genes.
+  :param basis: the embedding to use.
+  :param ncols: numner of columns for plot.
+  :param figsize: the size of the figure.
+  :param color_map: which color map to use.
+  :param return_scores: whether to return the calculated gene scores.
+  """
+
   import numpy as np
   import matplotlib.pyplot as plt
 
@@ -77,7 +89,6 @@ def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, 
     m = adata[:, genes].X
     scores[:,k] = np.squeeze(np.mean(m, axis=1))
 
-  import matplotlib.pyplot as plt
   nclusters = scores.shape[1]
   nrows = int(np.ceil(nclusters/ncols))
 
