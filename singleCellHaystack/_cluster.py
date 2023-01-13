@@ -53,6 +53,25 @@ def cluster_genes(adata, haystack_result, method="kmeans", n_clusters=None, n_ge
   
   return res
 
+def calculate_cluster_scores(adata, gene_clusters):
+  """
+  Calculate matrix of cluster scores.
+
+  :param adata: AnnData object.
+  :param gene_clusters: pandas DataFrame output by cluster_genes.
+  """
+
+  import numpy as np
+
+  clusters = gene_clusters.cluster.unique()
+  scores = np.zeros((adata.n_obs, len(clusters)))
+  for k in range(len(clusters)):
+    genes = gene_clusters[gene_clusters.cluster == clusters[k]].gene.tolist()
+    m = adata[:, genes].X
+    scores[:,k] = np.squeeze(np.mean(m, axis=1))
+  
+  return scores
+
 def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, color_map="coolwarm", return_scores=False):
   """
   Plot gene clusters returned by cluster_genes.
@@ -82,12 +101,7 @@ def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, 
 
   coord = adata.obsm[basis_key]
 
-  clusters = gene_clusters.cluster.unique()
-  scores = np.zeros((adata.n_obs, len(clusters)))
-  for k in range(len(clusters)):
-    genes = gene_clusters[gene_clusters.cluster == clusters[k]].gene.tolist()
-    m = adata[:, genes].X
-    scores[:,k] = np.squeeze(np.mean(m, axis=1))
+  scores = calculate_cluster_scores(adata=adata, gene_clusters=gene_clusters)
 
   nclusters = scores.shape[1]
   nrows = int(np.ceil(nclusters/ncols))
