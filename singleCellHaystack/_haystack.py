@@ -78,14 +78,12 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
   exprs_sd = np.sqrt(scaler_fit.var_)
   exprs_mean = scaler_fit.mean_
 
-  #exprs_sd = np.std(exprs, axis=0)
   sel_zero = exprs_sd == 0
   n_zero = np.sum(sel_zero)
   if (n_zero > 0):
     if (verbose):
       print("> removing", str(n_zero), "genes with zero variance ...")
     sel_nozero = np.invert(sel_zero)
-  #   genes = genes[sel_nozero]
     exprs_sd = exprs_sd[sel_nozero] + pseudo
     exprs_mean = exprs_mean[sel_nozero] + pseudo
     exprs = exprs[:, sel_nozero]
