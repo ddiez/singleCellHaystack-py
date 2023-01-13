@@ -64,13 +64,17 @@ def calculate_cluster_scores(adata, gene_clusters):
   import numpy as np
 
   clusters = gene_clusters.cluster.unique()
+  clusters.sort()
   scores = np.zeros((adata.n_obs, len(clusters)))
   for k in range(len(clusters)):
     genes = gene_clusters[gene_clusters.cluster == clusters[k]].gene.tolist()
     m = adata[:, genes].X
     scores[:,k] = np.squeeze(np.mean(m, axis=1))
   
-  return scores
+  return {
+    "scores": scores,
+    "clusters": clusters
+  }
 
 def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, color_map="coolwarm", return_scores=False):
   """
@@ -102,6 +106,8 @@ def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, 
   coord = adata.obsm[basis_key]
 
   scores = calculate_cluster_scores(adata=adata, gene_clusters=gene_clusters)
+  clusters = scores["clusters"]
+  scores = scores["scores"]
 
   nclusters = scores.shape[1]
   nrows = int(np.ceil(nclusters/ncols))
@@ -117,7 +123,7 @@ def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, 
   ccol=0
   for k in range(nclusters):
     im = ax[crow, ccol].scatter(coord[:,0], coord[:,1], s=4, c=scores[:,k], cmap=color_map)
-    ax[crow, ccol].set_title("Module: " + str(k))
+    ax[crow, ccol].set_title("Module: " + str(clusters[k]))
     ax[crow, ccol].set_axis_on()
     ax[crow, ccol].set_xticks([])
     ax[crow, ccol].set_yticks([])
