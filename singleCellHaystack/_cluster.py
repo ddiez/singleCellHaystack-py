@@ -53,7 +53,7 @@ def cluster_genes(adata, haystack_result, method="kmeans", n_clusters=None, n_ge
   
   return res
 
-def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, color_map="coolwarm"):
+def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, color_map="coolwarm", return_scores=False):
   import numpy as np
   import matplotlib.pyplot as plt
 
@@ -107,4 +107,5 @@ def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, 
 
   fig.tight_layout()
 
-  return scores
+  if return_scores:
+    return scores
