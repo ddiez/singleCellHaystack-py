@@ -14,6 +14,8 @@ This package is currently in beta. The most important functionality in the R pac
 
 * `seeding` method for calculating grid points.
 
+* Hierarchical clustering method for `cluster_genes`.
+
 # Installation
 
 You can install singleCellHaystack from [pypi](https://pypi.org):

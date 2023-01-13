@@ -12,6 +12,7 @@ This package is currently in beta. The most important functionality in the R pac
 
 * `weights.advanced.Q` (formerly known as `use.advanced.sampling`).
 * `seeding` method for calculating grid points.
+* Hierarchical clustering method for `cluster_genes`.
 
 # Installation
 
