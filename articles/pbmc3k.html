@@ -98,9 +98,11 @@
 <li class="toctree-l2"><a class="reference internal" href="../toy.html">Toy example</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="../pbmc3k.html">Application to scRNA-seq</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">Load data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Filter-some-cells">Filter some cells</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Run-haystack">Run haystack</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#QC">QC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Results">Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Check-some-QC-plots">Check some QC plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Visualizing-the-results">Visualizing the results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Clustering-results-into-gene-modules">Clustering results into gene modules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#Export-results">Export results</a></li>
 </ul>
 </li>
@@ -474,6 +476,7 @@ sc.set_figure_params(facecolor=&quot;white&quot;, dpi=90)
 </div>
 <section id="Load-data">
 <h1>Load data<a class="headerlink" href="#Load-data" title="Permalink to this heading">¶</a></h1>
+<p>We load the human PBMC data available from scanpy.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -482,14 +485,6 @@ sc.set_figure_params(facecolor=&quot;white&quot;, dpi=90)
 adata
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-100%|██████████| 23.5M/23.5M [00:00&lt;00:00, 83.4MB/s]
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -527,17 +522,66 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_3_1.png" class="no-scaled-link" src="../_images/articles_pbmc3k_3_1.png" style="width: 517px; height: 337px;" />
+<img alt="../_images/articles_pbmc3k_4_1.png" class="no-scaled-link" src="../_images/articles_pbmc3k_4_1.png" style="width: 517px; height: 337px;" />
 </div>
 </div>
 </section>
-<section id="Run-haystack">
-<h1>Run haystack<a class="headerlink" href="#Run-haystack" title="Permalink to this heading">¶</a></h1>
+<section id="Filter-some-cells">
+<h1>Filter some cells<a class="headerlink" href="#Filter-some-cells" title="Permalink to this heading">¶</a></h1>
+<p>We remove Megakaryocytes since they are not interesting in this example and they will drive the top results.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata.raw.to_adata(), coord=&quot;umap&quot;, n_randomizations=100, n_genes_to_randomize=100, spline_method=&quot;ns&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mega = adata.obs.louvain.isin([&quot;Megakaryocytes&quot;])
+mega.value_counts()
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+False    2623
+True       15
+Name: louvain, dtype: int64
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata = adata[~mega, :]
+adata
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+View of AnnData object with n_obs × n_vars = 2623 × 1838
+    obs: &#39;n_genes&#39;, &#39;percent_mito&#39;, &#39;n_counts&#39;, &#39;louvain&#39;
+    var: &#39;n_cells&#39;
+    uns: &#39;draw_graph&#39;, &#39;louvain&#39;, &#39;louvain_colors&#39;, &#39;neighbors&#39;, &#39;pca&#39;, &#39;rank_genes_groups&#39;
+    obsm: &#39;X_pca&#39;, &#39;X_tsne&#39;, &#39;X_umap&#39;, &#39;X_draw_graph_fr&#39;
+    varm: &#39;PCs&#39;
+    obsp: &#39;distances&#39;, &#39;connectivities&#39;
+</pre></div></div>
+</div>
+</section>
+<section id="Run-haystack">
+<h1>Run haystack<a class="headerlink" href="#Run-haystack" title="Permalink to this heading">¶</a></h1>
+<p>We run <code class="docutils literal notranslate"><span class="pre">haystack</span></code> using PCA coordinates and otherwise default parameters. Since the data has been scaled, we need to pass the raw data to avoid negative numbers. Also this will allow <code class="docutils literal notranslate"><span class="pre">haystack</span></code> to run on all the genes, not only those to calculate the PCA coordinates.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata.raw.to_adata(), coord=&quot;pca&quot;)
 </pre></div>
 </div>
 </div>
@@ -550,12 +594,12 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 &gt; entering array method ...
 &gt; scaling coordinates ...
 &gt; calculating feature stds ...
-&gt; removing 1 genes with zero variance ...
+&gt; removing 6 genes with zero variance ...
 &gt; calculating grid points ...
 &gt; calculating distance to cells ...
 &gt; calculating densities ...
 &gt; calculating Q dist ...
-&gt; calculating KLD for 13713 features ...
+&gt; calculating KLD for 13708 features ...
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -563,7 +607,7 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 13713/13713 [00:02&lt;00:00, 5448.06it/s]
+100%|██████████| 13708/13708 [00:02&lt;00:00, 6130.26it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -581,7 +625,7 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [00:02&lt;00:00, 35.19it/s]
+100%|██████████| 100/100 [00:02&lt;00:00, 40.36it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -594,11 +638,11 @@ AnnData object with n_obs × n_vars = 2638 × 1838
 </pre></div></div>
 </div>
 </section>
-<section id="QC">
-<h1>QC<a class="headerlink" href="#QC" title="Permalink to this heading">¶</a></h1>
+<section id="Check-some-QC-plots">
+<h1>Check some QC plots<a class="headerlink" href="#Check-some-QC-plots" title="Permalink to this heading">¶</a></h1>
 <p>We can examine some of the QC plots. First the randomization fits. These are used to calculate KLD from randomized expression levels for a subset of genes, in order to estimate the values to the entire gene set.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_rand_fit(res, &quot;mean&quot;)
@@ -610,19 +654,19 @@ hs.plot_rand_fit(res, &quot;sd&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_7_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_7_0.png" style="width: 349px; height: 358px;" />
+<img alt="../_images/articles_pbmc3k_13_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_13_0.png" style="width: 358px; height: 358px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_7_1.png" class="no-scaled-link" src="../_images/articles_pbmc3k_7_1.png" style="width: 353px; height: 358px;" />
+<img alt="../_images/articles_pbmc3k_13_1.png" class="no-scaled-link" src="../_images/articles_pbmc3k_13_1.png" style="width: 353px; height: 358px;" />
 </div>
 </div>
 <p>The ranking of logpval and distribution of pval gives us some idea of how many significant genes we can detect.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_pval_rank(res)
@@ -634,22 +678,22 @@ hs.plot_pval_hist(res)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_9_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_9_0.png" style="width: 368px; height: 338px;" />
+<img alt="../_images/articles_pbmc3k_15_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_15_0.png" style="width: 358px; height: 338px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_9_1.png" class="no-scaled-link" src="../_images/articles_pbmc3k_9_1.png" style="width: 368px; height: 316px;" />
+<img alt="../_images/articles_pbmc3k_15_1.png" class="no-scaled-link" src="../_images/articles_pbmc3k_15_1.png" style="width: 358px; height: 316px;" />
 </div>
 </div>
 </section>
-<section id="Results">
-<h1>Results<a class="headerlink" href="#Results" title="Permalink to this heading">¶</a></h1>
+<section id="Visualizing-the-results">
+<h1>Visualizing the results<a class="headerlink" href="#Visualizing-the-results" title="Permalink to this heading">¶</a></h1>
 <p>A pandas DataFrame with the results can be obtained. By default the results are sorted by logpval_adj.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sum = res[&quot;results&quot;]
@@ -658,7 +702,7 @@ sum
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -690,49 +734,49 @@ sum
   </thead>
   <tbody>
     <tr>
-      <th>12672</th>
-      <td>TYROBP</td>
-      <td>0.824173</td>
-      <td>1.599725e-213</td>
-      <td>2.193703e-209</td>
-      <td>-2.127960e+02</td>
-      <td>-208.658822</td>
+      <th>9290</th>
+      <td>GZMB</td>
+      <td>0.004207</td>
+      <td>2.671463e-67</td>
+      <td>3.662041e-63</td>
+      <td>-66.573251</td>
+      <td>-62.436277</td>
     </tr>
     <tr>
-      <th>11877</th>
-      <td>CST3</td>
-      <td>0.815731</td>
-      <td>3.897961e-204</td>
-      <td>5.345273e-200</td>
-      <td>-2.034092e+02</td>
-      <td>-199.272030</td>
+      <th>3200</th>
+      <td>FGFBP2</td>
+      <td>0.003713</td>
+      <td>2.990241e-63</td>
+      <td>4.099023e-59</td>
+      <td>-62.524294</td>
+      <td>-58.387320</td>
     </tr>
     <tr>
-      <th>1049</th>
-      <td>FCER1G</td>
-      <td>0.846571</td>
-      <td>1.201772e-200</td>
-      <td>1.647989e-196</td>
-      <td>-1.999202e+02</td>
-      <td>-195.783046</td>
+      <th>7149</th>
+      <td>PRF1</td>
+      <td>0.002337</td>
+      <td>2.624538e-57</td>
+      <td>3.597716e-53</td>
+      <td>-56.580947</td>
+      <td>-52.443973</td>
     </tr>
     <tr>
-      <th>4370</th>
-      <td>AIF1</td>
-      <td>0.760218</td>
-      <td>2.209666e-193</td>
-      <td>3.030115e-189</td>
-      <td>-1.926557e+02</td>
-      <td>-188.518541</td>
+      <th>12799</th>
+      <td>CD79A</td>
+      <td>0.002090</td>
+      <td>1.626349e-56</td>
+      <td>2.229399e-52</td>
+      <td>-55.788786</td>
+      <td>-51.651812</td>
     </tr>
     <tr>
-      <th>4411</th>
-      <td>HLA-DRB1</td>
-      <td>0.586864</td>
-      <td>3.156285e-193</td>
-      <td>4.328214e-189</td>
-      <td>-1.925008e+02</td>
-      <td>-188.363691</td>
+      <th>1802</th>
+      <td>GNLY</td>
+      <td>0.002155</td>
+      <td>3.416672e-56</td>
+      <td>4.683574e-52</td>
+      <td>-55.466397</td>
+      <td>-51.329423</td>
     </tr>
     <tr>
       <th>...</th>
@@ -744,58 +788,57 @@ sum
       <td>...</td>
     </tr>
     <tr>
-      <th>12907</th>
-      <td>DHX34</td>
-      <td>0.739196</td>
+      <th>13172</th>
+      <td>A1BG-AS1</td>
+      <td>0.000098</td>
+      <td>9.969061e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-3.953615e-50</td>
+      <td>-0.001346</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>9270</th>
-      <td>RP11-468E2.4</td>
-      <td>0.422861</td>
+      <th>344</th>
+      <td>SYNC</td>
+      <td>0.000088</td>
+      <td>9.974878e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-4.794212e-52</td>
+      <td>-0.001092</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>10260</th>
-      <td>ABCC1</td>
-      <td>0.422078</td>
+      <th>1731</th>
+      <td>PCYOX1</td>
+      <td>0.000065</td>
+      <td>9.980668e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-2.038303e-52</td>
+      <td>-0.000840</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>11911</th>
-      <td>PXMP4</td>
-      <td>0.590625</td>
+      <th>13247</th>
+      <td>CRKL</td>
+      <td>0.000038</td>
+      <td>9.988439e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-1.197850e-52</td>
+      <td>-0.000502</td>
       <td>0.000000</td>
     </tr>
     <tr>
-      <th>3044</th>
-      <td>TBCCD1</td>
-      <td>0.366168</td>
+      <th>9925</th>
+      <td>STOML1</td>
+      <td>0.000099</td>
+      <td>9.989249e-01</td>
       <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-2.431788e-54</td>
+      <td>-0.000467</td>
       <td>0.000000</td>
     </tr>
   </tbody>
 </table>
-<p>13713 rows × 6 columns</p>
+<p>13708 rows × 6 columns</p>
 </div></div>
 </div>
-<p>Plot top 4 genes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=sum.gene.iloc[:4], ncols=2, cmap=&quot;Spectral_r&quot;)
@@ -806,14 +849,211 @@ sum
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_pbmc3k_14_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_14_0.png" style="width: 737px; height: 654px;" />
+<img alt="../_images/articles_pbmc3k_19_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_19_0.png" style="width: 737px; height: 654px;" />
+</div>
+</div>
+</section>
+<section id="Clustering-results-into-gene-modules">
+<h1>Clustering results into gene modules<a class="headerlink" href="#Clustering-results-into-gene-modules" title="Permalink to this heading">¶</a></h1>
+<p>We can cluster the results using K-means. We need to pass the <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> object, the haystack results and the number of clusters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gene_mods = hs.cluster_genes(adata.raw.to_adata(), res, n_clusters=4, random_state=1)
+gene_mods.sort_values(&quot;cluster&quot;).groupby(&quot;cluster&quot;).head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gene</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>GZMB</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>CCL5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>CTSW</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>CEBPD</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>SPI1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>NCF2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CD79A</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>PKIG</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>HLA-DQA1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>CD1C</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>FCER1A</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>CLEC10A</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_gene_clusters(adata.raw.to_adata(), gene_mods, basis=&quot;umap&quot;, ncols=2, figsize=[7, 6],   color_map=&quot;Spectral_r&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/articles_pbmc3k_23_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_23_0.png" style="width: 607px; height: 522px;" />
+</div>
+</div>
+<p>Check some of the genes in <code class="docutils literal notranslate"><span class="pre">Module</span> <span class="pre">0</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mod0 = gene_mods.groupby(&quot;cluster&quot;).get_group(0)
+mod0.head(4)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gene</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>GZMB</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>FGFBP2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PRF1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>GNLY</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=mod0.gene.iloc[:4], cmap=&quot;Spectral_r&quot;, ncols=2)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/articles_pbmc3k_26_0.png" class="no-scaled-link" src="../_images/articles_pbmc3k_26_0.png" style="width: 737px; height: 654px;" />
 </div>
 </div>
 </section>
 <section id="Export-results">
 <h1>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">¶</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;pbmc3k-results.tsv&quot;)
