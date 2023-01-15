@@ -24,6 +24,8 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
   from anndata import AnnData
   from numpy import ndarray
 
+  res = None
+
   if isinstance(x, AnnData) and isinstance(coord, str):
     res = haystack_adata(adata=x, basis=coord, dims=None, scale_coords=scale_coords,
         ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
@@ -36,7 +38,15 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
         select_genes_randomize_method=select_genes_randomize_method, spline_method=spline_method,
         n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, verbose=verbose)
 
-  return(res)
+  if res is None:
+    print(
+  """
+    ERROR: Some of the input data didn't match the expected type:
+      * If x is an AnnData object then coord must be a string with the name of the basis to use.
+      * If x is a numpy or scipy sparse array then coord must be a numpy array.
+  """)
+  else:
+    return(res)
 
 # haystack_array
 # Method for numpy array and scipy sparse matrix objects.
