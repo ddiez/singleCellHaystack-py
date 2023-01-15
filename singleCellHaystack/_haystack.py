@@ -155,6 +155,8 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
     "pval_info": pvalData,
     "genes_to_randomize": genes_to_randomize,
     "exprs_cv": exprs_cv,
+    "coord_mean": coord_mean,
+    "coord_std": coord_std
   }
 
   return {
