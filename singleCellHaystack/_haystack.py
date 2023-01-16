@@ -124,7 +124,7 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
     genes_to_randomize = select_genes_to_randomize(exprs_cv, n_genes_to_randomize, method=select_genes_randomize_method, verbose=verbose)
 
   # Randomizations.
-  KLD_rand = randomize_KLD(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, verbose=verbose)
+  KLD_rand = randomize_KLD(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, random_state=random_state, verbose=verbose)
 
   # Calculate p.values:
   pvalData = calculate_Pval(KLD, KLD_rand, exprs_cv, exprs_cv[genes_to_randomize], method=spline_method, verbose=verbose)
