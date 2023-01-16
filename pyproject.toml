@@ -8,7 +8,7 @@ version = "0.0.4"
 authors = [
   { name="Diego Diez", email="diego10ruiz@gmail.com" },
 ]
-description = "An implementation of [singleCellHaystack](https://github.com/alexisvdb/singleCellHaystack) in python."
+description = "A Python implementation of singleCellHaystack."
 readme = "README.md"
 license = { file="LICENSE" }
 requires-python = ">=3.7"
@@ -37,3 +37,8 @@ dependencies = [
 
 [tool.setuptools]
 packages = ["singleCellHaystack"]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests"
+]
