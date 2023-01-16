@@ -20,7 +20,7 @@ def select_genes_to_randomize(x, ngenes=100, method="heavytails", tail=10, verbo
     return np.concatenate([ls, ms, rs])
 
 def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, verbose=False):
-  from ._haystack import calculate_KLD
+  from ._kld import calculate_KLD
 
   if (verbose):
     print("> calculating randomized KLD ...")
