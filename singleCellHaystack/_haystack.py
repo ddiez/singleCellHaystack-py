@@ -10,7 +10,7 @@ from scipy.sparse import isspmatrix
 # Main function. Can accept AnnData, numpy array and scipy sparse matrices.
 # Does not accept numpay matrix objects.
 def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
-    n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
+    n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None,
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True):
 
   """
@@ -30,13 +30,13 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
   if isinstance(x, AnnData) and isinstance(coord, str):
     res = haystack_adata(adata=x, basis=coord, dims=None, scale_coords=scale_coords,
         ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
-        select_genes_randomize_method=select_genes_randomize_method, spline_method=spline_method,
+        select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize, spline_method=spline_method,
         n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose)
 
   if (isinstance(x, ndarray) or isspmatrix(x)) and isinstance(coord, ndarray):
     res = haystack_array(weights=x, coord=coord, features=features, scale_coords=scale_coords,
         ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
-        select_genes_randomize_method=select_genes_randomize_method, spline_method=spline_method,
+        select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize, spline_method=spline_method,
         n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose)
 
   if res is None:
@@ -52,7 +52,7 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
 # haystack_array
 # Method for numpy array and scipy sparse matrix objects.
 def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_points=100,
-    n_genes_to_randomize=100, select_genes_randomize_method="heavytails",
+    n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None,
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True):
 
   from pandas import DataFrame
@@ -120,7 +120,8 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
     print("> calculating feature's CV ...")
   exprs_cv = exprs_sd / exprs_mean
 
-  genes_to_randomize = select_genes_to_randomize(exprs_cv, n_genes_to_randomize, method=select_genes_randomize_method, verbose=verbose)
+  if genes_to_randomize is None:
+    genes_to_randomize = select_genes_to_randomize(exprs_cv, n_genes_to_randomize, method=select_genes_randomize_method, verbose=verbose)
 
   # Randomizations.
   KLD_rand = randomize_KLD(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, verbose=verbose)
@@ -170,7 +171,7 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
 # haystack_adata
 # method for AnnData objects.
 def haystack_adata(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
-    n_genes_to_randomize=100, select_genes_randomize_method="heavytails", spline_method="bs",
+    n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None, spline_method="bs",
     n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True):
 
   if (verbose):
@@ -194,6 +195,6 @@ def haystack_adata(adata, basis="pca", dims=None, scale_coords=True, ngrid_point
     coord = coord[:, dims]
 
   res = haystack_array(exprs, coord, features=genes, scale_coords=scale_coords, ngrid_points=ngrid_points,
-      n_genes_to_randomize=n_genes_to_randomize, select_genes_randomize_method=select_genes_randomize_method,
+      n_genes_to_randomize=n_genes_to_randomize, select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize,
       spline_method=spline_method, n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose)
   return(res)
