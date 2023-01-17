@@ -32,7 +32,7 @@ def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, r
   ncells = expression.shape[0]
   ngenes = expression.shape[1]
 
-  KLD_rand=np.zeros([ngenes, n_randomizations])
+  KLD_rand = np.zeros([ngenes, n_randomizations])
 
   if random_state is not None:
     seed(random_state)
