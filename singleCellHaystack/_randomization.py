@@ -44,3 +44,31 @@ def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, r
       pbar.update(n=1)
 
   return KLD_rand
+
+def randomize_KLD2(density, expression, Q, n_randomizations=100, pseudo=1e-300, random_state=None, verbose=False):
+  from ._kld import calculate_KLD2
+  from ._kld import calculate_P_matrix
+
+  if (verbose):
+    print("> calculating randomized KLD ...")
+    pbar = tqdm(total=n_randomizations)
+
+  if (isspmatrix(expression)):
+    expression = expression.tocsc()
+
+  ncells = expression.shape[0]
+  ngenes = expression.shape[1]
+
+  KLD_rand = np.zeros([ngenes, n_randomizations])
+
+  if random_state is not None:
+    seed(random_state)
+
+  for n in range(n_randomizations):
+    shuffled_cells = sample(range(ncells), ncells)
+    P = calculate_P_matrix(density, expression[shuffled_cells, :])
+    KLD_rand[:, n] = calculate_KLD2(P, Q)
+    if (verbose):
+      pbar.update(n=1)
+
+  return KLD_rand

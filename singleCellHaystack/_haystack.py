@@ -11,7 +11,7 @@ from scipy.sparse import isspmatrix
 # Does not accept numpay matrix objects.
 def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None,
-    spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True):
+    spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True, kld_method="original"):
 
   """
   Runs singleCellHaystack.
@@ -31,13 +31,13 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
     res = haystack_adata(adata=x, basis=coord, dims=None, scale_coords=scale_coords,
         ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
         select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize, spline_method=spline_method,
-        n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose)
+        n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose, kld_method=kld_method)
 
   if (isinstance(x, ndarray) or isspmatrix(x)) and isinstance(coord, ndarray):
     res = haystack_array(weights=x, coord=coord, features=features, scale_coords=scale_coords,
         ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
         select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize, spline_method=spline_method,
-        n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose)
+        n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose, kld_method=kld_method)
 
   if res is None:
     print(
@@ -53,7 +53,7 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
 # Method for numpy array and scipy sparse matrix objects.
 def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None,
-    spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True):
+    spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True, kld_method="original"):
 
   from pandas import DataFrame
   from sklearn.preprocessing import StandardScaler
@@ -112,8 +112,14 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
   grid_density = calculate_density(grid_dist, verbose=verbose)
 
   Q = calculate_Q_dist(grid_density, pseudo=pseudo, verbose=verbose)
+  P = None
 
-  KLD = calculate_KLD(grid_density, exprs, Q, verbose=verbose)
+  if kld_method == "original":
+    KLD = calculate_KLD(grid_density, exprs, Q, verbose=verbose)
+  
+  if kld_method == "new":
+    P = calculate_P_matrix(grid_density, exprs, pseudo=pseudo, verbose=verbose)
+    KLD = calculate_KLD2(P, Q)
 
   # Calculate CV
   if (verbose):
@@ -124,7 +130,11 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
     genes_to_randomize = select_genes_to_randomize(exprs_cv, n_genes_to_randomize, method=select_genes_randomize_method, verbose=verbose)
 
   # Randomizations.
-  KLD_rand = randomize_KLD(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, random_state=random_state, verbose=verbose)
+  if kld_method == "original":
+    KLD_rand = randomize_KLD(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, random_state=random_state, verbose=verbose)
+  
+  if kld_method == "new":
+    KLD_rand = randomize_KLD2(grid_density, exprs[:, genes_to_randomize], Q, n_randomizations=n_randomizations, random_state=random_state, verbose=verbose)
 
   # Calculate p.values:
   pvalData = calculate_Pval(KLD, KLD_rand, exprs_cv, exprs_cv[genes_to_randomize], method=spline_method, verbose=verbose)
@@ -155,6 +165,7 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
     "grid_dist": grid_dist,
     "grid_density": grid_density,
     "Q": Q,
+    "P": P,
     "KLD_rand": KLD_rand,
     "pval_info": pvalData,
     "genes_to_randomize": genes_to_randomize,
@@ -172,7 +183,7 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
 # method for AnnData objects.
 def haystack_adata(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None, spline_method="bs",
-    n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True):
+    n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True, kld_method="original"):
 
   if (verbose):
     print("> starting haystack ...")
@@ -196,5 +207,5 @@ def haystack_adata(adata, basis="pca", dims=None, scale_coords=True, ngrid_point
 
   res = haystack_array(exprs, coord, features=genes, scale_coords=scale_coords, ngrid_points=ngrid_points,
       n_genes_to_randomize=n_genes_to_randomize, select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize,
-      spline_method=spline_method, n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose)
+      spline_method=spline_method, n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose, kld_method=kld_method)
   return(res)

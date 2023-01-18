@@ -45,9 +45,32 @@ def calculate_KLD(density, weights, Q, pseudo=1e-300, verbose=False):
   # FIXME: vectorize this computation.
   res = np.zeros(ngenes)
   for k in range(ngenes):
-    P = calculate_P_dist(density, weights[:, k])
+    P = calculate_P_dist(density, weights[:, k], pseudo=pseudo)
     res[k] = np.sum(P * np.log(P / Q))
     if (verbose):
       pbar.update(n=1)
 
   return res
+
+def calculate_P_matrix(density, weights, pseudo=1e-300, verbose=False):
+  if (isspmatrix(weights)):
+    weights = weights.tocsc()
+
+  ngenes = weights.shape[1]
+  ngrid_points = density.shape[1]
+
+  if (verbose):
+    print("> calculating KLD for " + str(ngenes) + " features ...")
+    pbar = tqdm(total=ngenes)
+
+  res = np.zeros([ngenes, ngrid_points])
+  for k in range(ngenes):
+    res[k, :] = calculate_P_dist(density, weights[:, k], pseudo=pseudo)
+    if (verbose):
+      pbar.update(n=1)
+  
+  return res
+
+def calculate_KLD2(P, Q):
+  kld = np.sum(P*np.log(P/Q), axis=1)
+  return kld
