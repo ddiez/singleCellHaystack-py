@@ -1,6 +1,5 @@
 import numpy as np
 from scipy.sparse import isspmatrix
-from numpy.random import seed
 from sklearn.utils import shuffle
 from tqdm import tqdm
 
@@ -35,11 +34,8 @@ def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, r
 
   KLD_rand = np.zeros([ngenes, n_randomizations])
 
-  if random_state is not None:
-    seed(random_state)
-
   for n in range(n_randomizations):
-    shuffled_cells = shuffle(range(ncells))
+    shuffled_cells = shuffle(range(ncells), random_state=random_state)
     KLD_rand[:, n] = calculate_KLD(density, expression[shuffled_cells, :], Q)
     if (verbose):
       pbar.update(n=1)
@@ -62,11 +58,8 @@ def randomize_KLD2(density, expression, Q, n_randomizations=100, pseudo=1e-300, 
 
   KLD_rand = np.zeros([ngenes, n_randomizations])
 
-  if random_state is not None:
-    seed(random_state)
-
   for n in range(n_randomizations):
-    shuffled_cells = shuffle(range(ncells))
+    shuffled_cells = shuffle(range(ncells), random_state=random_state)
     P = calculate_P_matrix(density, expression[shuffled_cells, :])
     KLD_rand[:, n] = calculate_KLD2(P, Q)
     if (verbose):
