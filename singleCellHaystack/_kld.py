@@ -60,7 +60,7 @@ def calculate_P_matrix(density, weights, pseudo=1e-300, verbose=False):
   ngrid_points = density.shape[1]
 
   if (verbose):
-    print("> calculating KLD for " + str(ngenes) + " features ...")
+    print("> calculating P for " + str(ngenes) + " features ...")
     pbar = tqdm(total=ngenes)
 
   res = np.zeros([ngenes, ngrid_points])
@@ -71,6 +71,9 @@ def calculate_P_matrix(density, weights, pseudo=1e-300, verbose=False):
   
   return res
 
-def calculate_KLD2(P, Q):
-  kld = np.sum(P*np.log(P/Q), axis=1)
+def calculate_KLD2(P, Q, verbose=False):
+  if (verbose):
+    print("> calculating KLD ...")
+  
+kld = np.sum(P*np.log(P/Q), axis=1)
   return kld

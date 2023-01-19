@@ -119,7 +119,7 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
   
   if kld_method == "new":
     P = calculate_P_matrix(grid_density, exprs, pseudo=pseudo, verbose=verbose)
-    KLD = calculate_KLD2(P, Q)
+    KLD = calculate_KLD2(P, Q, verbose=verbose)
 
   # Calculate CV
   if (verbose):
