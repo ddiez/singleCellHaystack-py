@@ -59,8 +59,8 @@ def randomize_KLD2(density, expression, Q, n_randomizations=100, pseudo=1e-300, 
   KLD_rand = np.zeros([ngenes, n_randomizations])
 
   for n in range(n_randomizations):
-    shuffled_cells = shuffle(range(ncells), random_state=random_state)
-    P = calculate_P_matrix(density, expression[shuffled_cells, :])
+    expression = shuffle(expression, random_state=random_state)
+    P = calculate_P_matrix(density, expression)
     KLD_rand[:, n] = calculate_KLD2(P, Q)
     if (verbose):
       pbar.update(n=1)
