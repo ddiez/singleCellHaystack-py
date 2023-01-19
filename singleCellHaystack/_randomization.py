@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.sparse import isspmatrix
-from random import sample, seed
+from numpy.random import seed
+from sklearn.utils import shuffle
 from tqdm import tqdm
 
 def select_genes_to_randomize(x, ngenes=100, method="heavytails", tail=10, verbose=False):
@@ -38,7 +39,7 @@ def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, r
     seed(random_state)
 
   for n in range(n_randomizations):
-    shuffled_cells = sample(range(ncells), ncells)
+    shuffled_cells = shuffle(range(ncells))
     KLD_rand[:, n] = calculate_KLD(density, expression[shuffled_cells, :], Q)
     if (verbose):
       pbar.update(n=1)
@@ -65,7 +66,7 @@ def randomize_KLD2(density, expression, Q, n_randomizations=100, pseudo=1e-300, 
     seed(random_state)
 
   for n in range(n_randomizations):
-    shuffled_cells = sample(range(ncells), ncells)
+    shuffled_cells = shuffle(range(ncells))
     P = calculate_P_matrix(density, expression[shuffled_cells, :])
     KLD_rand[:, n] = calculate_KLD2(P, Q)
     if (verbose):
