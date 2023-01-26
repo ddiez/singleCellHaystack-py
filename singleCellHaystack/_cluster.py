@@ -76,7 +76,7 @@ def calculate_cluster_scores(adata, gene_clusters):
     "clusters": clusters
   }
 
-def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, color_map="coolwarm", return_scores=False):
+def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=None, figsize=None, color_map="coolwarm", return_scores=False):
   """
   Plot gene clusters returned by cluster_genes.
 
@@ -110,6 +110,9 @@ def plot_gene_clusters(adata, gene_clusters, basis=None, ncols=4, figsize=None, 
   scores = scores["scores"]
 
   nclusters = scores.shape[1]
+
+  if ncols is None:
+    ncols = np.int32(np.ceil(np.sqrt(nclusters)))
   nrows = int(np.ceil(nclusters/ncols))
 
   fig, ax = plt.subplots(nrows=nrows, ncols=ncols, figsize=figsize)
