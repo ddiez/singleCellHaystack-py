@@ -18,6 +18,20 @@ def haystack(x, coord, features=None, layer=None, scale_coord=True, ngrid_points
 
   :param x: AnnData, numpy array or scipy sparse matrix.
   :param coord: a numpy array with 1D pseudotime, 2D or 3D spatial coordinates or an embedding with any number of dimansions.
+  :param features: a list of strings with feature names. If None for AnnData objects is adata.var_names and a numeric index for arrays.
+  :param layer: layer to use for AnnData objects. If None then adata.X is used.
+  :param scale_coord: whether to scale input coordinates.
+  :param ngrid_points: number of grid points.
+  :param n_genes_to_randomize: number of genes to use for randomization.
+  :param select_genes_randomize_method: method used to select genes for randomization. One of "heavytails" (default) or uniform.
+  :param genes_to_randomize: list of genes to randomize.
+  :param spline_method: spline method used for randomizations. One of bs (default) or ns.
+  :param n_randomizations: number of randomizations.
+  :param grid_points: array with grid coordinates.
+  :param pseudo: pseudo count added to counts.
+  :param random_state: random seed or random state.
+  :param verbose: whether to output messages when running haystack.
+  :param kld_method: method used to compute KLD.
   :return: A list with singleCellHaystack results.
   :rtype: list
 
