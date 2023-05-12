@@ -73,6 +73,8 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
     features = np.array(range(exprs.shape[1]))
 
   # Scale coords.
+  coord_mean = None
+  coord_std = None
   if scale_coords:
     if (verbose):
       print("> scaling coordinates ...")
