@@ -9,7 +9,7 @@ from scipy.sparse import isspmatrix
 # haystack
 # Main function. Can accept AnnData, numpy array and scipy sparse matrices.
 # Does not accept numpay matrix objects.
-def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
+def haystack(x, coord, features=None, scale_coord=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None,
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True, kld_method="original"):
 
@@ -28,13 +28,13 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
   res = None
 
   if isinstance(x, AnnData) and isinstance(coord, str):
-    res = haystack_adata(adata=x, basis=coord, dims=None, scale_coords=scale_coords,
+    res = haystack_adata(adata=x, basis=coord, dims=None, scale_coord=scale_coord,
         ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
         select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize, spline_method=spline_method,
         n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose, kld_method=kld_method)
 
   if (isinstance(x, ndarray) or isspmatrix(x)) and isinstance(coord, ndarray):
-    res = haystack_array(weights=x, coord=coord, features=features, scale_coords=scale_coords,
+    res = haystack_array(weights=x, coord=coord, features=features, scale_coord=scale_coord,
         ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
         select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize, spline_method=spline_method,
         n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose, kld_method=kld_method)
@@ -51,7 +51,7 @@ def haystack(x, coord, features=None, scale_coords=True, ngrid_points=100,
 
 # haystack_array
 # Method for numpy array and scipy sparse matrix objects.
-def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_points=100,
+def haystack_array(weights, coord, features=None, scale_coord=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None,
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True, kld_method="original"):
 
@@ -75,7 +75,7 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
   # Scale coords.
   coord_mean = None
   coord_std = None
-  if scale_coords:
+  if scale_coord:
     if (verbose):
       print("> scaling coordinates ...")
 
@@ -188,7 +188,7 @@ def haystack_array(weights, coord, features=None, scale_coords=True, ngrid_point
 
 # haystack_adata
 # method for AnnData objects.
-def haystack_adata(adata, basis="pca", dims=None, scale_coords=True, ngrid_points=100,
+def haystack_adata(adata, basis="pca", dims=None, scale_coord=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None, spline_method="bs",
     n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True, kld_method="original"):
 
@@ -212,7 +212,7 @@ def haystack_adata(adata, basis="pca", dims=None, scale_coords=True, ngrid_point
   if dims is not None:
     coord = coord[:, dims]
 
-  res = haystack_array(exprs, coord, features=genes, scale_coords=scale_coords, ngrid_points=ngrid_points,
+  res = haystack_array(exprs, coord, features=genes, scale_coord=scale_coord, ngrid_points=ngrid_points,
       n_genes_to_randomize=n_genes_to_randomize, select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize,
       spline_method=spline_method, n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose, kld_method=kld_method)
   return(res)

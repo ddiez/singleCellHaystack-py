@@ -14,7 +14,7 @@ def test_toy():
 
 def test_scale_coord():
   adata = hs.load_toy()
-  res = hs.haystack(adata, "tsne", scale_coords=False, random_state=1)
+  res = hs.haystack(adata, "tsne", scale_coord=False, random_state=1)
   assert res
   assert res["results"] is not None
   assert isinstance(res["results"], pd.core.frame.DataFrame) is True
