@@ -72,6 +72,8 @@ def plot_pval_hist(x):
   x = data["pval"]
 
   h = plt.hist(x, color="black", bins=30)
+  plt.xlabel("P value")
+  plt.ylabel("count")
   plt.xlim([0, 1])
   plt.show()
 
