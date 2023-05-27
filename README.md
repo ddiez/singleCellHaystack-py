@@ -22,6 +22,12 @@ You can install singleCellHaystack from [pypi](https://pypi.org):
 pip install singleCellHaystack
 ```
 
+You can install singleCellHaystack from GitHub with:
+
+```
+pip install git+http://github.com/ddiez/singleCellHaystack-py
+```
+
 >Support for conda installation will be added in the future.
 
 # Example
