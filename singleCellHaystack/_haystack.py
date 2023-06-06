@@ -73,12 +73,13 @@ def haystack_array(weights, coord, features=None, scale_coord=True, ngrid_points
   from sklearn.preprocessing import StandardScaler
   from numpy.random import RandomState
 
-  if isinstance(random_state, int):
-    random_state = RandomState(random_state)
+  if random_state is not None:
+    if isinstance(random_state, int):
+      random_state = RandomState(random_state)
 
-  if not isinstance(random_state, RandomState):
-    print("_ERROR_ invalid random state.")
-    return(None)
+    if not isinstance(random_state, RandomState):
+      print("_ERROR_ invalid random state.")
+      return(None)
 
   if (verbose):
     print("> entering array method ...")
