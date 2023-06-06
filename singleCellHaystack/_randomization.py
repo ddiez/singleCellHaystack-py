@@ -58,8 +58,11 @@ def randomize_KLD2(density, expression, Q, n_randomizations=100, pseudo=1e-300, 
 
   KLD_rand = np.zeros([ngenes, n_randomizations])
 
-  for n in range(n_randomizations):
-    expression = shuffle(expression, random_state=random_state)
+  for n in range(n_randomizations): 
+    # TODO: shuffle by column (features) independently.
+    #expression = shuffle(expression, random_state=random_state)
+    for k in range(expression.shape[0]):
+      expression[:, k] = shuffle(expression[:, k], random_state=random_state)
     P = calculate_P_matrix(density, expression)
     KLD_rand[:, n] = calculate_KLD2(P, Q)
     if (verbose):
