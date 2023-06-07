@@ -54,7 +54,7 @@ def calculate_KLD(density, weights, Q, pseudo=1e-300, verbose=False):
 
 def calculate_P_matrix(density, weights, pseudo=1e-300, verbose=False):
   if (isspmatrix(weights)):
-    weights = weights.tocsc()
+    weights = weights.tocrc()
 
   ngenes = weights.shape[1]
   ngrid_points = density.shape[1]
