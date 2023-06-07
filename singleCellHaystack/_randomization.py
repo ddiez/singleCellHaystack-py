@@ -70,8 +70,8 @@ def randomize_KLD2(density, expression, Q, n_randomizations=100, pseudo=1e-300, 
       for k in range(expression.shape[1]):
         expression[:, k] = shuffle(expression[:, k], random_state=random_state)
     
-    #if (isspmatrix(expression)):
-    #  expression = expression.tocsc()
+    if (isspmatrix(expression)):
+      expression = expression.tocsc()
     P = calculate_P_matrix(density, expression)
     KLD_rand[:, n] = calculate_KLD2(P, Q)
     if (verbose):
