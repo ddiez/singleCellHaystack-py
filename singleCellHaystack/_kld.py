@@ -75,5 +75,5 @@ def calculate_KLD2(P, Q, verbose=False):
   if (verbose):
     print("> calculating KLD ...")
   
-  kld = np.sum(P*np.log(P/Q), axis=1)
+  kld = np.sum(P * np.log(P / Q), axis=1)
   return kld
