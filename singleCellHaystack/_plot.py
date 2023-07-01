@@ -117,3 +117,25 @@ def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None):
   plt.plot(d.rank1, d.rank2, "bo", markersize=1)
   plt.xlabel(xlabel)
   plt.ylabel(ylabel)
+
+def plot_rand_kld(x, gene=0):
+    from scipy.stats import norm
+    
+    kld_rand = x.info["KLD_rand"]
+    X = kld_rand[gene, :]
+    X_m = np.mean(X)
+    X_s = np.std(X)
+
+    q95 = np.quantile(X, 0.95)
+    n95 = norm(loc=X_m, scale=X_s).ppf(0.95)
+    
+    plt.hist(X, color="black", bins=30)
+    plt.grid(False)
+    plt.axvline(X_m, color="green", linewidth=1)
+    plt.axvline(X_m + X_s, color="purple", linewidth=1)
+    plt.axvline(X_m - X_s, color="purple", linewidth=1)
+    plt.axvline(q95, color="blue", linewidth=1)
+    plt.axvline(n95, color="red", linewidth=1)
+    plt.xlabel("KLD_rand")
+    plt.ylabel("count")
+    plt.show()
