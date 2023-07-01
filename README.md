@@ -6,7 +6,7 @@ singleCellHaystack
 [![PyPI](https://img.shields.io/pypi/v/singleCellHaystack?logo=PyPI)](https://pypi.org/project/singleCellHaystack)
 [![PyPIDownloads](https://pepy.tech/badge/singleCellHaystack)](https://pepy.tech/project/singleCellHaystack)
 
-This repository contains a python implementation of [singleCellHaystack](https://github.com/alexisvdb/singleCellHaystack) (version >= 1.0.0).
+This repository contains a Python implementation of [singleCellHaystack](https://github.com/alexisvdb/singleCellHaystack) (version >= 1.0.0).
 
 This package is currently in beta. The most important functionality in the R package works, but some features are not yet available. Here is a (probably imcomplete) list of missing features. Some will be added in the future.
 
@@ -46,7 +46,7 @@ res.top_features(n=10)
 
 # References
 
-- Our manuscript describing the updated, more generally applicable version of `singleCellHaystack` inclusing this python implementation is available on [bioRxiv](https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1).
+- Our manuscript describing the updated, more generally applicable version of `singleCellHaystack` including this Python implementation is available on [bioRxiv](https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1).
 
 - Our manuscript describing the original implementation of `singleCellHaystack` for R ([version 0.3.4](https://github.com/alexisvdb/singleCellHaystack/tree/binary)) was published in [Nature Communications](https://doi.org/10.1038/s41467-020-17900-3).
 
