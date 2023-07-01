@@ -177,13 +177,14 @@ def haystack_array(weights, coord, features=None, scale_coord=True, ngrid_points
   df = DataFrame({
     "gene": features,
     "KLD": KLD,
+    "CV": exprs_cv,
     "pval": pval,
     "pval_adj": pval_adj,
     "logpval": logpval,
     "logpval_adj": logpval_adj
   })
 
-  df = df.sort_values("logpval")
+  #df = df.sort_values("logpval")
 
   info = {
     "grid_points": grid_points,
@@ -199,10 +200,8 @@ def haystack_array(weights, coord, features=None, scale_coord=True, ngrid_points
     "coord_std": coord_std
   }
 
-  return {
-    "results": df,
-    "info": info
-  }
+  res = HaystackResult(result=df, info=info)
+  return res
 
 # haystack_adata
 # method for AnnData objects.
@@ -237,3 +236,20 @@ def haystack_adata(adata, basis="pca", layer=None, dims=None, scale_coord=True, 
       n_genes_to_randomize=n_genes_to_randomize, select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize,
       spline_method=spline_method, n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose, kld_method=kld_method)
   return(res)
+
+class HaystackResult:
+  result = None
+  info = None
+
+  def __init__(self, result, info):
+    self.result=result
+    self.info=info
+
+  def top_features(self, n=None, sort_by="logpval_adj"):
+    sum = self.result
+    sum = sum.sort_values(sort_by)
+
+    if n is not None:
+      sum = sum.head(n)
+    
+    return sum
