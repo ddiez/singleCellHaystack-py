@@ -14,6 +14,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "b59fa879-a9cd-47f4-89be-9134e3cb5817",
    "metadata": {},
@@ -163,6 +164,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "ab04c886-341d-4bcb-b724-753a779e1258",
    "metadata": {},
@@ -293,6 +295,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "fa7d9564",
    "metadata": {},
@@ -352,6 +355,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "2cb03325",
    "metadata": {},
@@ -522,7 +526,7 @@
     }
    ],
    "source": [
-    "sum = res[\"results\"]\n",
+    "sum = res.top_features(n=10)\n",
     "sum"
    ]
   },
@@ -828,6 +832,7 @@
    ]
   },
   {
+   "attachments": {},
    "cell_type": "markdown",
    "id": "b17cefcd",
    "metadata": {},
