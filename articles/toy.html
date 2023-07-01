@@ -402,7 +402,7 @@ AnnData object with n_obs × n_vars = 601 × 500
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_3_0.png" class="no-scaled-link" src="../_images/articles_toy_3_0.png" style="width: 323px; height: 342px;" />
+<img alt="../_images/articles_toy_3_0.png" class="no-scaled-link" src="../_images/articles_toy_3_0.png" style="width: 319px; height: 338px;" />
 </div>
 </div>
 </section>
@@ -437,7 +437,7 @@ AnnData object with n_obs × n_vars = 601 × 500
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 500/500 [00:00&lt;00:00, 5689.77it/s]
+100%|███████████████████████████████████████████████████████████████████████████████| 500/500 [00:00&lt;00:00, 7301.81it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -455,7 +455,7 @@ AnnData object with n_obs × n_vars = 601 × 500
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|██████████| 100/100 [00:01&lt;00:00, 69.84it/s]
+100%|█████████████████████████████████████████████████████████████████████████████████| 100/100 [00:01&lt;00:00, 81.12it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -484,14 +484,14 @@ hs.plot_rand_fit(res, &quot;sd&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_7_0.png" class="no-scaled-link" src="../_images/articles_toy_7_0.png" style="width: 363px; height: 358px;" />
+<img alt="../_images/articles_toy_7_0.png" class="no-scaled-link" src="../_images/articles_toy_7_0.png" style="width: 372px; height: 360px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_7_1.png" class="no-scaled-link" src="../_images/articles_toy_7_1.png" style="width: 372px; height: 358px;" />
+<img alt="../_images/articles_toy_7_1.png" class="no-scaled-link" src="../_images/articles_toy_7_1.png" style="width: 379px; height: 360px;" />
 </div>
 </div>
 <p>The ranking of logpval and distribution of pval gives us some idea of how many significant genes we can detect.</p>
@@ -508,22 +508,30 @@ hs.plot_pval_hist(res)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_9_0.png" class="no-scaled-link" src="../_images/articles_toy_9_0.png" style="width: 358px; height: 338px;" />
+<img alt="../_images/articles_toy_9_0.png" class="no-scaled-link" src="../_images/articles_toy_9_0.png" style="width: 366px; height: 339px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_9_1.png" class="no-scaled-link" src="../_images/articles_toy_9_1.png" style="width: 339px; height: 316px;" />
+<img alt="../_images/articles_toy_9_1.png" class="no-scaled-link" src="../_images/articles_toy_9_1.png" style="width: 365px; height: 339px;" />
 </div>
 </div>
 </section>
 <section id="Results">
 <h1>Results<a class="headerlink" href="#Results" title="Permalink to this heading">#</a></h1>
 <p>A pandas DataFrame with the results can be obtained. By default the results are sorted by logpval_adj.</p>
-<div class="nbinput docutils container">
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sum = res.top_features(10)
@@ -532,7 +540,7 @@ sum
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -556,6 +564,7 @@ sum
       <th></th>
       <th>gene</th>
       <th>KLD</th>
+      <th>CV</th>
       <th>pval</th>
       <th>pval_adj</th>
       <th>logpval</th>
@@ -566,110 +575,110 @@ sum
     <tr>
       <th>241</th>
       <td>gene_242</td>
-      <td>1.801961</td>
-      <td>1.748949e-38</td>
-      <td>8.744746e-36</td>
-      <td>-3.775722e+01</td>
-      <td>-35.058253</td>
-    </tr>
-    <tr>
-      <th>274</th>
-      <td>gene_275</td>
-      <td>1.738050</td>
-      <td>5.804561e-34</td>
-      <td>2.902281e-31</td>
-      <td>-3.323623e+01</td>
-      <td>-30.537261</td>
-    </tr>
-    <tr>
-      <th>496</th>
-      <td>gene_497</td>
-      <td>1.945970</td>
-      <td>6.162514e-34</td>
-      <td>3.081257e-31</td>
-      <td>-3.321024e+01</td>
-      <td>-30.511272</td>
-    </tr>
-    <tr>
-      <th>350</th>
-      <td>gene_351</td>
-      <td>1.817486</td>
-      <td>3.136079e-33</td>
-      <td>1.568039e-30</td>
-      <td>-3.250361e+01</td>
-      <td>-29.804643</td>
+      <td>1.738191</td>
+      <td>2.627666</td>
+      <td>1.066598e-37</td>
+      <td>5.332992e-35</td>
+      <td>-36.971999</td>
+      <td>-34.273029</td>
     </tr>
     <tr>
       <th>338</th>
       <td>gene_339</td>
-      <td>1.730166</td>
-      <td>6.431448e-33</td>
-      <td>3.215724e-30</td>
-      <td>-3.219169e+01</td>
-      <td>-29.492721</td>
+      <td>1.861424</td>
+      <td>2.718406</td>
+      <td>2.894843e-37</td>
+      <td>1.447422e-34</td>
+      <td>-36.538375</td>
+      <td>-33.839405</td>
     </tr>
     <tr>
-      <th>...</th>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
-      <td>...</td>
+      <th>496</th>
+      <td>gene_497</td>
+      <td>2.007779</td>
+      <td>2.860687</td>
+      <td>1.749626e-35</td>
+      <td>8.748131e-33</td>
+      <td>-34.757055</td>
+      <td>-32.058085</td>
     </tr>
     <tr>
-      <th>187</th>
-      <td>gene_188</td>
-      <td>0.469387</td>
-      <td>9.999956e-01</td>
-      <td>1.000000e+00</td>
-      <td>-1.904205e-06</td>
-      <td>0.000000</td>
+      <th>274</th>
+      <td>gene_275</td>
+      <td>1.733409</td>
+      <td>2.698842</td>
+      <td>1.510932e-34</td>
+      <td>7.554659e-32</td>
+      <td>-33.820755</td>
+      <td>-31.121785</td>
     </tr>
     <tr>
-      <th>362</th>
-      <td>gene_363</td>
-      <td>0.685665</td>
-      <td>9.999987e-01</td>
-      <td>1.000000e+00</td>
-      <td>-5.429706e-07</td>
-      <td>0.000000</td>
+      <th>350</th>
+      <td>gene_351</td>
+      <td>1.849559</td>
+      <td>2.781079</td>
+      <td>1.538332e-34</td>
+      <td>7.691660e-32</td>
+      <td>-33.812950</td>
+      <td>-31.113980</td>
     </tr>
     <tr>
-      <th>447</th>
-      <td>gene_448</td>
-      <td>0.526370</td>
-      <td>9.999993e-01</td>
-      <td>1.000000e+00</td>
-      <td>-2.903058e-07</td>
-      <td>0.000000</td>
+      <th>61</th>
+      <td>gene_62</td>
+      <td>2.027718</td>
+      <td>2.931154</td>
+      <td>3.283019e-33</td>
+      <td>1.641509e-30</td>
+      <td>-32.483727</td>
+      <td>-29.784757</td>
     </tr>
     <tr>
-      <th>374</th>
-      <td>gene_375</td>
-      <td>0.471640</td>
-      <td>9.999999e-01</td>
-      <td>1.000000e+00</td>
-      <td>-3.192371e-08</td>
-      <td>0.000000</td>
+      <th>136</th>
+      <td>gene_137</td>
+      <td>1.791516</td>
+      <td>2.784830</td>
+      <td>6.520173e-33</td>
+      <td>3.260087e-30</td>
+      <td>-32.185741</td>
+      <td>-29.486771</td>
     </tr>
     <tr>
-      <th>379</th>
-      <td>gene_380</td>
-      <td>0.565381</td>
-      <td>1.000000e+00</td>
-      <td>1.000000e+00</td>
-      <td>-1.109075e-13</td>
-      <td>0.000000</td>
+      <th>316</th>
+      <td>gene_317</td>
+      <td>1.762123</td>
+      <td>2.776867</td>
+      <td>1.982998e-32</td>
+      <td>9.914989e-30</td>
+      <td>-31.702678</td>
+      <td>-29.003708</td>
+    </tr>
+    <tr>
+      <th>243</th>
+      <td>gene_244</td>
+      <td>1.664939</td>
+      <td>2.719325</td>
+      <td>7.226574e-32</td>
+      <td>3.613287e-29</td>
+      <td>-31.141068</td>
+      <td>-28.442098</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>gene_79</td>
+      <td>2.238983</td>
+      <td>3.174348</td>
+      <td>1.517525e-30</td>
+      <td>7.587625e-28</td>
+      <td>-29.818864</td>
+      <td>-27.119894</td>
     </tr>
   </tbody>
 </table>
-<p>500 rows × 6 columns</p>
 </div></div>
 </div>
 <p>Plot top 4 genes.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.tsne(adata, color=sum.gene.iloc[:4], ncols=2, cmap=&quot;Spectral_r&quot;)
@@ -680,14 +689,14 @@ sum
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_14_0.png" class="no-scaled-link" src="../_images/articles_toy_14_0.png" style="width: 746px; height: 654px;" />
+<img alt="../_images/articles_toy_15_0.png" class="no-scaled-link" src="../_images/articles_toy_15_0.png" style="width: 745px; height: 650px;" />
 </div>
 </div>
 </section>
 <section id="Export-results">
 <h1>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;toy-results.tsv&quot;)
