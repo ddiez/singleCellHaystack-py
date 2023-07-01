@@ -10,7 +10,7 @@ def plot_rand_fit(x, type="mean"):
 
   """
 
-  data = x["info"]["pval_info"]
+  data = x.info["pval_info"]
 
   x = data["CV"]
   method = data["method"]
@@ -50,7 +50,7 @@ def plot_pval_rank(x):
 
   """
 
-  data = x["info"]["pval_info"]
+  data = x.info["pval_info"]
 
   x = np.sort(data["logpval"])
 
@@ -67,7 +67,7 @@ def plot_pval_hist(x):
 
   """
 
-  data = x["info"]["pval_info"]
+  data = x.info["pval_info"]
 
   x = data["pval"]
 
@@ -93,8 +93,8 @@ def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None):
 
   import pandas as pd
 
-  sum1 = res1["results"].sort_values(sort_by)
-  sum2 = res2["results"].sort_values(sort_by)
+  sum1 = res1.result.sort_values(sort_by)
+  sum2 = res2.result.sort_values(sort_by)
 
   r1 = pd.DataFrame({
     "gene1": sum1.index,
