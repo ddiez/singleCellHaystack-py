@@ -16,11 +16,3 @@ html_theme_options = {
   "use_repository_button": True,
   "repository_url": "https://github.com/ddiez/singleCellHaystack-py"
 }
-
-html_context = dict(
-    display_github=True,      # Integrate GitHub
-    github_user='ddiez',   # Username
-    github_repo='singleCellHaystack-py',     # Repo name
-    github_version='main',  # Version
-    conf_py_path='docs/',    # Path in the checkout to the docs root
-)
