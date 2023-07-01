@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Load toy data &#8212; singleCellHaystack  documentation</title>
+    <title>Toy Example &#8212; singleCellHaystack  documentation</title>
   
   
   
@@ -47,8 +47,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'articles/toy';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Application to scRNA-seq" href="../pbmc3k.html" />
-    <link rel="prev" title="Toy example" href="../toy.html" />
+    <link rel="next" title="Single Cell Transcriptomics (PBMC3k)" href="pbmc3k.html" />
+    <link rel="prev" title="Articles" href="../articles.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -127,50 +127,14 @@
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../articles.html">Articles</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="../toy.html">Toy example</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">Load toy data</a></li>
-
-
-
-
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Toy Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbmc3k.html">Single Cell Transcriptomics (PBMC3k)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spatial.html">Spatial Transcriptomics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trajectory.html">Trajectory Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoca.html">Human Single Cell Atlas Gene Expression</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../pbmc3k.html">Application to scRNA-seq</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="pbmc3k.html">Load data</a></li>
-
-
-
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../spatial.html">Application to spatial transcriptomics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="spatial.html">Load data</a></li>
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../trajectory.html">Application to trajectory analysis</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="trajectory.html">Load data</a></li>
-
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../hoca.html">Application to very large datasets</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="hoca.html">Analysis of Human Cell Atlas of Fetal Gene Expression</a></li>
-
-
-
-
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.haystack.html">singleCellHaystack.haystack</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.cluster_genes.html">singleCellHaystack.cluster_genes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.plot_rand_fit.html">singleCellHaystack.plot_rand_fit</a></li>
@@ -331,7 +295,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Load toy data</h1>
+    <h1>Toy Example</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -341,13 +305,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Load toy data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-haystack">Run haystack</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#QC">QC</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Results">Results</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-toy-data">Load toy data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-haystack">Run haystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#QC">QC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Results">Results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -358,11 +321,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <div class="nbinput nblast docutils container">
+  <section id="Toy-Example">
+<h1>Toy Example<a class="headerlink" href="#Toy-Example" title="Permalink to this heading">#</a></h1>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import scanpy as sc
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>import scanpy as sc
 import singleCellHaystack as hs
 
 sc.set_figure_params(facecolor=&quot;white&quot;, dpi=90)
@@ -370,12 +335,12 @@ sc.set_figure_params(facecolor=&quot;white&quot;, dpi=90)
 </div>
 </div>
 <section id="Load-toy-data">
-<h1>Load toy data<a class="headerlink" href="#Load-toy-data" title="Permalink to this heading">#</a></h1>
+<h2>Load toy data<a class="headerlink" href="#Load-toy-data" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata = hs.load_toy()
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>adata = hs.load_toy()
 adata
 </pre></div>
 </div>
@@ -394,7 +359,7 @@ AnnData object with n_obs × n_vars = 601 × 500
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.scatter(adata, basis=&quot;tsne&quot;)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sc.pl.scatter(adata, basis=&quot;tsne&quot;)
 </pre></div>
 </div>
 </div>
@@ -402,17 +367,17 @@ AnnData object with n_obs × n_vars = 601 × 500
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_3_0.png" class="no-scaled-link" src="../_images/articles_toy_3_0.png" style="width: 319px; height: 338px;" />
+<img alt="../_images/articles_toy_4_0.png" class="no-scaled-link" src="../_images/articles_toy_4_0.png" style="width: 319px; height: 338px;" />
 </div>
 </div>
 </section>
 <section id="Run-haystack">
-<h1>Run haystack<a class="headerlink" href="#Run-haystack" title="Permalink to this heading">#</a></h1>
+<h2>Run haystack<a class="headerlink" href="#Run-haystack" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata, coord=&quot;tsne&quot;, n_randomizations=100, n_genes_to_randomize=100, spline_method=&quot;ns&quot;)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata, coord=&quot;tsne&quot;, n_randomizations=100, n_genes_to_randomize=100, spline_method=&quot;ns&quot;)
 </pre></div>
 </div>
 </div>
@@ -469,13 +434,13 @@ AnnData object with n_obs × n_vars = 601 × 500
 </div>
 </section>
 <section id="QC">
-<h1>QC<a class="headerlink" href="#QC" title="Permalink to this heading">#</a></h1>
+<h2>QC<a class="headerlink" href="#QC" title="Permalink to this heading">#</a></h2>
 <p>We can examine some of the QC plots. First the randomization fits. These are used to calculate KLD from randomized expression levels for a subset of genes, in order to estimate the values to the entire gene set.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_rand_fit(res, &quot;mean&quot;)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>hs.plot_rand_fit(res, &quot;mean&quot;)
 hs.plot_rand_fit(res, &quot;sd&quot;)
 </pre></div>
 </div>
@@ -484,14 +449,14 @@ hs.plot_rand_fit(res, &quot;sd&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_7_0.png" class="no-scaled-link" src="../_images/articles_toy_7_0.png" style="width: 372px; height: 360px;" />
+<img alt="../_images/articles_toy_8_0.png" class="no-scaled-link" src="../_images/articles_toy_8_0.png" style="width: 372px; height: 360px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_7_1.png" class="no-scaled-link" src="../_images/articles_toy_7_1.png" style="width: 379px; height: 360px;" />
+<img alt="../_images/articles_toy_8_1.png" class="no-scaled-link" src="../_images/articles_toy_8_1.png" style="width: 379px; height: 360px;" />
 </div>
 </div>
 <p>The ranking of logpval and distribution of pval gives us some idea of how many significant genes we can detect.</p>
@@ -499,7 +464,7 @@ hs.plot_rand_fit(res, &quot;sd&quot;)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_pval_rank(res)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>hs.plot_pval_rank(res)
 hs.plot_pval_hist(res)
 </pre></div>
 </div>
@@ -508,25 +473,25 @@ hs.plot_pval_hist(res)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_9_0.png" class="no-scaled-link" src="../_images/articles_toy_9_0.png" style="width: 366px; height: 339px;" />
+<img alt="../_images/articles_toy_10_0.png" class="no-scaled-link" src="../_images/articles_toy_10_0.png" style="width: 366px; height: 339px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_9_1.png" class="no-scaled-link" src="../_images/articles_toy_9_1.png" style="width: 365px; height: 339px;" />
+<img alt="../_images/articles_toy_10_1.png" class="no-scaled-link" src="../_images/articles_toy_10_1.png" style="width: 365px; height: 339px;" />
 </div>
 </div>
 </section>
 <section id="Results">
-<h1>Results<a class="headerlink" href="#Results" title="Permalink to this heading">#</a></h1>
+<h2>Results<a class="headerlink" href="#Results" title="Permalink to this heading">#</a></h2>
 <p>A pandas DataFrame with the results can be obtained. By default the results are sorted by logpval_adj.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>import pandas as pd
 </pre></div>
 </div>
 </div>
@@ -534,7 +499,7 @@ hs.plot_pval_hist(res)
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sum = res.top_features(10)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sum = res.top_features(10)
 sum
 </pre></div>
 </div>
@@ -681,7 +646,7 @@ sum
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.tsne(adata, color=sum.gene.iloc[:4], ncols=2, cmap=&quot;Spectral_r&quot;)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sc.pl.tsne(adata, color=sum.gene.iloc[:4], ncols=2, cmap=&quot;Spectral_r&quot;)
 </pre></div>
 </div>
 </div>
@@ -689,20 +654,21 @@ sum
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_toy_15_0.png" class="no-scaled-link" src="../_images/articles_toy_15_0.png" style="width: 745px; height: 650px;" />
+<img alt="../_images/articles_toy_16_0.png" class="no-scaled-link" src="../_images/articles_toy_16_0.png" style="width: 745px; height: 650px;" />
 </div>
 </div>
 </section>
 <section id="Export-results">
-<h1>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">#</a></h1>
+<h2>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;toy-results.tsv&quot;)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;toy-results.tsv&quot;)
 </pre></div>
 </div>
 </div>
+</section>
 </section>
 
 
@@ -718,20 +684,20 @@ sum
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../toy.html"
+       href="../articles.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Toy example</p>
+        <p class="prev-next-title">Articles</p>
       </div>
     </a>
     <a class="right-next"
-       href="../pbmc3k.html"
+       href="pbmc3k.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Application to scRNA-seq</p>
+        <p class="prev-next-title">Single Cell Transcriptomics (PBMC3k)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -753,13 +719,12 @@ sum
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Load toy data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-haystack">Run haystack</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#QC">QC</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Results">Results</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-toy-data">Load toy data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-haystack">Run haystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#QC">QC</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Results">Results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>

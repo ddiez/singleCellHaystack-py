@@ -4,8 +4,8 @@ Articles
 .. toctree::
   :maxdepth: 1
 
-  toy
-  pbmc3k
-  spatial
-  trajectory
-  hoca
+  articles/toy
+  articles/pbmc3k
+  articles/spatial
+  articles/trajectory
+  articles/hoca

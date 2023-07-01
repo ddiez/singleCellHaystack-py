@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Load data &#8212; singleCellHaystack  documentation</title>
+    <title>Spatial Transcriptomics &#8212; singleCellHaystack  documentation</title>
   
   
   
@@ -47,8 +47,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'articles/spatial';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Application to trajectory analysis" href="../trajectory.html" />
-    <link rel="prev" title="Application to spatial transcriptomics" href="../spatial.html" />
+    <link rel="next" title="Trajectory Analysis" href="trajectory.html" />
+    <link rel="prev" title="Single Cell Transcriptomics (PBMC3k)" href="pbmc3k.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -127,50 +127,14 @@
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../articles.html">Articles</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../toy.html">Toy example</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="toy.html">Load toy data</a></li>
-
-
-
-
+<li class="toctree-l2"><a class="reference internal" href="toy.html">Toy Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbmc3k.html">Single Cell Transcriptomics (PBMC3k)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Spatial Transcriptomics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trajectory.html">Trajectory Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoca.html">Human Single Cell Atlas Gene Expression</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../pbmc3k.html">Application to scRNA-seq</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="pbmc3k.html">Load data</a></li>
-
-
-
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="../spatial.html">Application to spatial transcriptomics</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">Load data</a></li>
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../trajectory.html">Application to trajectory analysis</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="trajectory.html">Load data</a></li>
-
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../hoca.html">Application to very large datasets</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="hoca.html">Analysis of Human Cell Atlas of Fetal Gene Expression</a></li>
-
-
-
-
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.haystack.html">singleCellHaystack.haystack</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.cluster_genes.html">singleCellHaystack.cluster_genes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.plot_rand_fit.html">singleCellHaystack.plot_rand_fit</a></li>
@@ -331,7 +295,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Load data</h1>
+    <h1>Spatial Transcriptomics</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -341,12 +305,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Load data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Process">Process</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Haystack">Haystack</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-data">Load data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Process">Process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Haystack">Haystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -357,7 +320,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <div class="nbinput nblast docutils container">
+  <section id="Spatial-Transcriptomics">
+<h1>Spatial Transcriptomics<a class="headerlink" href="#Spatial-Transcriptomics" title="Permalink to this heading">#</a></h1>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
@@ -367,7 +332,7 @@ import singleCellHaystack as hs
 </div>
 </div>
 <section id="Load-data">
-<h1>Load data<a class="headerlink" href="#Load-data" title="Permalink to this heading">#</a></h1>
+<h2>Load data<a class="headerlink" href="#Load-data" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -421,12 +386,12 @@ AnnData object with n_obs × n_vars = 3798 × 36601
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_spatial_4_0.png" src="../_images/articles_spatial_4_0.png" />
+<img alt="../_images/articles_spatial_5_0.png" src="../_images/articles_spatial_5_0.png" />
 </div>
 </div>
 </section>
 <section id="Process">
-<h1>Process<a class="headerlink" href="#Process" title="Permalink to this heading">#</a></h1>
+<h2>Process<a class="headerlink" href="#Process" title="Permalink to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -438,7 +403,7 @@ sc.pp.log1p(adata)
 </div>
 </section>
 <section id="Haystack">
-<h1>Haystack<a class="headerlink" href="#Haystack" title="Permalink to this heading">#</a></h1>
+<h2>Haystack<a class="headerlink" href="#Haystack" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -512,14 +477,14 @@ hs.plot_rand_fit(res, &quot;sd&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_spatial_9_0.png" src="../_images/articles_spatial_9_0.png" />
+<img alt="../_images/articles_spatial_10_0.png" src="../_images/articles_spatial_10_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_spatial_9_1.png" src="../_images/articles_spatial_9_1.png" />
+<img alt="../_images/articles_spatial_10_1.png" src="../_images/articles_spatial_10_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -535,14 +500,14 @@ hs.plot_pval_hist(res)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_spatial_10_0.png" src="../_images/articles_spatial_10_0.png" />
+<img alt="../_images/articles_spatial_11_0.png" src="../_images/articles_spatial_11_0.png" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_spatial_10_1.png" src="../_images/articles_spatial_10_1.png" />
+<img alt="../_images/articles_spatial_11_1.png" src="../_images/articles_spatial_11_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -702,12 +667,12 @@ sum
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_spatial_12_0.png" src="../_images/articles_spatial_12_0.png" />
+<img alt="../_images/articles_spatial_13_0.png" src="../_images/articles_spatial_13_0.png" />
 </div>
 </div>
 </section>
 <section id="Export-results">
-<h1>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">#</a></h1>
+<h2>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -716,6 +681,7 @@ sum
 </pre></div>
 </div>
 </div>
+</section>
 </section>
 
 
@@ -731,20 +697,20 @@ sum
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../spatial.html"
+       href="pbmc3k.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Application to spatial transcriptomics</p>
+        <p class="prev-next-title">Single Cell Transcriptomics (PBMC3k)</p>
       </div>
     </a>
     <a class="right-next"
-       href="../trajectory.html"
+       href="trajectory.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Application to trajectory analysis</p>
+        <p class="prev-next-title">Trajectory Analysis</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -766,12 +732,11 @@ sum
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Load data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Process">Process</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Haystack">Haystack</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-data">Load data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Process">Process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Haystack">Haystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>

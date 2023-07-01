@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Analysis of Human Cell Atlas of Fetal Gene Expression &#8212; singleCellHaystack  documentation</title>
+    <title>Human Single Cell Atlas Gene Expression &#8212; singleCellHaystack  documentation</title>
   
   
   
@@ -48,7 +48,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Reference" href="../reference.html" />
-    <link rel="prev" title="Application to very large datasets" href="../hoca.html" />
+    <link rel="prev" title="Trajectory Analysis" href="trajectory.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -127,50 +127,14 @@
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../articles.html">Articles</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../toy.html">Toy example</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="toy.html">Load toy data</a></li>
-
-
-
-
+<li class="toctree-l2"><a class="reference internal" href="toy.html">Toy Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbmc3k.html">Single Cell Transcriptomics (PBMC3k)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spatial.html">Spatial Transcriptomics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trajectory.html">Trajectory Analysis</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Human Single Cell Atlas Gene Expression</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../pbmc3k.html">Application to scRNA-seq</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="pbmc3k.html">Load data</a></li>
-
-
-
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../spatial.html">Application to spatial transcriptomics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="spatial.html">Load data</a></li>
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../trajectory.html">Application to trajectory analysis</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="trajectory.html">Load data</a></li>
-
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="../hoca.html">Application to very large datasets</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">Analysis of Human Cell Atlas of Fetal Gene Expression</a></li>
-
-
-
-
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.haystack.html">singleCellHaystack.haystack</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.cluster_genes.html">singleCellHaystack.cluster_genes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.plot_rand_fit.html">singleCellHaystack.plot_rand_fit</a></li>
@@ -331,7 +295,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Analysis of Human Cell Atlas of Fetal Gene Expression</h1>
+    <h1>Human Single Cell Atlas Gene Expression</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -341,13 +305,11 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Analysis of Human Cell Atlas of Fetal Gene Expression</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-data">Load data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Filter-genes">Filter genes</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocess">Preprocess</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-haystack">Run haystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-data">Load data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Filter-genes">Filter genes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocess">Preprocess</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-haystack">Run haystack</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -358,8 +320,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="Analysis-of-Human-Cell-Atlas-of-Fetal-Gene-Expression">
-<h1>Analysis of Human Cell Atlas of Fetal Gene Expression<a class="headerlink" href="#Analysis-of-Human-Cell-Atlas-of-Fetal-Gene-Expression" title="Permalink to this heading">#</a></h1>
+  <section id="Human-Single-Cell-Atlas-Gene-Expression">
+<h1>Human Single Cell Atlas Gene Expression<a class="headerlink" href="#Human-Single-Cell-Atlas-Gene-Expression" title="Permalink to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -372,9 +334,8 @@ sc.settings.set_figure_params(dpi=150, facecolor=&#39;white&#39;)
 </div>
 </div>
 <p>Here we show how singleCellHaystack can handle very large datasets. For this we use the Human Cell Atlas of Fetal Gene Expression dataset with ~4 million cells.</p>
-</section>
 <section id="Load-data">
-<h1>Load data<a class="headerlink" href="#Load-data" title="Permalink to this heading">#</a></h1>
+<h2>Load data<a class="headerlink" href="#Load-data" title="Permalink to this heading">#</a></h2>
 <p>Reading the loom file is very slow and memory costly. It is better to do this independently and export the data in h5ad format.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -411,7 +372,7 @@ AnnData object with n_obs × n_vars = 4062980 × 63561
 </div>
 </section>
 <section id="Filter-genes">
-<h1>Filter genes<a class="headerlink" href="#Filter-genes" title="Permalink to this heading">#</a></h1>
+<h2>Filter genes<a class="headerlink" href="#Filter-genes" title="Permalink to this heading">#</a></h2>
 <p>We remove genes expressed in less than 100 cells.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -437,7 +398,7 @@ AnnData object with n_obs × n_vars = 4062980 × 35686
 </div>
 </section>
 <section id="Preprocess">
-<h1>Preprocess<a class="headerlink" href="#Preprocess" title="Permalink to this heading">#</a></h1>
+<h2>Preprocess<a class="headerlink" href="#Preprocess" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -851,7 +812,7 @@ adata_raw.var
 </div>
 </section>
 <section id="Run-haystack">
-<h1>Run haystack<a class="headerlink" href="#Run-haystack" title="Permalink to this heading">#</a></h1>
+<h2>Run haystack<a class="headerlink" href="#Run-haystack" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
@@ -1148,6 +1109,7 @@ genes
 </div>
 </div>
 </section>
+</section>
 
 
                 </article>
@@ -1162,12 +1124,12 @@ genes
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../hoca.html"
+       href="trajectory.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Application to very large datasets</p>
+        <p class="prev-next-title">Trajectory Analysis</p>
       </div>
     </a>
     <a class="right-next"
@@ -1197,13 +1159,11 @@ genes
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Analysis of Human Cell Atlas of Fetal Gene Expression</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-data">Load data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Filter-genes">Filter genes</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocess">Preprocess</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-haystack">Run haystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-data">Load data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Filter-genes">Filter genes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocess">Preprocess</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-haystack">Run haystack</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>

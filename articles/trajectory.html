@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Load data &#8212; singleCellHaystack  documentation</title>
+    <title>Trajectory Analysis &#8212; singleCellHaystack  documentation</title>
   
   
   
@@ -47,8 +47,8 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'articles/trajectory';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Application to very large datasets" href="../hoca.html" />
-    <link rel="prev" title="Application to trajectory analysis" href="../trajectory.html" />
+    <link rel="next" title="Human Single Cell Atlas Gene Expression" href="hoca.html" />
+    <link rel="prev" title="Spatial Transcriptomics" href="spatial.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -127,50 +127,14 @@
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../articles.html">Articles</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 has-children"><a class="reference internal" href="../toy.html">Toy example</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="toy.html">Load toy data</a></li>
-
-
-
-
+<li class="toctree-l2"><a class="reference internal" href="toy.html">Toy Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pbmc3k.html">Single Cell Transcriptomics (PBMC3k)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spatial.html">Spatial Transcriptomics</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Trajectory Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hoca.html">Human Single Cell Atlas Gene Expression</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../pbmc3k.html">Application to scRNA-seq</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="pbmc3k.html">Load data</a></li>
-
-
-
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../spatial.html">Application to spatial transcriptomics</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="spatial.html">Load data</a></li>
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="../trajectory.html">Application to trajectory analysis</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l3 current active"><a class="current reference internal" href="#">Load data</a></li>
-
-
-
-
-</ul>
-</li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../hoca.html">Application to very large datasets</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="hoca.html">Analysis of Human Cell Atlas of Fetal Gene Expression</a></li>
-
-
-
-
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../reference.html">Reference</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.haystack.html">singleCellHaystack.haystack</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.cluster_genes.html">singleCellHaystack.cluster_genes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../generated/singleCellHaystack.plot_rand_fit.html">singleCellHaystack.plot_rand_fit</a></li>
@@ -331,7 +295,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Load data</h1>
+    <h1>Trajectory Analysis</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -341,13 +305,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Load data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocess">Preprocess</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Calculate-DPT-trajectories">Calculate DPT trajectories</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-singleCellHaystack">Run singleCellHaystack</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-data">Load data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocess">Preprocess</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Calculate-DPT-trajectories">Calculate DPT trajectories</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-singleCellHaystack">Run singleCellHaystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -358,22 +321,24 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <div class="nbinput nblast docutils container">
+  <section id="Trajectory-Analysis">
+<h1>Trajectory Analysis<a class="headerlink" href="#Trajectory-Analysis" title="Permalink to this heading">#</a></h1>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import scanpy as sc
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>import scanpy as sc
 import singleCellHaystack as hs
 </pre></div>
 </div>
 </div>
 <section id="Load-data">
-<h1>Load data<a class="headerlink" href="#Load-data" title="Permalink to this heading">#</a></h1>
+<h2>Load data<a class="headerlink" href="#Load-data" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata = sc.datasets.paul15()
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>adata = sc.datasets.paul15()
 adata
 </pre></div>
 </div>
@@ -408,12 +373,12 @@ AnnData object with n_obs × n_vars = 2730 × 3451
 </div>
 </section>
 <section id="Preprocess">
-<h1>Preprocess<a class="headerlink" href="#Preprocess" title="Permalink to this heading">#</a></h1>
+<h2>Preprocess<a class="headerlink" href="#Preprocess" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pp.normalize_total(adata)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sc.pp.normalize_total(adata)
 sc.pp.log1p(adata)
 sc.tl.pca(adata)
 sc.pl.pca(adata)
@@ -433,14 +398,14 @@ sc.pl.pca(adata)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_4_1.png" src="../_images/articles_trajectory_4_1.png" />
+<img alt="../_images/articles_trajectory_5_1.png" src="../_images/articles_trajectory_5_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pp.neighbors(adata)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sc.pp.neighbors(adata)
 sc.tl.leiden(adata)
 sc.tl.umap(adata)
 sc.pl.umap(adata, color=&quot;leiden&quot;, legend_loc=&quot;on data&quot;)
@@ -468,17 +433,17 @@ sc.pl.umap(adata, color=&quot;leiden&quot;, legend_loc=&quot;on data&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_5_1.png" src="../_images/articles_trajectory_5_1.png" />
+<img alt="../_images/articles_trajectory_6_1.png" src="../_images/articles_trajectory_6_1.png" />
 </div>
 </div>
 </section>
 <section id="Calculate-DPT-trajectories">
-<h1>Calculate DPT trajectories<a class="headerlink" href="#Calculate-DPT-trajectories" title="Permalink to this heading">#</a></h1>
+<h2>Calculate DPT trajectories<a class="headerlink" href="#Calculate-DPT-trajectories" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.tl.diffmap(adata)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sc.tl.diffmap(adata)
 sc.tl.dpt(adata)
 sc.pl.umap(adata, color=&quot;dpt_pseudotime&quot;)
 </pre></div>
@@ -488,18 +453,18 @@ sc.pl.umap(adata, color=&quot;dpt_pseudotime&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_7_0.png" src="../_images/articles_trajectory_7_0.png" />
+<img alt="../_images/articles_trajectory_8_0.png" src="../_images/articles_trajectory_8_0.png" />
 </div>
 </div>
 </section>
 <section id="Run-singleCellHaystack">
-<h1>Run singleCellHaystack<a class="headerlink" href="#Run-singleCellHaystack" title="Permalink to this heading">#</a></h1>
+<h2>Run singleCellHaystack<a class="headerlink" href="#Run-singleCellHaystack" title="Permalink to this heading">#</a></h2>
 <p>For now there is not direct way to access the pseudotime information from AnnData object. But we can pass the expression matrix and 1D coordinates directly.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import numpy
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>import numpy
 pseudotime = numpy.array(adata.obs.dpt_pseudotime.to_list())
 pseudotime = pseudotime.reshape(-1, 1)
 pseudotime
@@ -525,7 +490,7 @@ array([[0.0275316965],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata.X, coord=pseudotime, features=adata.var_names)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata.X, coord=pseudotime, features=adata.var_names)
 </pre></div>
 </div>
 </div>
@@ -583,31 +548,8 @@ array([[0.0275316965],
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_rand_fit(res, &quot;mean&quot;)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>hs.plot_rand_fit(res, &quot;mean&quot;)
 hs.plot_rand_fit(res, &quot;sd&quot;)
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_12_0.png" src="../_images/articles_trajectory_12_0.png" />
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_12_1.png" src="../_images/articles_trajectory_12_1.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_pval_rank(res)
-hs.plot_pval_hist(res)
 </pre></div>
 </div>
 </div>
@@ -626,10 +568,33 @@ hs.plot_pval_hist(res)
 </div>
 </div>
 <div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>hs.plot_pval_rank(res)
+hs.plot_pval_hist(res)
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/articles_trajectory_14_0.png" src="../_images/articles_trajectory_14_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/articles_trajectory_14_1.png" src="../_images/articles_trajectory_14_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sum = res.top_features(9)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sum = res.top_features(9)
 sum
 </pre></div>
 </div>
@@ -765,7 +730,7 @@ sum
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=sum.gene, ncols=3)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=sum.gene, ncols=3)
 </pre></div>
 </div>
 </div>
@@ -773,20 +738,21 @@ sum
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_15_0.png" src="../_images/articles_trajectory_15_0.png" />
+<img alt="../_images/articles_trajectory_16_0.png" src="../_images/articles_trajectory_16_0.png" />
 </div>
 </div>
 </section>
 <section id="Export-results">
-<h1>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">#</a></h1>
+<h2>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;results-trajectory.csv&quot;)
+<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;results-trajectory.csv&quot;)
 </pre></div>
 </div>
 </div>
+</section>
 </section>
 
 
@@ -802,20 +768,20 @@ sum
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../trajectory.html"
+       href="spatial.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Application to trajectory analysis</p>
+        <p class="prev-next-title">Spatial Transcriptomics</p>
       </div>
     </a>
     <a class="right-next"
-       href="../hoca.html"
+       href="hoca.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Application to very large datasets</p>
+        <p class="prev-next-title">Human Single Cell Atlas Gene Expression</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -837,13 +803,12 @@ sum
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Load data</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocess">Preprocess</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Calculate-DPT-trajectories">Calculate DPT trajectories</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-singleCellHaystack">Run singleCellHaystack</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-data">Load data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocess">Preprocess</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Calculate-DPT-trajectories">Calculate DPT trajectories</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-singleCellHaystack">Run singleCellHaystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
 </ul>
-
   </nav></div>
 
 </div></div>
