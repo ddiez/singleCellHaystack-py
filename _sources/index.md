@@ -53,6 +53,6 @@ Vandenbon A, Diez D (2020). “A clustering-independent method for finding diffe
 ```{toctree}
 :hidden: true
 
-articles
+tutorials
 reference
 ```

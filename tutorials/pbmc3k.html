@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>Trajectory Analysis &#8212; singleCellHaystack  documentation</title>
+    <title>Single Cell Transcriptomics (PBMC3k) &#8212; singleCellHaystack  documentation</title>
   
   
   
@@ -44,11 +44,11 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'articles/trajectory';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'tutorials/pbmc3k';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Human Single Cell Atlas Gene Expression" href="hoca.html" />
-    <link rel="prev" title="Spatial Transcriptomics" href="spatial.html" />
+    <link rel="next" title="Spatial Transcriptomics" href="spatial.html" />
+    <link rel="prev" title="Toy Example" href="toy.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -126,11 +126,11 @@
         <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../articles.html">Articles</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../tutorials.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="toy.html">Toy Example</a></li>
-<li class="toctree-l2"><a class="reference internal" href="pbmc3k.html">Single Cell Transcriptomics (PBMC3k)</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Single Cell Transcriptomics (PBMC3k)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="spatial.html">Spatial Transcriptomics</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Trajectory Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="trajectory.html">Trajectory Analysis</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hoca.html">Human Single Cell Atlas Gene Expression</a></li>
 </ul>
 </li>
@@ -213,7 +213,7 @@
       
       
       
-      <li><a href="../_sources/articles/trajectory.ipynb" target="_blank"
+      <li><a href="../_sources/tutorials/pbmc3k.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -295,7 +295,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Trajectory Analysis</h1>
+    <h1>Single Cell Transcriptomics (PBMC3k)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -306,9 +306,11 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-data">Load data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocess">Preprocess</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Calculate-DPT-trajectories">Calculate DPT trajectories</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-singleCellHaystack">Run singleCellHaystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Filter-some-cells">Filter some cells</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-haystack">Run haystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Check-some-QC-plots">Check some QC plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualizing-the-results">Visualizing the results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Clustering-results-into-gene-modules">Clustering results into gene modules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
 </ul>
             </nav>
@@ -321,67 +323,51 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="Trajectory-Analysis">
-<h1>Trajectory Analysis<a class="headerlink" href="#Trajectory-Analysis" title="Permalink to this heading">#</a></h1>
+  <section id="Single-Cell-Transcriptomics-(PBMC3k)">
+<h1>Single Cell Transcriptomics (PBMC3k)<a class="headerlink" href="#Single-Cell-Transcriptomics-(PBMC3k)" title="Permalink to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>import scanpy as sc
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import scanpy as sc
 import singleCellHaystack as hs
+
+sc.set_figure_params(facecolor=&quot;white&quot;, dpi=90)
 </pre></div>
 </div>
 </div>
 <section id="Load-data">
 <h2>Load data<a class="headerlink" href="#Load-data" title="Permalink to this heading">#</a></h2>
+<p>We load the human PBMC data available from scanpy.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>adata = sc.datasets.paul15()
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata = sc.datasets.pbmc3k_processed()
 adata
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-WARNING: In Scanpy 0.*, this returned logarithmized data. Now it returns non-logarithmized data.
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/diez/miniconda3/envs/singleCellHaystack/lib/python3.11/site-packages/scanpy/datasets/_datasets.py:202: ImplicitModificationWarning: Trying to modify attribute `._uns` of view, initializing view as actual.
-  adata.uns[&#39;iroot&#39;] = 840
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-AnnData object with n_obs × n_vars = 2730 × 3451
-    obs: &#39;paul15_clusters&#39;
-    uns: &#39;iroot&#39;
+AnnData object with n_obs × n_vars = 2638 × 1838
+    obs: &#39;n_genes&#39;, &#39;percent_mito&#39;, &#39;n_counts&#39;, &#39;louvain&#39;
+    var: &#39;n_cells&#39;
+    uns: &#39;draw_graph&#39;, &#39;louvain&#39;, &#39;louvain_colors&#39;, &#39;neighbors&#39;, &#39;pca&#39;, &#39;rank_genes_groups&#39;
+    obsm: &#39;X_pca&#39;, &#39;X_tsne&#39;, &#39;X_umap&#39;, &#39;X_draw_graph_fr&#39;
+    varm: &#39;PCs&#39;
+    obsp: &#39;distances&#39;, &#39;connectivities&#39;
 </pre></div></div>
 </div>
-</section>
-<section id="Preprocess">
-<h2>Preprocess<a class="headerlink" href="#Preprocess" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sc.pp.normalize_total(adata)
-sc.pp.log1p(adata)
-sc.tl.pca(adata)
-sc.pl.pca(adata)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=&quot;louvain&quot;)
 </pre></div>
 </div>
 </div>
@@ -390,7 +376,7 @@ sc.pl.pca(adata)
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/home/diez/miniconda3/envs/singleCellHaystack/lib/python3.11/site-packages/scanpy/plotting/_tools/scatterplots.py:392: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39;, &#39;norm&#39; will be ignored
+/Users/diez/miniconda3/envs/singleCellHaystack/lib/python3.10/site-packages/scanpy/plotting/_tools/scatterplots.py:392: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39; will be ignored
   cax = scatter(
 </pre></div></div>
 </div>
@@ -398,99 +384,66 @@ sc.pl.pca(adata)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_5_1.png" src="../_images/articles_trajectory_5_1.png" />
+<img alt="../_images/tutorials_pbmc3k_5_1.png" class="no-scaled-link" src="../_images/tutorials_pbmc3k_5_1.png" style="width: 517px; height: 337px;" />
 </div>
 </div>
+</section>
+<section id="Filter-some-cells">
+<h2>Filter some cells<a class="headerlink" href="#Filter-some-cells" title="Permalink to this heading">#</a></h2>
+<p>We remove Megakaryocytes since they are not interesting in this example and they will drive the top results.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sc.pp.neighbors(adata)
-sc.tl.leiden(adata)
-sc.tl.umap(adata)
-sc.pl.umap(adata, color=&quot;leiden&quot;, legend_loc=&quot;on data&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mega = adata.obs.louvain.isin([&quot;Megakaryocytes&quot;])
+mega.value_counts()
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/home/diez/miniconda3/envs/singleCellHaystack/lib/python3.11/site-packages/umap/distances.py:1063: NumbaDeprecationWarning: <span class="ansi-bold">The &#39;nopython&#39; keyword argument was not supplied to the &#39;numba.jit&#39; decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.</span>
-  @numba.jit()
-/home/diez/miniconda3/envs/singleCellHaystack/lib/python3.11/site-packages/umap/distances.py:1071: NumbaDeprecationWarning: <span class="ansi-bold">The &#39;nopython&#39; keyword argument was not supplied to the &#39;numba.jit&#39; decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.</span>
-  @numba.jit()
-/home/diez/miniconda3/envs/singleCellHaystack/lib/python3.11/site-packages/umap/distances.py:1086: NumbaDeprecationWarning: <span class="ansi-bold">The &#39;nopython&#39; keyword argument was not supplied to the &#39;numba.jit&#39; decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.</span>
-  @numba.jit()
-/home/diez/miniconda3/envs/singleCellHaystack/lib/python3.11/site-packages/umap/umap_.py:660: NumbaDeprecationWarning: <span class="ansi-bold">The &#39;nopython&#39; keyword argument was not supplied to the &#39;numba.jit&#39; decorator. The implicit default value for this argument is currently False, but it will be changed to True in Numba 0.59.0. See https://numba.readthedocs.io/en/stable/reference/deprecation.html#deprecation-of-object-mode-fall-back-behaviour-when-using-jit for details.</span>
-  @numba.jit()
-/home/diez/miniconda3/envs/singleCellHaystack/lib/python3.11/site-packages/scanpy/plotting/_tools/scatterplots.py:392: UserWarning: No data for colormapping provided via &#39;c&#39;. Parameters &#39;cmap&#39; will be ignored
-  cax = scatter(
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_6_1.png" src="../_images/articles_trajectory_6_1.png" />
+<div class="highlight"><pre>
+False    2623
+True       15
+Name: louvain, dtype: int64
+</pre></div></div>
 </div>
-</div>
-</section>
-<section id="Calculate-DPT-trajectories">
-<h2>Calculate DPT trajectories<a class="headerlink" href="#Calculate-DPT-trajectories" title="Permalink to this heading">#</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sc.tl.diffmap(adata)
-sc.tl.dpt(adata)
-sc.pl.umap(adata, color=&quot;dpt_pseudotime&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>adata = adata[~mega, :]
+adata
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_8_0.png" src="../_images/articles_trajectory_8_0.png" />
-</div>
-</div>
-</section>
-<section id="Run-singleCellHaystack">
-<h2>Run singleCellHaystack<a class="headerlink" href="#Run-singleCellHaystack" title="Permalink to this heading">#</a></h2>
-<p>For now there is not direct way to access the pseudotime information from AnnData object. But we can pass the expression matrix and 1D coordinates directly.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
-</pre></div>
-</div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>import numpy
-pseudotime = numpy.array(adata.obs.dpt_pseudotime.to_list())
-pseudotime = pseudotime.reshape(-1, 1)
-pseudotime
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-array([[0.0275316965],
-       [0.1844685227],
-       [0.2824616432],
-       ...,
-       [0.0244765058],
-       [0.1840221733],
-       [0.2610901594]])
+View of AnnData object with n_obs × n_vars = 2623 × 1838
+    obs: &#39;n_genes&#39;, &#39;percent_mito&#39;, &#39;n_counts&#39;, &#39;louvain&#39;
+    var: &#39;n_cells&#39;
+    uns: &#39;draw_graph&#39;, &#39;louvain&#39;, &#39;louvain_colors&#39;, &#39;neighbors&#39;, &#39;pca&#39;, &#39;rank_genes_groups&#39;
+    obsm: &#39;X_pca&#39;, &#39;X_tsne&#39;, &#39;X_umap&#39;, &#39;X_draw_graph_fr&#39;
+    varm: &#39;PCs&#39;
+    obsp: &#39;distances&#39;, &#39;connectivities&#39;
 </pre></div></div>
 </div>
+</section>
+<section id="Run-haystack">
+<h2>Run haystack<a class="headerlink" href="#Run-haystack" title="Permalink to this heading">#</a></h2>
+<p>We run <code class="docutils literal notranslate"><span class="pre">haystack</span></code> using PCA coordinates and otherwise default parameters. Since the data has been scaled, we need to pass the raw data to avoid negative numbers. Also this will allow <code class="docutils literal notranslate"><span class="pre">haystack</span></code> to run on all the genes, not only those to calculate the PCA coordinates.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata.X, coord=pseudotime, features=adata.var_names)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>res = hs.haystack(adata.raw.to_adata(), coord=&quot;pca&quot;)
 </pre></div>
 </div>
 </div>
@@ -499,14 +452,16 @@ array([[0.0275316965],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+&gt; starting haystack ...
 &gt; entering array method ...
 &gt; scaling coordinates ...
 &gt; calculating feature stds ...
+&gt; removing 6 genes with zero variance ...
 &gt; calculating grid points ...
 &gt; calculating distance to cells ...
 &gt; calculating densities ...
 &gt; calculating Q dist ...
-&gt; calculating KLD for 3451 features ...
+&gt; calculating KLD for 13708 features ...
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -514,7 +469,7 @@ array([[0.0275316965],
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████████████████████████████████████████████████████████████████████████| 3451/3451 [00:01&lt;00:00, 2068.14it/s]
+100%|██████████| 13708/13708 [00:02&lt;00:00, 6130.26it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -532,7 +487,7 @@ array([[0.0275316965],
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████████████████████████████████████████████████████████████████████████████| 100/100 [00:04&lt;00:00, 20.31it/s]
+100%|██████████| 100/100 [00:02&lt;00:00, 40.36it/s]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -544,11 +499,15 @@ array([[0.0275316965],
 &gt; done.
 </pre></div></div>
 </div>
+</section>
+<section id="Check-some-QC-plots">
+<h2>Check some QC plots<a class="headerlink" href="#Check-some-QC-plots" title="Permalink to this heading">#</a></h2>
+<p>We can examine some of the QC plots. First the randomization fits. These are used to calculate KLD from randomized expression levels for a subset of genes, in order to estimate the values to the entire gene set.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>hs.plot_rand_fit(res, &quot;mean&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_rand_fit(res, &quot;mean&quot;)
 hs.plot_rand_fit(res, &quot;sd&quot;)
 </pre></div>
 </div>
@@ -557,21 +516,22 @@ hs.plot_rand_fit(res, &quot;sd&quot;)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_13_0.png" src="../_images/articles_trajectory_13_0.png" />
+<img alt="../_images/tutorials_pbmc3k_14_0.png" class="no-scaled-link" src="../_images/tutorials_pbmc3k_14_0.png" style="width: 358px; height: 358px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_13_1.png" src="../_images/articles_trajectory_13_1.png" />
+<img alt="../_images/tutorials_pbmc3k_14_1.png" class="no-scaled-link" src="../_images/tutorials_pbmc3k_14_1.png" style="width: 353px; height: 358px;" />
 </div>
 </div>
+<p>The ranking of logpval and distribution of pval gives us some idea of how many significant genes we can detect.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>hs.plot_pval_rank(res)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_pval_rank(res)
 hs.plot_pval_hist(res)
 </pre></div>
 </div>
@@ -580,27 +540,31 @@ hs.plot_pval_hist(res)
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_14_0.png" src="../_images/articles_trajectory_14_0.png" />
+<img alt="../_images/tutorials_pbmc3k_16_0.png" class="no-scaled-link" src="../_images/tutorials_pbmc3k_16_0.png" style="width: 358px; height: 338px;" />
 </div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_14_1.png" src="../_images/articles_trajectory_14_1.png" />
+<img alt="../_images/tutorials_pbmc3k_16_1.png" class="no-scaled-link" src="../_images/tutorials_pbmc3k_16_1.png" style="width: 358px; height: 316px;" />
 </div>
 </div>
+</section>
+<section id="Visualizing-the-results">
+<h2>Visualizing the results<a class="headerlink" href="#Visualizing-the-results" title="Permalink to this heading">#</a></h2>
+<p>A pandas DataFrame with the results can be obtained. By default the results are sorted by logpval_adj.</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sum = res.top_features(9)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sum = res.top_features(n=10)
 sum
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="output_area rendered_html docutils container">
@@ -624,7 +588,6 @@ sum
       <th></th>
       <th>gene</th>
       <th>KLD</th>
-      <th>CV</th>
       <th>pval</th>
       <th>pval_adj</th>
       <th>logpval</th>
@@ -633,104 +596,114 @@ sum
   </thead>
   <tbody>
     <tr>
-      <th>1121</th>
-      <td>Fam132a</td>
-      <td>0.354324</td>
-      <td>1.111779</td>
-      <td>1.907912e-81</td>
-      <td>6.584203e-78</td>
-      <td>-80.719442</td>
-      <td>-77.181497</td>
+      <th>9290</th>
+      <td>GZMB</td>
+      <td>0.004207</td>
+      <td>2.671463e-67</td>
+      <td>3.662041e-63</td>
+      <td>-66.573251</td>
+      <td>-62.436277</td>
     </tr>
     <tr>
-      <th>1954</th>
-      <td>Mt2</td>
-      <td>0.476056</td>
-      <td>1.326631</td>
-      <td>1.375929e-77</td>
-      <td>4.748330e-74</td>
-      <td>-76.861404</td>
-      <td>-73.323459</td>
+      <th>3200</th>
+      <td>FGFBP2</td>
+      <td>0.003713</td>
+      <td>2.990241e-63</td>
+      <td>4.099023e-59</td>
+      <td>-62.524294</td>
+      <td>-58.387320</td>
     </tr>
     <tr>
-      <th>2590</th>
-      <td>Rhd</td>
-      <td>0.601656</td>
-      <td>1.491535</td>
-      <td>3.467935e-77</td>
-      <td>1.196784e-73</td>
-      <td>-76.459929</td>
-      <td>-72.921984</td>
+      <th>7149</th>
+      <td>PRF1</td>
+      <td>0.002337</td>
+      <td>2.624538e-57</td>
+      <td>3.597716e-53</td>
+      <td>-56.580947</td>
+      <td>-52.443973</td>
     </tr>
     <tr>
-      <th>2425</th>
-      <td>Prtn3</td>
-      <td>0.164153</td>
-      <td>0.776379</td>
-      <td>1.141090e-74</td>
-      <td>3.937903e-71</td>
-      <td>-73.942680</td>
-      <td>-70.404735</td>
+      <th>12799</th>
+      <td>CD79A</td>
+      <td>0.002090</td>
+      <td>1.626349e-56</td>
+      <td>2.229399e-52</td>
+      <td>-55.788786</td>
+      <td>-51.651812</td>
     </tr>
     <tr>
-      <th>1040</th>
-      <td>Elane</td>
-      <td>0.291931</td>
-      <td>1.066940</td>
-      <td>1.240241e-74</td>
-      <td>4.280072e-71</td>
-      <td>-73.906494</td>
-      <td>-70.368549</td>
+      <th>1802</th>
+      <td>GNLY</td>
+      <td>0.002155</td>
+      <td>3.416672e-56</td>
+      <td>4.683574e-52</td>
+      <td>-55.466397</td>
+      <td>-51.329423</td>
     </tr>
     <tr>
-      <th>2910</th>
-      <td>Sphk1</td>
-      <td>0.568372</td>
-      <td>1.485415</td>
-      <td>3.270921e-74</td>
-      <td>1.128795e-70</td>
-      <td>-73.485330</td>
-      <td>-69.947385</td>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
     </tr>
     <tr>
-      <th>815</th>
-      <td>Ctsg</td>
-      <td>0.212397</td>
-      <td>0.907998</td>
-      <td>8.823847e-74</td>
-      <td>3.045110e-70</td>
-      <td>-73.054342</td>
-      <td>-69.516397</td>
+      <th>13172</th>
+      <td>A1BG-AS1</td>
+      <td>0.000098</td>
+      <td>9.969061e-01</td>
+      <td>1.000000e+00</td>
+      <td>-0.001346</td>
+      <td>0.000000</td>
     </tr>
     <tr>
-      <th>1072</th>
-      <td>Ermap</td>
-      <td>0.440583</td>
-      <td>1.333001</td>
-      <td>1.493464e-72</td>
-      <td>5.153945e-69</td>
-      <td>-71.825805</td>
-      <td>-68.287860</td>
+      <th>344</th>
+      <td>SYNC</td>
+      <td>0.000088</td>
+      <td>9.974878e-01</td>
+      <td>1.000000e+00</td>
+      <td>-0.001092</td>
+      <td>0.000000</td>
     </tr>
     <tr>
-      <th>778</th>
-      <td>Cpox</td>
-      <td>0.349522</td>
-      <td>1.195660</td>
-      <td>6.859488e-72</td>
-      <td>2.367209e-68</td>
-      <td>-71.163708</td>
-      <td>-67.625763</td>
+      <th>1731</th>
+      <td>PCYOX1</td>
+      <td>0.000065</td>
+      <td>9.980668e-01</td>
+      <td>1.000000e+00</td>
+      <td>-0.000840</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>13247</th>
+      <td>CRKL</td>
+      <td>0.000038</td>
+      <td>9.988439e-01</td>
+      <td>1.000000e+00</td>
+      <td>-0.000502</td>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>9925</th>
+      <td>STOML1</td>
+      <td>0.000099</td>
+      <td>9.989249e-01</td>
+      <td>1.000000e+00</td>
+      <td>-0.000467</td>
+      <td>0.000000</td>
     </tr>
   </tbody>
 </table>
+<p>13708 rows × 6 columns</p>
 </div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=sum.gene, ncols=3)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=sum.gene.iloc[:4], ncols=2, cmap=&quot;Spectral_r&quot;)
 </pre></div>
 </div>
 </div>
@@ -738,17 +711,214 @@ sum
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/articles_trajectory_16_0.png" src="../_images/articles_trajectory_16_0.png" />
+<img alt="../_images/tutorials_pbmc3k_20_0.png" class="no-scaled-link" src="../_images/tutorials_pbmc3k_20_0.png" style="width: 737px; height: 654px;" />
+</div>
+</div>
+</section>
+<section id="Clustering-results-into-gene-modules">
+<h2>Clustering results into gene modules<a class="headerlink" href="#Clustering-results-into-gene-modules" title="Permalink to this heading">#</a></h2>
+<p>We can cluster the results using K-means. We need to pass the <code class="docutils literal notranslate"><span class="pre">AnnData</span></code> object, the haystack results and the number of clusters.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>gene_mods = hs.cluster_genes(adata.raw.to_adata(), res, n_clusters=4, random_state=1)
+gene_mods.sort_values(&quot;cluster&quot;).groupby(&quot;cluster&quot;).head(3)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gene</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>GZMB</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>CCL5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>CTSW</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>CEBPD</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>SPI1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>NCF2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>CD79A</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>PKIG</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>HLA-DQA1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>CD1C</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>FCER1A</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>CLEC10A</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>hs.plot_gene_clusters(adata.raw.to_adata(), gene_mods, basis=&quot;umap&quot;, ncols=2, figsize=[7, 6],   color_map=&quot;Spectral_r&quot;)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_pbmc3k_24_0.png" class="no-scaled-link" src="../_images/tutorials_pbmc3k_24_0.png" style="width: 607px; height: 522px;" />
+</div>
+</div>
+<p>Check some of the genes in <code class="docutils literal notranslate"><span class="pre">Module</span> <span class="pre">0</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>mod0 = gene_mods.groupby(&quot;cluster&quot;).get_group(0)
+mod0.head(4)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>gene</th>
+      <th>cluster</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>GZMB</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>FGFBP2</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>PRF1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>GNLY</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>sc.pl.umap(adata, color=mod0.gene.iloc[:4], cmap=&quot;Spectral_r&quot;, ncols=2)
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/tutorials_pbmc3k_27_0.png" class="no-scaled-link" src="../_images/tutorials_pbmc3k_27_0.png" style="width: 737px; height: 654px;" />
 </div>
 </div>
 </section>
 <section id="Export-results">
 <h2>Export results<a class="headerlink" href="#Export-results" title="Permalink to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
 </pre></div>
 </div>
-<div class="input_area highlight-none notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;results-trajectory.csv&quot;)
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#sum.to_csv(&quot;pbmc3k-results.tsv&quot;)
 </pre></div>
 </div>
 </div>
@@ -768,20 +938,20 @@ sum
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="spatial.html"
+       href="toy.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Spatial Transcriptomics</p>
+        <p class="prev-next-title">Toy Example</p>
       </div>
     </a>
     <a class="right-next"
-       href="hoca.html"
+       href="spatial.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Human Single Cell Atlas Gene Expression</p>
+        <p class="prev-next-title">Spatial Transcriptomics</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -804,9 +974,11 @@ sum
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Load-data">Load data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Preprocess">Preprocess</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Calculate-DPT-trajectories">Calculate DPT trajectories</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-singleCellHaystack">Run singleCellHaystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Filter-some-cells">Filter some cells</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Run-haystack">Run haystack</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Check-some-QC-plots">Check some QC plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualizing-the-results">Visualizing the results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Clustering-results-into-gene-modules">Clustering results into gene modules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Export-results">Export results</a></li>
 </ul>
   </nav></div>
