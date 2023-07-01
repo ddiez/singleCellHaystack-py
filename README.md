@@ -41,7 +41,7 @@ adata = sc.read_h5ad("data.h5ad")
 [... process adata object ...]
 
 res = hs.haystack(adata, coord="pca")
-res["results"]
+res.top_features(n=10)
 ```
 
 # References
