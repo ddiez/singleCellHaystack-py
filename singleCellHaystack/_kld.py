@@ -26,7 +26,7 @@ def calculate_P_dist(density, weights, pseudo=1e-300):
   if (isinstance(weights, ndarray)):
     P = density * weights.reshape(-1,1)
 
-  P = np.sum(P, 0)
+  P = np.sum(P, axis=0)
   P = P + pseudo
   P = P / np.sum(P)
   return P
