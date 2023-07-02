@@ -27,7 +27,7 @@ def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, r
     pbar = tqdm(total=n_randomizations)
 
   if (isspmatrix(expression)):
-    expression = expression.tocsc()
+    expression = expression.tolil()
 
   ncells = expression.shape[0]
   ngenes = expression.shape[1]
