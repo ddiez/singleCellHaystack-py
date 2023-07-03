@@ -96,6 +96,12 @@ def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None):
   sum1 = res1.result.sort_values(sort_by)
   sum2 = res2.result.sort_values(sort_by)
 
+  if xlabel is None:
+    xlabel = sort_by + "_1"
+
+  if ylabel is None:
+    ylabel = sort_by + "_2"
+
   r1 = pd.DataFrame({
     "gene1": sum1.index,
     "rank1": list(range(sum1.index.shape[0])),
