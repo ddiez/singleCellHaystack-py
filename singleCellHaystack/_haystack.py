@@ -9,7 +9,7 @@ from scipy.sparse import isspmatrix
 # haystack
 # Main function. Can accept AnnData, numpy array and scipy sparse matrices.
 # Does not accept numpay matrix objects.
-def haystack(x, coord, features=None, layer=None, scale_coord=True, ngrid_points=100,
+def haystack(x, coord, features=None, layer=None, dims=None, scale_coord=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None,
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True, kld_method="original"):
 
@@ -42,7 +42,7 @@ def haystack(x, coord, features=None, layer=None, scale_coord=True, ngrid_points
   res = None
 
   if isinstance(x, AnnData) and isinstance(coord, str):
-    res = haystack_adata(adata=x, basis=coord, layer=layer, dims=None, scale_coord=scale_coord,
+    res = haystack_adata(adata=x, basis=coord, layer=layer, dims=dims, scale_coord=scale_coord,
         ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
         select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize, spline_method=spline_method,
         n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose, kld_method=kld_method)
@@ -230,7 +230,7 @@ def haystack_adata(adata, basis="pca", layer=None, dims=None, scale_coord=True, 
     return(None)
 
   if dims is not None:
-    coord = coord[:, dims]
+    coord = coord[:, :dims]
 
   res = haystack_array(exprs, coord, features=genes, scale_coord=scale_coord, ngrid_points=ngrid_points,
       n_genes_to_randomize=n_genes_to_randomize, select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize,
