@@ -4,8 +4,13 @@ This is a python implementation of `singleCellHaystack <https://github.com/alexi
 
 """
 
-from importlib.metadata import version
-__version__ = version("singleCellHaystack")
+from importlib.metadata import version, PackageNotFoundError
+
+try:
+    __version__ = version("singleCellHaystack")
+except PackageNotFoundError:
+    # package is not installed
+    pass
 
 from anndata import AnnData
 
