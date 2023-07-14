@@ -4,6 +4,9 @@ This is a python implementation of `singleCellHaystack <https://github.com/alexi
 
 """
 
+from importlib.metadata import version
+__version__ = version("singleCellHaystack")
+
 from anndata import AnnData
 
 from ._haystack import *
