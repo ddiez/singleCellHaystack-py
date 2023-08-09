@@ -18,7 +18,7 @@ This package is currently in beta. The most important functionality in the R pac
 
 # Installation
 
-You can install singleCellHaystack from [pypi](https://pypi.org):
+You can install singleCellHaystack from [PyPI](https://pypi.org):
 
 ```
 pip install singleCellHaystack
@@ -36,7 +36,7 @@ adata = sc.read_h5ad("data.h5ad")
 
 [... process adata object ...]
 
-res = hs.haystack(adata)
+res = hs.haystack(adata, basis="pca")
 res.top_features(n=10)
 ```
 

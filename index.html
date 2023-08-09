@@ -337,7 +337,7 @@ document.write(`
 </section>
 <section id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this heading">#</a></h1>
-<p>You can install singleCellHaystack from <a class="reference external" href="https://pypi.org">pypi</a>:</p>
+<p>You can install singleCellHaystack from <a class="reference external" href="https://pypi.org">PyPI</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">singleCellHaystack</span>
 </pre></div>
 </div>
@@ -354,7 +354,7 @@ document.write(`
 
 <span class="p">[</span><span class="o">...</span> <span class="n">process</span> <span class="n">adata</span> <span class="nb">object</span> <span class="o">...</span><span class="p">]</span>
 
-<span class="n">res</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">haystack</span><span class="p">(</span><span class="n">adata</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="n">hs</span><span class="o">.</span><span class="n">haystack</span><span class="p">(</span><span class="n">adata</span><span class="p">,</span> <span class="n">basis</span><span class="o">=</span><span class="s2">&quot;pca&quot;</span><span class="p">)</span>
 <span class="n">res</span><span class="o">.</span><span class="n">top_features</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 </pre></div>
 </div>
