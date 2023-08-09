@@ -17,7 +17,7 @@ def haystack(x, coord, features=None, layer=None, dims=None, scale_coord=True, n
   Runs singleCellHaystack.
 
   :param x: AnnData, numpy array or scipy sparse matrix.
-  :param coord: a numpy array with 1D pseudotime, 2D or 3D spatial coordinates or an embedding with any number of dimansions.
+  :param coord: a numpy array with 1D pseudotime, 2D or 3D spatial coordinates or an embedding with any number of dimensions.
   :param features: a list of strings with feature names. If None for AnnData objects is adata.var_names and a numeric index for arrays.
   :param layer: layer to use for AnnData objects. If None then adata.X is used.
   :param scale_coord: whether to scale input coordinates.
