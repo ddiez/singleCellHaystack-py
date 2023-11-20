@@ -77,7 +77,7 @@ def plot_pval_hist(x):
   plt.xlim([0, 1])
   plt.show()
 
-def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None):
+def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None, return_ax=False):
   """
   Plot the rank of two singleCellHaystack results.
 
@@ -120,9 +120,12 @@ def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None):
 
   d = r1.join(r2)
 
-  plt.plot(d.rank1, d.rank2, "bo", markersize=1)
-  plt.xlabel(xlabel)
-  plt.ylabel(ylabel)
+  fig, ax = plt.subplots(ncols=1, nrows=1)
+  ax.scatter(d.rank1, d.rank2, s=1, c="black")
+  ax.axline((0,0), slope=1, c="red")
+
+  if return_ax:
+      return ax
 
 def plot_rand_kld(x, gene=0):
     from scipy.stats import norm
