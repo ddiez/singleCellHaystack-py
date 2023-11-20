@@ -84,7 +84,7 @@ def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None):
   This plot facilitates comparing two singleCellHaystack results.
 
   :param res1: singleCellHaystack result.
-  :param res2: singleCellHaystack resuot.
+  :param res2: singleCellHaystack result.
   :param sort_by: what column to use for sorting (rank).
   :param xlabel: label for x-axis (res1).
   :param ylabel: label for y-axis (res2).
