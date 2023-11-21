@@ -77,30 +77,11 @@ def plot_pval_hist(x):
   plt.xlim([0, 1])
   plt.show()
 
-def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None, return_ax=False):
-  """
-  Plot the rank of two singleCellHaystack results.
-
-  This plot facilitates comparing two singleCellHaystack results.
-
-  :param res1: singleCellHaystack result.
-  :param res2: singleCellHaystack result.
-  :param sort_by: what column to use for sorting (rank).
-  :param xlabel: label for x-axis (res1).
-  :param ylabel: label for y-axis (res2).
-
-  """
-
+def compare_ranks(res1, res2, sort_by="logpval"):
   import pandas as pd
 
   sum1 = res1.result.sort_values(sort_by)
   sum2 = res2.result.sort_values(sort_by)
-
-  if xlabel is None:
-    xlabel = sort_by + "_1"
-
-  if ylabel is None:
-    ylabel = sort_by + "_2"
 
   r1 = pd.DataFrame({
     "gene1": sum1.index,
@@ -120,9 +101,35 @@ def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None, 
 
   d = r1.join(r2)
 
+  return(d)
+
+def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None, return_ax=False):
+  """
+  Plot the rank of two singleCellHaystack results.
+
+  This plot facilitates comparing two singleCellHaystack results.
+
+  :param res1: singleCellHaystack result.
+  :param res2: singleCellHaystack result.
+  :param sort_by: what column to use for sorting (rank).
+  :param xlabel: label for x-axis (res1).
+  :param ylabel: label for y-axis (res2).
+
+  """
+
+  if xlabel is None:
+    xlabel = sort_by + "_1"
+
+  if ylabel is None:
+    ylabel = sort_by + "_2"
+
+  d = compare_ranks(res1, res2, sort_by=sort_by)
+
   fig, ax = plt.subplots(ncols=1, nrows=1)
   ax.scatter(d.rank1, d.rank2, s=1, c="black")
   ax.axline((0,0), slope=1, c="red")
+  ax.set_xlabel(xlabel)
+  ax.set_ylabel(ylabel)
 
   if return_ax:
       return ax
