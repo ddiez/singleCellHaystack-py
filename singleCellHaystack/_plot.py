@@ -117,19 +117,14 @@ def plot_compare_ranks(res1, res2, sort_by="logpval", xlabel=None, ylabel=None, 
 
   """
 
-  if xlabel is None:
-    xlabel = sort_by + "_1"
-
-  if ylabel is None:
-    ylabel = sort_by + "_2"
-
   d = compare_ranks(res1, res2, sort_by=sort_by)
 
   fig, ax = plt.subplots(ncols=1, nrows=1)
   ax.scatter(d.rank1, d.rank2, s=1, c="black")
   ax.axline((0,0), slope=1, c="red")
-  ax.set_xlabel(xlabel)
-  ax.set_ylabel(ylabel)
+  ax.set_xlabel("rank_1")
+  ax.set_ylabel("rank_2")
+  ax.set_title("Sort by: " + sort_by)
 
   if return_ax:
       return ax
