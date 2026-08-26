@@ -3,11 +3,14 @@ from ._pvalue import *
 from ._grid import *
 from ._kld import *
 from ._tools import *
+from ._backend import is_dask, to_numpy, calculate_mean_std
 
 from scipy.sparse import isspmatrix
 
 # haystack
-# Main function. Can accept AnnData, numpy array and scipy sparse matrices.
+# Main function. Can accept AnnData, numpy array, scipy sparse matrices and
+# dask arrays (numpy or scipy backed AnnData layers/X, including dask-backed
+# ones, are all routed to haystack_array once extracted).
 # Does not accept numpay matrix objects.
 def haystack(x, coord, features=None, layer=None, dims=None, scale_coord=True, ngrid_points=100,
     n_genes_to_randomize=100, select_genes_randomize_method="heavytails", genes_to_randomize=None,
@@ -16,7 +19,7 @@ def haystack(x, coord, features=None, layer=None, dims=None, scale_coord=True, n
   """
   Runs singleCellHaystack.
 
-  :param x: AnnData, numpy array or scipy sparse matrix.
+  :param x: AnnData, numpy array, scipy sparse matrix or dask array.
   :param coord: a numpy array with 1D pseudotime, 2D or 3D spatial coordinates or an embedding with any number of dimensions.
   :param features: a list of strings with feature names. If None for AnnData objects is adata.var_names and a numeric index for arrays.
   :param layer: layer to use for AnnData objects. If None then adata.X is used.
@@ -47,7 +50,7 @@ def haystack(x, coord, features=None, layer=None, dims=None, scale_coord=True, n
         select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize, spline_method=spline_method,
         n_randomizations=n_randomizations, grid_points=grid_points, pseudo=pseudo, random_state=random_state, verbose=verbose, kld_method=kld_method)
 
-  if (isinstance(x, ndarray) or isspmatrix(x)) and isinstance(coord, ndarray):
+  if (isinstance(x, ndarray) or isspmatrix(x) or is_dask(x)) and (isinstance(coord, ndarray) or is_dask(coord)):
     res = haystack_array(weights=x, coord=coord, features=features, scale_coord=scale_coord,
         ngrid_points=ngrid_points, n_genes_to_randomize=n_genes_to_randomize,
         select_genes_randomize_method=select_genes_randomize_method, genes_to_randomize=genes_to_randomize, spline_method=spline_method,
@@ -58,7 +61,7 @@ def haystack(x, coord, features=None, layer=None, dims=None, scale_coord=True, n
   """
     ERROR: Some of the input data didn't match the expected type:
       * If x is an AnnData object then coord must be a string with the name of the basis to use.
-      * If x is a numpy or scipy sparse array then coord must be a numpy array.
+      * If x is a numpy, scipy sparse or dask array then coord must be a numpy or dask array.
   """)
   else:
     return(res)
@@ -70,7 +73,6 @@ def haystack_array(weights, coord, features=None, scale_coord=True, ngrid_points
     spline_method="bs", n_randomizations=100, grid_points=None, pseudo=1e-300, random_state=None, verbose=True, kld_method="original"):
 
   from pandas import DataFrame
-  from sklearn.preprocessing import StandardScaler
   from numpy.random import RandomState
 
   if random_state is not None:
@@ -90,6 +92,12 @@ def haystack_array(weights, coord, features=None, scale_coord=True, ngrid_points
   if features is None:
     features = np.array(range(exprs.shape[1]))
 
+  # Coordinates (unlike exprs) are always small (ncells x few dims), so it's
+  # fine -- and simpler for everything downstream (KMeans, distance_matrix,
+  # scaling) -- to always materialize them to a plain numpy array up front,
+  # even when a dask array was passed in.
+  coord = to_numpy(coord)
+
   # Scale coords.
   coord_mean = None
   coord_std = None
@@ -104,17 +112,14 @@ def haystack_array(weights, coord, features=None, scale_coord=True, ngrid_points
     #coord, coord_mean, coord_std = scale(coord)
 
   # Check for negative values.
-  if (np.sum(exprs < 0).astype(bool)):
+  if to_numpy(np.sum(exprs < 0)) > 0:
     print("_ERROR_ negative values in your data.")
     return(None)
 
   # filter genes with zero stdev.
   if (verbose):
     print("> calculating feature stds ...")
-  scaler = StandardScaler(with_mean=False)
-  scaler_fit = scaler.fit(exprs)
-  exprs_sd = np.sqrt(scaler_fit.var_)
-  exprs_mean = scaler_fit.mean_
+  exprs_mean, exprs_sd = calculate_mean_std(exprs, verbose=verbose)
 
   sel_zero = exprs_sd == 0
   n_zero = np.sum(sel_zero)
@@ -225,7 +230,7 @@ def haystack_adata(adata, basis="pca", layer=None, dims=None, scale_coord=True, 
   genes = adata.var_names
 
   # Check for negative values.
-  if (np.sum(exprs < 0).astype(bool)):
+  if to_numpy(np.sum(exprs < 0)) > 0:
     print("_ERROR_ negative values in your data. Hint: pass adata.raw.to_adata() or adata.layers[\"count\"]")
     return(None)
 

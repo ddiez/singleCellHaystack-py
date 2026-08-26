@@ -44,6 +44,15 @@ res = hs.haystack(adata, basis="pca")
 res.top_features(n=10)
 ```
 
+`haystack()` also accepts numpy arrays, scipy sparse matrices and (optionally installed via `pip install singleCellHaystack[dask]`) [dask](https://www.dask.org) arrays directly, or as an AnnData layer, for data too large to fit densely in memory:
+
+```
+import dask.array as da
+
+adata.layers["dask"] = da.from_array(adata.X, chunks=(1000, adata.n_vars))
+res = hs.haystack(adata, basis="pca", layer="dask")
+```
+
 # References
 
 - Our manuscript describing the updated, more generally applicable version of `singleCellHaystack` including this Python implementation was published in [Scientific Reports](https://doi.org/10.1038/s41598-023-38965-2).

@@ -1,7 +1,8 @@
 import numpy as np
-from scipy.sparse import isspmatrix
-from sklearn.utils import shuffle
+from sklearn.utils import shuffle, check_random_state
 from tqdm import tqdm
+
+from ._backend import is_sparse
 
 def select_genes_to_randomize(x, ngenes=100, method="heavytails", tail=10, verbose=False):
   if (verbose):
@@ -26,7 +27,8 @@ def randomize_KLD(density, expression, Q, n_randomizations=100, pseudo=1e-300, r
     print("> calculating randomized KLD ...")
     pbar = tqdm(total=n_randomizations)
 
-  if (isspmatrix(expression)):
+  # lil is faster than csr/csc for repeated row slicing below.
+  if is_sparse(expression):
     expression = expression.tolil()
 
   ncells = expression.shape[0]
@@ -50,25 +52,19 @@ def randomize_KLD2(density, expression, Q, n_randomizations=100, pseudo=1e-300, 
     print("> calculating randomized KLD ...")
     pbar = tqdm(total=n_randomizations)
 
-  if (isspmatrix(expression)):
-    expression = expression.tolil()
-
   ncells = expression.shape[0]
   ngenes = expression.shape[1]
+  rng = check_random_state(random_state)
 
   KLD_rand = np.zeros([ngenes, n_randomizations])
 
-  for n in range(n_randomizations): 
-    # TODO: shuffle by column (features) independently.
-    expression = shuffle(expression, random_state=random_state)
-    #if (isspmatrix(expression)):
-    #  for k in range(expression.shape[1]):
-    #      expression[:, [k]] = shuffle(expression[:, [k]], random_state=random_state)
-    #else:
-    #  for k in range(expression.shape[1]):
-    #    expression[:, k] = shuffle(expression[:, k], random_state=random_state)
-    
-    P = calculate_P_matrix(density, expression)
+  for n in range(n_randomizations):
+    # Draw a fresh permutation of the (original) cells for every
+    # randomization and index with it directly: this works the same way for
+    # numpy arrays, scipy sparse matrices and dask arrays, so it doesn't need
+    # any backend-specific handling.
+    shuffled_cells = rng.permutation(ncells)
+    P = calculate_P_matrix(density, expression[shuffled_cells, :], pseudo=pseudo)
     KLD_rand[:, n] = calculate_KLD2(P, Q)
     if (verbose):
       pbar.update(n=1)

@@ -32,6 +32,9 @@ dependencies = [
   "tqdm"
 ]
 
+[project.optional-dependencies]
+dask = ["dask[array]"]
+
 [project.urls]
 "Homepage" = "https://github.com/ddiez/singleCellHaystack-py"
 "Bug Tracker" = "https://github.com/ddiez/singleCellHaystack-py/issues"
